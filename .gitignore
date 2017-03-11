@@ -239,3 +239,7 @@ typings/
 
 # End of https://www.gitignore.io/api/node,maven,intellij+iml,eclipse,netbeans,java
 
+
+### Spring-boot ###
+
+application.properties
