@@ -1,7 +1,7 @@
 #lokasi database
 spring.datasource.url=jdbc:postgresql://localhost:5432/athens
 
-spring.datasource.username=rien
-spring.datasource.password=postgres
+spring.datasource.username=username_postgresql
+spring.datasource.password=password_postgresql
 
 spring.datasource.driverClassName=org.postgresql.Driver
