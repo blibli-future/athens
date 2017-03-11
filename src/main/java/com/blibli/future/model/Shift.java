@@ -30,16 +30,16 @@ public class Shift {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getStartHour() {
+	public Timestamp getStartHour() {
 		return startHour;
 	}
-	public void setStartHour(String startHour) {
+	public void setStartHour(Timestamp startHour) {
 		this.startHour = startHour;
 	}
-	public String getEndHour() {
+	public Timestamp getEndHour() {
 		return endHour;
 	}
-	public void setEndHour(String endHour) {
+	public void setEndHour(Timestamp endHour) {
 		this.endHour = endHour;
 	}
 	public String getStartDay() {
