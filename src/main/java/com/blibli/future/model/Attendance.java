@@ -8,43 +8,42 @@ import javax.persistence.Id;
 
 @Entity
 public class Attendance {
-    @Id
-    private String nik;
-    private Timestamp tapIn;
-    private Timestamp tapOut;
-    private Date date;
+	@Id
+	private String nik;
+	private Timestamp tapIn;
+	private Timestamp tapOut;
+	private Date date;
 
-    public String getNik() {
-        return nik;
-    }
+	public String getNik() {
+		return nik;
+	}
 
-    public void setNik(String nik) {
-        this.nik = nik;
-    }
+	public void setNik(String nik) {
+		this.nik = nik;
+	}
 
-    public Timestamp getTapIn() {
-        return tapIn;
-    }
+	public Timestamp getTapIn() {
+		return tapIn;
+	}
 
-    public void setTapIn(Timestamp tapIn) {
-        this.tapIn = tapIn;
-    }
+	public void setTapIn(Timestamp tapIn) {
+		this.tapIn = tapIn;
+	}
 
-    public Timestamp getTapOut() {
-        return tapOut;
-    }
+	public Timestamp getTapOut() {
+		return tapOut;
+	}
 
-    public void setTapOut(Timestamp tapOut) {
-        this.tapOut = tapOut;
-    }
+	public void setTapOut(Timestamp tapOut) {
+		this.tapOut = tapOut;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    
-    
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 }
