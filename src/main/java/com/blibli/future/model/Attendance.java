@@ -13,6 +13,13 @@ public class Attendance {
 	private Timestamp tapIn;
 	private Timestamp tapOut;
 	private Date date;
+	
+	public Attendance(String nik, Timestamp tapIn, Timestamp tapOut,Date date){
+		this.nik=nik;
+		this.tapIn=tapIn;
+		this.tapOut=tapOut;
+		this.date=date;
+	}
 
 	public String getNik() {
 		return nik;
