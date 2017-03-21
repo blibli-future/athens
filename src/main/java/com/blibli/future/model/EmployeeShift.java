@@ -9,36 +9,36 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class EmployeeShift {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String id;
 
-    private String nik;
-    private String idShift;
+	private String nik;
+	private String idShift;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getNik() {
-        return nik;
-    }
+	public String getNik() {
+		return nik;
+	}
 
-    public void setNik(String nik) {
-        this.nik = nik;
-    }
+	public void setNik(String nik) {
+		this.nik = nik;
+	}
 
-    public String getIdShift() {
-        return idShift;
-    }
+	public String getIdShift() {
+		return idShift;
+	}
 
-    public void setIdShift(String idShift) {
-        this.idShift = idShift;
-    }
+	public void setIdShift(String idShift) {
+		this.idShift = idShift;
+	}
 
 }

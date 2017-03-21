@@ -5,8 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.blibli.future.model.Leave;
 
-
 @Repository
-public interface LeaveRepository extends JpaRepository<Leave, String>{
+public interface LeaveRepository extends JpaRepository<Leave, String> {
 
 }

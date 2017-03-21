@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.blibli.future.model.AbsencePermit;
 
 @Repository
-public interface AbsencePermitRepository extends JpaRepository<AbsencePermit, String>{
+public interface AbsencePermitRepository extends JpaRepository<AbsencePermit, String> {
 
 }

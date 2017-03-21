@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.blibli.future.model.Shift;
 
 @Repository
-public interface ShiftRepository extends JpaRepository<Shift, String>{
+public interface ShiftRepository extends JpaRepository<Shift, String> {
 
 }

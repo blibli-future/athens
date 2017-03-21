@@ -155,8 +155,4 @@ public class Employee {
     public void setEndWorkingDate(Date endWorkingDate) {
         this.endWorkingDate = endWorkingDate;
     }
-    
-    
-    
-    
 }
