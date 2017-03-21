@@ -9,10 +9,19 @@ public class UploadFileService {
     public boolean processFile(MultipartFile uploadedFile) {
         String fileName = uploadedFile.getOriginalFilename();
 
-        if(fileName.matches("(xlsx?|csv)$")) {
-            return true;
+        if(fileName.endsWith(".xlsx")) {
+//            processXlsx(uploadedFile);
+        } else if(fileName.endsWith(".xls")) {
+//            processXls(uploadedFile);
+        } else if(fileName.endsWith(".csv")) {
+//            processCsv(uploadedFile);
+        } else {
+            return false;
         }
 
-        return false;
+        return true;
+    }
+
+
     }
 }

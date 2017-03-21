@@ -20,11 +20,15 @@ public class AttendanceController {
 
     @PostMapping("/employees/taps/upload")
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
+        if(file == null) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+
         boolean fileUploaded = uploadFileService.processFile(file);
 
         if(fileUploaded) {
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 }
