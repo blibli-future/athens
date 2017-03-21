@@ -5,9 +5,11 @@
  */
 package com.blibli.future.model;
 
-import java.util.Date;
+import com.blibli.future.enums.Gender;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  *
@@ -20,7 +22,7 @@ public class Employee {
     private String nik;
     
     private String fullName;
-    private String gender;
+    private Gender gender;
     private String position;
     private String level;
     private String organizationalUnitText;
@@ -50,11 +52,11 @@ public class Employee {
         this.fullName = fullName;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
