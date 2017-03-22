@@ -36,6 +36,27 @@ public class Employee {
     private Date startWorkingDate;
     private Date endWorkingDate;
 
+    public Employee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept,String chiefName,String chiefNik, String chiefPosition, String chiefPositionText, Date startWorkingDate, Date endWorkingDate){
+        this.nik = nik;
+        this.fullName=fullName;
+        this.gender =gender;
+        this.position=position;
+        this.level=level;
+        this.organizationalUnitText=organizationalUnitText;
+        this.maritalStatus=maritalStatus;
+        this.religion=religion;
+        this.nameOfDept=nameOfDept;
+        this.chiefNik=chiefNik;
+        this.chiefName=chiefName;
+        this.chiefPosition=chiefPosition;
+        this.chiefPositionText=chiefPositionText;
+        this.startWorkingDate=startWorkingDate;
+        this.endWorkingDate=endWorkingDate;
+
+
+    }
+
+
     public String getNik() {
         return nik;
     }
