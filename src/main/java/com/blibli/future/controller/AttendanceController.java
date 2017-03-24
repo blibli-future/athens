@@ -39,7 +39,7 @@ public class AttendanceController {
         if(1==1) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("employees")

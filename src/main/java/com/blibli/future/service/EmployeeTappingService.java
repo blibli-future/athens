@@ -11,11 +11,11 @@ import com.blibli.future.model.Attendance;
 import com.blibli.future.repository.AttendanceRepository;
 
 @Service
-public class EmployeesTappingService {
+public class EmployeeTappingService {
 	private AttendanceRepository attendanceRepo;
 	
 	@Autowired
-	public EmployeesTappingService(AttendanceRepository attendanceRepo){
+	public EmployeeTappingService(AttendanceRepository attendanceRepo){
 		this.attendanceRepo = attendanceRepo;
 	}
 	
