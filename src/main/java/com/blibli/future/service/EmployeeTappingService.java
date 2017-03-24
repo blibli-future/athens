@@ -20,7 +20,7 @@ public class EmployeeTappingService {
 	}
 	
 	public boolean processTapping(String type, String nik, Timestamp tapTime, Date dateTap){
-		if(type!=null || tapTime!=null || dateTap!=null || nik!=null){
+		if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
 			if(type.equalsIgnoreCase("in")){
 				Attendance attendance = new Attendance(nik, tapTime, null, dateTap);
 				attendanceRepo.save(attendance);

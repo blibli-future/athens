@@ -1,5 +1,6 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.service.EmployeeShiftingService;
 import com.blibli.future.service.EmployeeTappingService;
 import com.blibli.future.service.UploadFileService;
 
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class AttendanceController {
     private UploadFileService uploadFileService;
     private EmployeeTappingService employeeTappingService;
+    private EmployeeShiftingService employeeShiftingService;
 
     @Autowired
     public AttendanceController(UploadFileService uploadFileService) {
@@ -40,9 +42,19 @@ public class AttendanceController {
     	boolean employeeTapped = 
     			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
         if(employeeTapped) {
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return new ResponseEntity(true, HttpStatus.OK);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    }
+    
+    @PostMapping("employees/shift")
+    public ResponseEntity employeeShifting(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
+    	boolean employeeShifted = 
+    			employeeShiftingService.processShifting(idShift, nik);
+        if(employeeShifted) {
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("employees")

@@ -16,6 +16,11 @@ public class EmployeeShift {
 
 	private String nik;
 	private String idShift;
+	
+	public EmployeeShift(String idShift, String nik){
+		this.idShift = idShift;
+		this.nik = nik;
+	}
 
 	public String getId() {
 		return id;
