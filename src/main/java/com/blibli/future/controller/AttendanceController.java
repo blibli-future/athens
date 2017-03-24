@@ -1,5 +1,8 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.enums.Gender;
+import com.blibli.future.model.Employee;
+import com.blibli.future.service.EmployeeService;
 import com.blibli.future.service.EmployeeShiftingService;
 import com.blibli.future.service.EmployeeTappingService;
 import com.blibli.future.service.UploadFileService;
@@ -20,10 +23,28 @@ public class AttendanceController {
     private UploadFileService uploadFileService;
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
+    private EmployeeService employeeService;
+    private String nik;
+    private String fullname;
+    private String chiefNik;
+    private String chiefName;
+    private String chiefPosition;
+    private String chiefPositionUnitText;
+    private String leveln;
+    private Date startWorkingDate;
+    private Date endWorkingDate;
+    private Gender gender;
+    private String maritalStatus;
+    private String organizationalUnitText;
+    private String religion;
+    private String nameOfDept;
+
 
     @Autowired
-    public AttendanceController(UploadFileService uploadFileService) {
+    public AttendanceController(UploadFileService uploadFileService, EmployeeService employeeService) {
         this.uploadFileService = uploadFileService;
+        this.employeeService = employeeService;
+
     }
 
     @PostMapping("/employees/taps/upload")
@@ -62,9 +83,18 @@ public class AttendanceController {
     }
     
     @PostMapping("employees")
-    public ResponseEntity Employee(@RequestParam("variabel") String type ){
+    public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullname") String fullname ,
+                                   @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
+                                   @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
+                                   @RequestParam("level") String level, @RequestParam("startWorkingDate") Date startWorkingDate,
+                                   @RequestParam("endWorkingDate") Date endWorkingDate, @RequestParam("gender") Gender gender,
+                                   @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
+                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("positon") String positon){
 
-        if (1==1){
+        Employee emp = new Employee(nik, fullname,gender,positon,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate);
+
+        if (employeeService.isEmployeeExist(nik)){
+            employeeService.saveEmployee(emp);
             return  new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
