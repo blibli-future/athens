@@ -11,6 +11,6 @@ import java.util.Collection;
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
     public  Employee findOneByNik (String nik);
-    public Employee findOneByName (String name);
-    Collection<Employee> findByDepartement(String nameOfDept);
+    public Employee findOneByFullName (String fullName);
+    public Collection<Employee> findByNameOfDept(String nameOfDept);
 }
