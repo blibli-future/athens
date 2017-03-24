@@ -1,9 +1,10 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.service.EmployeeTappingService;
 import com.blibli.future.service.UploadFileService;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class AttendanceController {
     private UploadFileService uploadFileService;
+    private EmployeeTappingService employeeTappingService;
 
     @Autowired
     public AttendanceController(UploadFileService uploadFileService) {
@@ -35,8 +37,9 @@ public class AttendanceController {
     @PostMapping("employees/taps")
     public ResponseEntity employeeTapping(@RequestParam("type") String type, @RequestParam("tapTime") Timestamp tapTime,
     		@RequestParam("dateTap") Date dateTap, @RequestParam("nik") String nik) {
-
-        if(1==1) {
+    	boolean employeeTapped = 
+    			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
+        if(employeeTapped) {
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
         return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
