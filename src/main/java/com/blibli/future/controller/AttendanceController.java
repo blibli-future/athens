@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,20 +25,7 @@ public class AttendanceController {
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
-    private String nik;
-    private String fullname;
-    private String chiefNik;
-    private String chiefName;
-    private String chiefPosition;
-    private String chiefPositionUnitText;
-    private String leveln;
-    private Date startWorkingDate;
-    private Date endWorkingDate;
-    private Gender gender;
-    private String maritalStatus;
-    private String organizationalUnitText;
-    private String religion;
-    private String nameOfDept;
+
 
 
     @Autowired
@@ -83,20 +71,28 @@ public class AttendanceController {
     }
     
     @PostMapping("employees")
-    public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullname") String fullname ,
+    public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
                                    @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
                                    @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
                                    @RequestParam("level") String level, @RequestParam("startWorkingDate") Date startWorkingDate,
                                    @RequestParam("endWorkingDate") Date endWorkingDate, @RequestParam("gender") Gender gender,
                                    @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("positon") String positon){
+                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position){
 
-        Employee emp = new Employee(nik, fullname,gender,positon,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate);
+        Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate);
 
         if (employeeService.isEmployeeExist(nik)){
             employeeService.saveEmployee(emp);
-            return  new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return  new ResponseEntity(true, HttpStatus.OK);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        else {
+            employeeService.saveEmployee(emp);
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
     }
+
+
+
+
+   
 }

@@ -9,8 +9,7 @@ import java.util.Collection;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
-
-    public  Employee findOneByNik (String nik);
-    public Employee findOneByFullName (String fullName);
-    public Collection<Employee> findByNameOfDept(String nameOfDept);
+    Employee findOneByNik (String nik);
+    Employee findOneByFullName (String fullName);
+    Collection<Employee> findByNameOfDept(String nameOfDept);
 }
