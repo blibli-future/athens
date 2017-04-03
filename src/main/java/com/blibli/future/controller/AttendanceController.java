@@ -13,10 +13,7 @@ import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -25,8 +22,6 @@ public class AttendanceController {
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
-
-
 
     @Autowired
     public AttendanceController(UploadFileService uploadFileService, EmployeeService employeeService) {
@@ -77,9 +72,9 @@ public class AttendanceController {
                                    @RequestParam("level") String level, @RequestParam("startWorkingDate") Date startWorkingDate,
                                    @RequestParam("endWorkingDate") Date endWorkingDate, @RequestParam("gender") Gender gender,
                                    @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position){
+                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,@RequestParam("status") Boolean status){
 
-        Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate);
+        Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate,status);
 
         if (employeeService.isEmployeeExist(nik)){
             employeeService.saveEmployee(emp);
@@ -90,6 +85,7 @@ public class AttendanceController {
             return new ResponseEntity(true, HttpStatus.OK);
         }
     }
+
 
 
 

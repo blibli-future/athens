@@ -35,8 +35,9 @@ public class Employee {
     private String chiefPositionText;
     private Date startWorkingDate;
     private Date endWorkingDate;
+    private Boolean status;
 
-    public Employee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept,String chiefName,String chiefNik, String chiefPosition, String chiefPositionText, Date startWorkingDate, Date endWorkingDate){
+    public Employee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept,String chiefName,String chiefNik, String chiefPosition, String chiefPositionText, Date startWorkingDate, Date endWorkingDate, Boolean status){
         this.nik = nik;
         this.fullName=fullName;
         this.gender =gender;
@@ -52,8 +53,16 @@ public class Employee {
         this.chiefPositionText=chiefPositionText;
         this.startWorkingDate=startWorkingDate;
         this.endWorkingDate=endWorkingDate;
+        this.status=status;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public String getNik() {
         return nik;
