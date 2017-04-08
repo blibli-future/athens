@@ -1,56 +1,55 @@
 
 package com.blibli.future.model;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class Attendance {
 	@Id
 	private String nik;
-	private Timestamp tapIn;
-	private Timestamp tapOut;
-	private Date date;
-	
-	public Attendance(String nik, Timestamp tapIn, Timestamp tapOut,Date date){
-		this.nik=nik;
-		this.tapIn=tapIn;
-		this.tapOut=tapOut;
-		this.date=date;
-	}
+	private LocalDate date;
+	private LocalTime tapIn;
+	private LocalTime tapOut;
 
-	public String getNik() {
-		return nik;
-	}
+    public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
+        this.nik = nik;
+        this.date = date;
+        this.tapIn = tapIn;
+        this.tapOut = tapOut;
+    }
 
-	public void setNik(String nik) {
-		this.nik = nik;
-	}
+    public String getNik() {
+        return nik;
+    }
 
-	public Timestamp getTapIn() {
-		return tapIn;
-	}
+    public void setNik(String nik) {
+        this.nik = nik;
+    }
 
-	public void setTapIn(Timestamp tapIn) {
-		this.tapIn = tapIn;
-	}
+    public LocalDate getDate() {
+        return date;
+    }
 
-	public Timestamp getTapOut() {
-		return tapOut;
-	}
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
-	public void setTapOut(Timestamp tapOut) {
-		this.tapOut = tapOut;
-	}
+    public LocalTime getTapIn() {
+        return tapIn;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public void setTapIn(LocalTime tapIn) {
+        this.tapIn = tapIn;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public LocalTime getTapOut() {
+        return tapOut;
+    }
 
+    public void setTapOut(LocalTime tapOut) {
+        this.tapOut = tapOut;
+    }
 }

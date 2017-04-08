@@ -4,28 +4,30 @@ import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.EmployeeService;
 import com.blibli.future.service.EmployeeShiftingService;
+import com.blibli.future.service.EmployeeTapService;
 import com.blibli.future.service.EmployeeTappingService;
-import com.blibli.future.service.UploadFileService;
-
-import java.sql.Timestamp;
-import java.sql.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @RestController
 public class AttendanceController {
-    private UploadFileService uploadFileService;
+    private EmployeeTapService employeeTapService;
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
 
     @Autowired
-    public AttendanceController(UploadFileService uploadFileService, EmployeeService employeeService) {
-        this.uploadFileService = uploadFileService;
+    public AttendanceController(EmployeeTapService employeeTapService, EmployeeService employeeService) {
+        this.employeeTapService = employeeTapService;
         this.employeeService = employeeService;
 
     }
@@ -36,7 +38,7 @@ public class AttendanceController {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 
-        boolean fileUploaded = uploadFileService.processFile(file);
+        boolean fileUploaded = employeeTapService.addTapMachineFile(file);
 
         if(fileUploaded) {
             return new ResponseEntity(HttpStatus.OK);
@@ -45,10 +47,10 @@ public class AttendanceController {
     }
 
     @PostMapping("employees/taps")
-    public ResponseEntity employeeTapping(@RequestParam("type") String type, @RequestParam("tapTime") Timestamp tapTime,
-    		@RequestParam("dateTap") Date dateTap, @RequestParam("nik") String nik) {
+    public ResponseEntity employeeTapping(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
+                                          @RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
     	boolean employeeTapped = 
-    			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
+    			employeeTappingService.processTapping(type, nik, dateTap, tapTime);
         if(employeeTapped) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
