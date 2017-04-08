@@ -1,6 +1,6 @@
 package com.blibli.future.controller;
 
-import com.blibli.future.service.UploadFileService;
+import com.blibli.future.service.EmployeeTappingService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +18,7 @@ public class AttendanceControllerTest {
     @InjectMocks
     private AttendanceController attendanceController;
     @Mock
-    private UploadFileService uploadFileService;
+    private EmployeeTappingService employeeTappingService;
 
     private MockMvc mockMvc;
 
@@ -35,7 +35,7 @@ public class AttendanceControllerTest {
         MediaType mediaType = new MediaType("excel", "vnd.ms-excel");
         MockMultipartFile multipartFile = new MockMultipartFile("file",  "testing".getBytes("UTF-8"));
 
-        Mockito.when(uploadFileService.processFile(multipartFile))
+        Mockito.when(employeeTappingService.addTapMachineFile(multipartFile))
                 .thenReturn(true);
 
         mockMvc.perform(
@@ -45,6 +45,6 @@ public class AttendanceControllerTest {
                         .contentType(mediaType)
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(uploadFileService).processFile(multipartFile);
+        Mockito.verify(employeeTappingService).addTapMachineFile(multipartFile);
     }
 }

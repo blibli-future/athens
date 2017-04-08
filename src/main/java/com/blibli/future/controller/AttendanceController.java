@@ -4,7 +4,6 @@ import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.EmployeeService;
 import com.blibli.future.service.EmployeeShiftingService;
-import com.blibli.future.service.EmployeeTapService;
 import com.blibli.future.service.EmployeeTappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +19,13 @@ import java.time.LocalTime;
 
 @RestController
 public class AttendanceController {
-    private EmployeeTapService employeeTapService;
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
 
     @Autowired
-    public AttendanceController(EmployeeTapService employeeTapService, EmployeeService employeeService) {
-        this.employeeTapService = employeeTapService;
+    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService) {
+        this.employeeTappingService = employeeTappingService;
         this.employeeService = employeeService;
 
     }
@@ -38,7 +36,7 @@ public class AttendanceController {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
 
-        boolean fileUploaded = employeeTapService.addTapMachineFile(file);
+        boolean fileUploaded = employeeTappingService.addTapMachineFile(file);
 
         if(fileUploaded) {
             return new ResponseEntity(HttpStatus.OK);

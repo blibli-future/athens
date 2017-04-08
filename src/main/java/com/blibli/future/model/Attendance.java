@@ -21,6 +21,24 @@ public class Attendance {
         this.tapOut = tapOut;
     }
 
+    public Attendance(String nik, LocalDate date, LocalTime tapIn) {
+        this.nik = nik;
+        this.date = date;
+        this.tapIn = tapIn;
+        this.tapOut = null;
+    }
+
+    public void assign(LocalTime tapTime) {
+        if(tapTime.isBefore(this.getTapIn())) {
+            this.setTapOut(this.getTapIn());
+            this.setTapIn(tapTime);
+        } else if(this.getTapOut() == null){
+            this.setTapOut(tapTime);
+        } else if(tapTime.isAfter(this.getTapOut())) {
+            this.setTapOut(tapTime);
+        }
+    }
+
     public String getNik() {
         return nik;
     }
@@ -52,4 +70,6 @@ public class Attendance {
     public void setTapOut(LocalTime tapOut) {
         this.tapOut = tapOut;
     }
+
+
 }
