@@ -19,10 +19,8 @@ public class AttendanceControllerTest {
     private AttendanceController attendanceController;
     @Mock
     private EmployeeTappingService employeeTappingService;
-
     private MockMvc mockMvc;
 
-    private static final String XLSX_FILENAME = "example.xlsx";
 
     @Before
     public void setUp() {
@@ -31,8 +29,8 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void uploadAttendanceFileTest() throws Exception {
-        MediaType mediaType = new MediaType("excel", "vnd.ms-excel");
+    public void uploadAttendanceFileTest_CsvFile() throws Exception {
+        MediaType mediaType = new MediaType("text", "csv");
         MockMultipartFile multipartFile = new MockMultipartFile("file",  "testing".getBytes("UTF-8"));
 
         Mockito.when(employeeTappingService.addTapMachineFile(multipartFile))

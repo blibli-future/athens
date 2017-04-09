@@ -71,5 +71,25 @@ public class Attendance {
         this.tapOut = tapOut;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
 
+        Attendance that = (Attendance) o;
+
+        if(nik != null ? !nik.equals(that.nik) : that.nik != null) return false;
+        if(date != null ? !date.equals(that.date) : that.date != null) return false;
+        if(tapIn != null ? !tapIn.equals(that.tapIn) : that.tapIn != null) return false;
+        return tapOut != null ? tapOut.equals(that.tapOut) : that.tapOut == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nik != null ? nik.hashCode() : 0;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (tapIn != null ? tapIn.hashCode() : 0);
+        result = 31 * result + (tapOut != null ? tapOut.hashCode() : 0);
+        return result;
+    }
 }
