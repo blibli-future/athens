@@ -29,13 +29,19 @@ public class Attendance {
     }
 
     public void assign(LocalTime tapTime) {
-        if(tapTime.isBefore(this.getTapIn())) {
-            this.setTapOut(this.getTapIn());
-            this.setTapIn(tapTime);
-        } else if(this.getTapOut() == null){
-            this.setTapOut(tapTime);
-        } else if(tapTime.isAfter(this.getTapOut())) {
-            this.setTapOut(tapTime);
+        if(this.getTapOut() == null) {
+            if(tapTime.isBefore(this.tapIn)) {
+                this.tapOut = tapIn;
+                this.tapIn = tapTime;
+            } else {
+                this.tapOut = tapTime;
+            }
+        } else {
+            if(tapTime.isBefore(tapIn)) {
+                this.tapIn = tapTime;
+            } else if(tapTime.isAfter(tapOut)) {
+                this.tapOut = tapTime;
+            }
         }
     }
 
@@ -91,5 +97,15 @@ public class Attendance {
         result = 31 * result + (tapIn != null ? tapIn.hashCode() : 0);
         result = 31 * result + (tapOut != null ? tapOut.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "nik='" + nik + '\'' +
+                ", date=" + date +
+                ", tapIn=" + tapIn +
+                ", tapOut=" + tapOut +
+                '}';
     }
 }
