@@ -8,6 +8,7 @@ import com.blibli.future.service.EmployeeTappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class AttendanceController {
         this.employeeService = employeeService;
 
     }
-
+    
     @PostMapping("/employees/taps/upload")
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
         if(file == null) {
@@ -55,6 +56,28 @@ public class AttendanceController {
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
+    @PutMapping("employees/taps") //tahap pengembangan
+    public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") Timestamp tapTime,
+    		@RequestParam("dateTap") Date dateTap, @RequestParam("nik") String nik) {
+    	boolean employeeTapped = 
+    			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
+        if(employeeTapped) {
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping("employees/taps") //tahap pengembangan
+    public ResponseEntity employeeTappingGet(@RequestParam("type") String type, @RequestParam("tapTime") Timestamp tapTime,
+    		@RequestParam("dateTap") Date dateTap, @RequestParam("nik") String nik) {
+    	boolean employeeTapped = 
+    			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
+        if(employeeTapped) {
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    }
+    
     @PostMapping("employees/shift")
     public ResponseEntity employeeShifting(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
     	boolean employeeShifted = 
@@ -65,6 +88,25 @@ public class AttendanceController {
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
+    @PutMapping("employees/shift")
+    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
+    	boolean employeeShifted = 
+    			employeeShiftingService.processShifting(idShift, nik);
+        if(employeeShifted) {
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping("employees/shift")
+    public ResponseEntity employeeShiftingGet(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
+    	boolean employeeShifted = 
+    			employeeShiftingService.processShifting(idShift, nik);
+        if(employeeShifted) {
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    }
     @PostMapping("employees")
     public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
                                    @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
