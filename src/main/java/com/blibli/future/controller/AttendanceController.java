@@ -1,6 +1,7 @@
 package com.blibli.future.controller;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.EmployeeService;
 import com.blibli.future.service.EmployeeShiftingService;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @RestController
 public class AttendanceController {
@@ -56,24 +58,26 @@ public class AttendanceController {
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
-    @PutMapping("employees/taps") //tahap pengembangan
+    @PutMapping("employees/taps")
     public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
     		@RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
-    	
-        if(true) {
+    	boolean employeeUpdated = 
+    			employeeTappingService.processUpdateTapping(type, nik, dateTap, tapTime);
+        if(employeeUpdated) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
-    @GetMapping("employees/taps") //tahap pengembangan
-    public ResponseEntity employeeTappingGet(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
-    		@RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
-    	
-        if(true) {
-            return new ResponseEntity(true, HttpStatus.OK);
+    @GetMapping("employees/taps")
+    public ResponseEntity<List<Attendance>> employeeTappingGet(@RequestParam("dateTap") LocalDate dateStart, 
+    		@RequestParam("dateTap") LocalDate dateEnd) {
+    	List<Attendance> employeeTapGetted = 
+    			employeeTappingService.processGetTapping(dateStart, dateEnd);
+        if(employeeTapGetted!=null) {
+            return new ResponseEntity(employeeTapGetted, HttpStatus.OK);
         }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(employeeTapGetted, HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("employees/shift")

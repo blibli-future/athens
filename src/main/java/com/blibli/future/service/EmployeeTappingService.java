@@ -108,6 +108,33 @@ public class EmployeeTappingService {
         else
             return false;
     }
+    
+    public boolean processUpdateTapping(String type, String nik, LocalDate dateTap, LocalTime tapTime){
+        if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
+            if(type.equalsIgnoreCase("in")){
+            	Attendance attendance = attendanceRepository.findOneByNikAndDate(nik, dateTap);
+                attendance.setTapIn(tapTime);
+                attendanceRepository.save(attendance);
+            }
+            else{
+                Attendance attendance = attendanceRepository.findOneByNikAndDate(nik, dateTap);
+                attendance.setTapOut(tapTime);
+                attendanceRepository.save(attendance);
+            }
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    public List<Attendance> processGetTapping(LocalDate dateStart, LocalDate dateEnd){
+    	List<Attendance> listAttendance = new ArrayList<>();
+        if(dateStart!=null && dateEnd!=null){
+        	listAttendance = attendanceRepository.findDateBetween(dateStart, dateEnd);
+        	return listAttendance;
+        }
+        return null;
+    }
 
     public boolean addTapData(TapData tapData){
         Attendance attendance = new Attendance(tapData.getNik(), tapData.getTapDate(), tapData.getTapTime(), null);
