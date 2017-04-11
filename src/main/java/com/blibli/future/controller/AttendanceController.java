@@ -32,7 +32,7 @@ public class AttendanceController {
         this.employeeService = employeeService;
 
     }
-    
+
     @PostMapping("/employees/taps/upload")
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
         if(file == null) {
@@ -50,7 +50,7 @@ public class AttendanceController {
     @PostMapping("employees/taps")
     public ResponseEntity employeeTapping(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
                                           @RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
-    	boolean employeeTapped = 
+    	boolean employeeTapped =
     			employeeTappingService.processTapping(type, nik, dateTap, tapTime);
         if(employeeTapped) {
             return new ResponseEntity(true, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class AttendanceController {
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
-    
+
     @GetMapping("employees/taps")
     public ResponseEntity<List<Attendance>> employeeTappingGet(@RequestParam("dateTap") LocalDate dateStart, 
     		@RequestParam("dateTap") LocalDate dateEnd) {
@@ -79,30 +79,30 @@ public class AttendanceController {
         }
         return new ResponseEntity(employeeTapGetted, HttpStatus.BAD_REQUEST);
     }
-    
+
     @PostMapping("employees/shift")
     public ResponseEntity employeeShifting(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted = 
+    	boolean employeeShifted =
     			employeeShiftingService.processShifting(idShift, nik);
         if(employeeShifted) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
-    
+
     @PutMapping("employees/shift")
     public ResponseEntity employeeShiftingUpdate(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted = 
+    	boolean employeeShifted =
     			employeeShiftingService.processShifting(idShift, nik);
         if(employeeShifted) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
-    
+
     @GetMapping("employees/shift")
     public ResponseEntity employeeShiftingGet(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted = 
+    	boolean employeeShifted =
     			employeeShiftingService.processShifting(idShift, nik);
         if(employeeShifted) {
             return new ResponseEntity(true, HttpStatus.OK);
@@ -135,5 +135,5 @@ public class AttendanceController {
 
 
 
-   
+    
 }
