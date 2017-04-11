@@ -130,7 +130,7 @@ public class EmployeeTappingService {
     public List<Attendance> processGetTapping(LocalDate dateStart, LocalDate dateEnd){
     	List<Attendance> listAttendance = new ArrayList<>();
         if(dateStart!=null && dateEnd!=null){
-        	listAttendance = attendanceRepository.findDateBetween(dateStart, dateEnd);
+        	listAttendance = attendanceRepository.findByDateBetween(dateStart, dateEnd);
         	return listAttendance;
         }
         return null;
