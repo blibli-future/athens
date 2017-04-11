@@ -9,7 +9,7 @@ import com.blibli.future.enums.Gender;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -33,27 +33,27 @@ public class Employee {
     private String chiefName;
     private String chiefPosition;
     private String chiefPositionText;
-    private Date startWorkingDate;
-    private Date endWorkingDate;
+    private LocalDate startWorkingDate;
+    private LocalDate endWorkingDate;
     private Boolean status;
 
-    public Employee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept,String chiefName,String chiefNik, String chiefPosition, String chiefPositionText, Date startWorkingDate, Date endWorkingDate, Boolean status){
+    public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status) {
         this.nik = nik;
-        this.fullName=fullName;
-        this.gender =gender;
-        this.position=position;
-        this.level=level;
-        this.organizationalUnitText=organizationalUnitText;
-        this.maritalStatus=maritalStatus;
-        this.religion=religion;
-        this.nameOfDept=nameOfDept;
-        this.chiefNik=chiefNik;
-        this.chiefName=chiefName;
-        this.chiefPosition=chiefPosition;
-        this.chiefPositionText=chiefPositionText;
-        this.startWorkingDate=startWorkingDate;
-        this.endWorkingDate=endWorkingDate;
-        this.status=status;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.position = position;
+        this.level = level;
+        this.organizationalUnitText = organizationalUnitText;
+        this.maritalStatus = maritalStatus;
+        this.religion = religion;
+        this.nameOfDept = nameOfDept;
+        this.chiefNik = chiefNik;
+        this.chiefName = chiefName;
+        this.chiefPosition = chiefPosition;
+        this.chiefPositionText = chiefPositionText;
+        this.startWorkingDate = startWorkingDate;
+        this.endWorkingDate = endWorkingDate;
+        this.status = status;
     }
 
     public Boolean getStatus() {
@@ -168,19 +168,19 @@ public class Employee {
         this.chiefPositionText = chiefPositionText;
     }
 
-    public Date getStartWorkingDate() {
+    public LocalDate getStartWorkingDate() {
         return startWorkingDate;
     }
 
-    public void setStartWorkingDate(Date startWorkingDate) {
+    public void setStartWorkingDate(LocalDate startWorkingDate) {
         this.startWorkingDate = startWorkingDate;
     }
 
-    public Date getEndWorkingDate() {
+    public LocalDate getEndWorkingDate() {
         return endWorkingDate;
     }
 
-    public void setEndWorkingDate(Date endWorkingDate) {
+    public void setEndWorkingDate(LocalDate endWorkingDate) {
         this.endWorkingDate = endWorkingDate;
     }
 }
