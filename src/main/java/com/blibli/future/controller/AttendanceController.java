@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -57,22 +57,20 @@ public class AttendanceController {
     }
     
     @PutMapping("employees/taps") //tahap pengembangan
-    public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") Timestamp tapTime,
-    		@RequestParam("dateTap") Date dateTap, @RequestParam("nik") String nik) {
-    	boolean employeeTapped = 
-    			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
-        if(employeeTapped) {
+    public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
+    		@RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
+    	
+        if(true) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
     @GetMapping("employees/taps") //tahap pengembangan
-    public ResponseEntity employeeTappingGet(@RequestParam("type") String type, @RequestParam("tapTime") Timestamp tapTime,
-    		@RequestParam("dateTap") Date dateTap, @RequestParam("nik") String nik) {
-    	boolean employeeTapped = 
-    			employeeTappingService.processTapping(type, nik, tapTime, dateTap);
-        if(employeeTapped) {
+    public ResponseEntity employeeTappingGet(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
+    		@RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
+    	
+        if(true) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
@@ -107,12 +105,13 @@ public class AttendanceController {
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
+    
     @PostMapping("employees")
     public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
                                    @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
                                    @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
-                                   @RequestParam("level") String level, @RequestParam("startWorkingDate") Date startWorkingDate,
-                                   @RequestParam("endWorkingDate") Date endWorkingDate, @RequestParam("gender") Gender gender,
+                                   @RequestParam("level") String level, @RequestParam("startWorkingDate") LocalDate startWorkingDate,
+                                   @RequestParam("endWorkingDate") LocalDate endWorkingDate, @RequestParam("gender") Gender gender,
                                    @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
                                    @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,@RequestParam("status") Boolean status){
 
