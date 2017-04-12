@@ -3,6 +3,7 @@ package com.blibli.future.controller;
 import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
+import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeService;
 import com.blibli.future.service.EmployeeShiftingService;
 import com.blibli.future.service.EmployeeTappingService;
@@ -91,23 +92,24 @@ public class AttendanceController {
     }
 
     @PutMapping("employees/shift")
-    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted =
-    			employeeShiftingService.processShifting(idShift, nik);
-        if(employeeShifted) {
+    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShift") String idShiftLama, 
+    		@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
+    	boolean employeeShiftUpdated =
+    			employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik);
+        if(employeeShiftUpdated) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("employees/shift")
-    public ResponseEntity employeeShiftingGet(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted =
-    			employeeShiftingService.processShifting(idShift, nik);
-        if(employeeShifted) {
-            return new ResponseEntity(true, HttpStatus.OK);
+    public ResponseEntity<List<EmployeeShift>> employeeShiftingGet(@RequestParam("idShift") String idShift) {
+    	List<EmployeeShift> employeeShiftGetted =
+    			employeeShiftingService.processGetShifting(idShift);
+        if(employeeShiftGetted!=null) {
+            return new ResponseEntity(employeeShiftGetted, HttpStatus.OK);
         }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(employeeShiftGetted, HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("employees")
