@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.repository.EmployeeShiftRepository;
+import com.blibli.future.service.api.EmployeeShiftingService;
 
 @Service
-public class EmployeeShiftingService {
+public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
 	private EmployeeShiftRepository shiftRepo;
 	
 	@Autowired
-	public EmployeeShiftingService(EmployeeShiftRepository shiftRepo){
+	public EmployeeShiftingServiceImpl(EmployeeShiftRepository shiftRepo){
 		this.shiftRepo = shiftRepo;
 	}
 	
@@ -29,7 +30,7 @@ public class EmployeeShiftingService {
 	
 	public boolean processUpdateShifting(String idShiftLama, String idShift, String nik){
 		if(idShift!=null && nik!=null){
-			EmployeeShift employeeShift = shiftRepo.findOneByNikAndIdshift(nik, idShiftLama);
+			EmployeeShift employeeShift = shiftRepo.findOneByNikAndIdShift(nik, idShiftLama);
 			employeeShift.setIdShift(idShift);
 			shiftRepo.save(employeeShift);
 			return true;
@@ -39,7 +40,7 @@ public class EmployeeShiftingService {
 	
 	public List<EmployeeShift> processGetShifting(String idShift){
 		List<EmployeeShift> listEmployeeShift = new ArrayList<>();
-		listEmployeeShift = shiftRepo.findByIdshift(idShift);
+		listEmployeeShift = shiftRepo.findByIdShift(idShift);
 		if(listEmployeeShift!=null){
 			return listEmployeeShift;
 		}

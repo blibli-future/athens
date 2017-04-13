@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeShiftRepository extends JpaRepository<EmployeeShift, String> {
-	public EmployeeShift findOneByNikAndIdshift(String nik, String idShift);
-	public List<EmployeeShift> findByIdshift(String idShift);
+	public EmployeeShift findOneByNikAndIdShift(String nik, String idShift);
+	public List<EmployeeShift> findByIdShift(String idShift);
 }

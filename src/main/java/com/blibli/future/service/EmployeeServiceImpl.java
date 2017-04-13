@@ -1,6 +1,8 @@
 package com.blibli.future.service;
 import com.blibli.future.model.Employee;
 import com.blibli.future.repository.EmployeeRepository;
+import com.blibli.future.service.api.EmployeeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +13,11 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeService (EmployeeRepository employeeRepository){
+    public EmployeeServiceImpl (EmployeeRepository employeeRepository){
         this.employeeRepository = employeeRepository;
     }
 

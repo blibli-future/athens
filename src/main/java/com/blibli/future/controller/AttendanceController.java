@@ -4,9 +4,10 @@ import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
-import com.blibli.future.service.EmployeeService;
-import com.blibli.future.service.EmployeeShiftingService;
-import com.blibli.future.service.EmployeeTappingService;
+import com.blibli.future.service.api.EmployeeShiftingService;
+import com.blibli.future.service.api.EmployeeTappingService;
+import com.blibli.future.service.api.EmployeeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class AttendanceController {
         }
 
         boolean fileUploaded = employeeTappingService.addTapMachineFile(file);
-
+        
         if(fileUploaded) {
             return new ResponseEntity(HttpStatus.OK);
         }

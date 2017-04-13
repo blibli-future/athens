@@ -2,6 +2,8 @@ package com.blibli.future.service;
 
 import com.blibli.future.model.Attendance;
 import com.blibli.future.repository.AttendanceRepository;
+import com.blibli.future.service.api.EmployeeTappingService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +19,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service //Question: Is it normal for all method in a service to return a boolean?
-public class EmployeeTappingService {
+public class EmployeeTappingServiceImpl implements EmployeeTappingService{
     private class MachineKey{
         private String nik;
         private LocalDate date;
@@ -88,7 +90,7 @@ public class EmployeeTappingService {
     private AttendanceRepository attendanceRepository;
 
     @Autowired
-    public EmployeeTappingService(AttendanceRepository attendanceRepository) {
+    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository) {
         this.attendanceRepository = attendanceRepository;
     }
 

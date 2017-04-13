@@ -1,6 +1,12 @@
 package com.blibli.future.controller;
 
-import com.blibli.future.service.EmployeeTappingService;
+import com.blibli.future.service.EmployeeShiftingServiceImpl;
+import com.blibli.future.service.EmployeeTappingServiceImpl;
+
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +24,9 @@ public class AttendanceControllerTest {
     @InjectMocks
     private AttendanceController attendanceController;
     @Mock
-    private EmployeeTappingService employeeTappingService;
+    private EmployeeTappingServiceImpl employeeTappingService;
+    @Mock
+    private EmployeeShiftingServiceImpl employeeShiftingService;
     private MockMvc mockMvc;
 
 
@@ -44,5 +52,30 @@ public class AttendanceControllerTest {
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
         Mockito.verify(employeeTappingService).addTapMachineFile(multipartFile);
+    }
+    
+    @Test
+    public void employeeTappingTest() throws Exception {
+        String idShiftMock = "9999";
+        String nikMock = "1234";
+
+        Mockito.when(employeeShiftingService.processShifting(idShiftMock, nikMock)).thenReturn(true);
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/employees/shift").accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("idShift", idShiftMock)
+                .param("nik", nikMock))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+
+        Mockito.verify(employeeShiftingService).processShifting(idShiftMock, nikMock);
+        assertTrue(employeeShiftingService.processShifting(idShiftMock, nikMock));
+    }
+    
+    @After
+    public void tearDown() throws Exception {
+      verifyNoMoreInteractions(this.employeeTappingService);
+      verifyNoMoreInteractions(this.employeeShiftingService);
     }
 }
