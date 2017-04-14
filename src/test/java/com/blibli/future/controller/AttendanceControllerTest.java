@@ -18,6 +18,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class AttendanceControllerTest {
     @InjectMocks
     private AttendanceController attendanceController;
@@ -66,10 +69,28 @@ public class AttendanceControllerTest {
                 .param("nik", nikMock))
         .andExpect(MockMvcResultMatchers.status().isOk());
 
-
         Mockito.verify(employeeShiftingService).processShifting(idShiftMock, nikMock);
-        // Question: Why asserting the Service? this method is checking the controller right?
-        // -> assertTrue(employeeShiftingService.processShifting(idShiftMock, nikMock));
+    }
+    
+    @Test
+    public void employeeTappingTest() throws Exception {
+        String type = "in";
+        String nik = "1234";
+        LocalDate dateTap = LocalDate.now();
+        LocalTime tapTime = LocalTime.now();
+
+        Mockito.when(employeeTappingService.processTapping(type, nik, dateTap, tapTime)).thenReturn(true);
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/employees/taps").accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("type", type)
+                .param("nik", nik)
+                .param("dateTap", dateTap.toString())
+                .param("tapTime", tapTime.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employeeTappingService).processTapping(type, nik, dateTap, tapTime);
     }
     
     @After

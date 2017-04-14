@@ -52,11 +52,13 @@ public class AttendanceController {
 
     @PostMapping("employees/taps")
     public ResponseEntity employeeTapping(@RequestParam("type") String type,
-                                          @RequestParam("tapTime") LocalTime tapTime,
-                                          @RequestParam("dateTap") LocalDate dateTap,
+                                          @RequestParam("tapTime") String tapTime,
+                                          @RequestParam("dateTap") String dateTap,
                                           @RequestParam("nik") String nik) {
+    	LocalDate dateTapConvert = LocalDate.parse(dateTap);
+    	LocalTime tapTimeConvert = LocalTime.parse(tapTime);
     	boolean employeeTapped =
-    			employeeTappingService.processTapping(type, nik, dateTap, tapTime);
+    			employeeTappingService.processTapping(type, nik, dateTapConvert, tapTimeConvert);
         if(employeeTapped) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
