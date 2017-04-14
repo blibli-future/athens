@@ -29,9 +29,10 @@ public class AttendanceController {
     private EmployeeService employeeService;
 
     @Autowired
-    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService) {
+    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService) {
         this.employeeTappingService = employeeTappingService;
         this.employeeService = employeeService;
+        this.employeeShiftingService = employeeShiftingService;
 
     }
 
@@ -50,8 +51,10 @@ public class AttendanceController {
     }
 
     @PostMapping("employees/taps")
-    public ResponseEntity employeeTapping(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
-                                          @RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
+    public ResponseEntity employeeTapping(@RequestParam("type") String type,
+                                          @RequestParam("tapTime") LocalTime tapTime,
+                                          @RequestParam("dateTap") LocalDate dateTap,
+                                          @RequestParam("nik") String nik) {
     	boolean employeeTapped =
     			employeeTappingService.processTapping(type, nik, dateTap, tapTime);
         if(employeeTapped) {

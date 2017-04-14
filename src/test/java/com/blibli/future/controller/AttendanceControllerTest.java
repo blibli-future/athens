@@ -2,10 +2,6 @@ package com.blibli.future.controller;
 
 import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class AttendanceControllerTest {
     @InjectMocks
@@ -55,7 +53,7 @@ public class AttendanceControllerTest {
     }
     
     @Test
-    public void employeeTappingTest() throws Exception {
+    public void employeeShiftingTest() throws Exception {
         String idShiftMock = "9999";
         String nikMock = "1234";
 
@@ -70,7 +68,8 @@ public class AttendanceControllerTest {
 
 
         Mockito.verify(employeeShiftingService).processShifting(idShiftMock, nikMock);
-        assertTrue(employeeShiftingService.processShifting(idShiftMock, nikMock));
+        // Question: Why asserting the Service? this method is checking the controller right?
+        // -> assertTrue(employeeShiftingService.processShifting(idShiftMock, nikMock));
     }
     
     @After
