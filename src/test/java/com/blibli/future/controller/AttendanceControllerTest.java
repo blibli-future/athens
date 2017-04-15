@@ -1,5 +1,7 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.model.Attendance;
+import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
 import org.junit.After;
@@ -20,6 +22,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AttendanceControllerTest {
     @InjectMocks
@@ -73,6 +77,40 @@ public class AttendanceControllerTest {
     }
     
     @Test
+    public void employeeShiftingUpdateTest() throws Exception {
+    	String idShiftLama = "9989";
+    	String idShift = "9999";
+        String nik = "1234";
+
+        Mockito.when(employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik)).thenReturn(true);
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/employees/shift").accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("idShiftLama", idShiftLama)
+                .param("idShift", idShift)
+                .param("nik", nik))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employeeShiftingService).processUpdateShifting(idShiftLama, idShift, nik);
+    }
+    
+    @Test
+    public void employeeShiftingGetTest() throws Exception {
+    	String idShift = "9999";
+    	List employeeShiftList = new ArrayList<EmployeeShift>();
+        Mockito.when(employeeShiftingService.processGetShifting(idShift)).thenReturn(employeeShiftList);
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/employees/shift").accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("idShift", idShift))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employeeShiftingService).processGetShifting(idShift);
+    }
+    
+    @Test
     public void employeeTappingTest() throws Exception {
         String type = "in";
         String nik = "1234";
@@ -91,6 +129,45 @@ public class AttendanceControllerTest {
         .andExpect(MockMvcResultMatchers.status().isOk());
 
         Mockito.verify(employeeTappingService).processTapping(type, nik, dateTap, tapTime);
+    }
+    
+    @Test
+    public void employeeTappingUpdateTest() throws Exception {
+        String type = "in";
+        String nik = "1234";
+        LocalDate dateTap = LocalDate.now();
+        LocalTime tapTime = LocalTime.now();
+
+        Mockito.when(employeeTappingService.processUpdateTapping(type, nik, dateTap, tapTime)).thenReturn(true);
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/employees/taps").accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("type", type)
+                .param("nik", nik)
+                .param("dateTap", dateTap.toString())
+                .param("tapTime", tapTime.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employeeTappingService).processUpdateTapping(type, nik, dateTap, tapTime);
+    }
+    
+    @Test
+    public void employeeTappingGetTest() throws Exception {
+        LocalDate dateStart = LocalDate.of(2016, 11, 13);
+        LocalDate dateEnd = LocalDate.now();
+
+        List attendance = new ArrayList<Attendance>();
+        Mockito.when(employeeTappingService.processGetTapping(dateStart, dateEnd)).thenReturn(attendance);
+        
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/employees/taps").accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("dateStart", dateStart.toString())
+                .param("dateEnd", dateEnd.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employeeTappingService).processGetTapping(dateStart, dateEnd);
     }
     
     @After

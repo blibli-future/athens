@@ -66,10 +66,12 @@ public class AttendanceController {
     }
     
     @PutMapping("employees/taps")
-    public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") LocalTime tapTime,
-    		@RequestParam("dateTap") LocalDate dateTap, @RequestParam("nik") String nik) {
+    public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") String tapTime,
+    		@RequestParam("dateTap") String dateTap, @RequestParam("nik") String nik) {
+    	LocalDate dateTapConvert = LocalDate.parse(dateTap);
+    	LocalTime tapTimeConvert = LocalTime.parse(tapTime);
     	boolean employeeUpdated = 
-    			employeeTappingService.processUpdateTapping(type, nik, dateTap, tapTime);
+    			employeeTappingService.processUpdateTapping(type, nik, dateTapConvert, tapTimeConvert);
         if(employeeUpdated) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
@@ -77,10 +79,12 @@ public class AttendanceController {
     }
 
     @GetMapping("employees/taps")
-    public ResponseEntity<List<Attendance>> employeeTappingGet(@RequestParam("dateTap") LocalDate dateStart, 
-    		@RequestParam("dateTap") LocalDate dateEnd) {
+    public ResponseEntity<List<Attendance>> employeeTappingGet(@RequestParam("dateStart") String dateStart, 
+    		@RequestParam("dateEnd") String dateEnd) {
+    	LocalDate dateStartConvert = LocalDate.parse(dateStart);
+    	LocalDate dateEndConvert = LocalDate.parse(dateEnd);
     	List<Attendance> employeeTapGetted = 
-    			employeeTappingService.processGetTapping(dateStart, dateEnd);
+    			employeeTappingService.processGetTapping(dateStartConvert, dateEndConvert);
         if(employeeTapGetted!=null) {
             return new ResponseEntity(employeeTapGetted, HttpStatus.OK);
         }
@@ -98,7 +102,7 @@ public class AttendanceController {
     }
 
     @PutMapping("employees/shift")
-    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShift") String idShiftLama, 
+    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShiftLama") String idShiftLama, 
     		@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
     	boolean employeeShiftUpdated =
     			employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik);
