@@ -1,5 +1,6 @@
 package com.blibli.future.service;
 import com.blibli.future.model.Employee;
+import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
 
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by amesa on 3/21/17.
@@ -21,9 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public void deleteEmployee(String nik){
-        employeeRepository.delete(nik);
-    }
+
 
     public void saveEmployee (Employee employee){
         employeeRepository.save(employee);
@@ -36,7 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return  false;
     }
 
-    public void updateEmployee (Employee employee){
+
+    public boolean updateEmployee (Employee employee){
         Employee oldEmployee = employeeRepository.findOneByNik(employee.getNik());
         oldEmployee.setPosition(employee.getPosition());
         oldEmployee.setFullName(employee.getFullName());
@@ -53,8 +56,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         oldEmployee.setStartWorkingDate(employee.getStartWorkingDate());
         oldEmployee.setNameOfDept(employee.getNameOfDept());
 
-        employeeRepository.save(oldEmployee);
+       if( employeeRepository.save(oldEmployee)!=null){
+           return true;
+       }
+       return false;
 
+
+    }
+
+
+    public List<Employee> getEmployeesByDept(String nameOfDept){
+        List<Employee> listEmployee = new ArrayList<>();
+        listEmployee = employeeRepository.findByNameOfDept(nameOfDept);
+        if(listEmployee!=null){
+            return listEmployee;
+        }
+        return null;
 
     }
 

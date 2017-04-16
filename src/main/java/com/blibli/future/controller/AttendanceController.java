@@ -135,17 +135,46 @@ public class AttendanceController {
 
         if (employeeService.isEmployeeExist(nik)){
             employeeService.saveEmployee(emp);
-            return  new ResponseEntity(true, HttpStatus.OK);
+            return new ResponseEntity(true, HttpStatus.OK);
+
         }
         else {
             employeeService.saveEmployee(emp);
             return new ResponseEntity(true, HttpStatus.OK);
         }
+
+    }
+    @GetMapping("employees")
+    public ResponseEntity<List<Employee>> employeeGetAll(@RequestParam("nameOfDept") String nameOfDept){
+        List<Employee> getEmployees =
+                employeeService.getEmployeesByDept(nameOfDept);
+        if(getEmployees!= null){
+            return new ResponseEntity(getEmployees, HttpStatus.OK);
+        }
+        return new ResponseEntity(getEmployees, HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("employees")
+    public ResponseEntity employeeUpdate(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
+                                         @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
+                                         @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
+                                         @RequestParam("level") String level, @RequestParam("startWorkingDate") LocalDate startWorkingDate,
+                                         @RequestParam("endWorkingDate") LocalDate endWorkingDate, @RequestParam("gender") Gender gender,
+                                         @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
+                                         @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,@RequestParam("status") Boolean status){
+
+        Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate,status);
+        if(employeeService.updateEmployee(emp)){
+            return new ResponseEntity(true, HttpStatus.OK);
+        }
+        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+
     }
 
 
 
 
 
-    
-}
+
+
+    }
