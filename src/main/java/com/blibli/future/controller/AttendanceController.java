@@ -145,7 +145,7 @@ public class AttendanceController {
 
     }
     @GetMapping("employees")
-    public ResponseEntity<List<Employee>> employeeGetAll(@RequestParam("nameOfDept") String nameOfDept){
+    public ResponseEntity<List<Employee>> employeeGetByDepartment(@RequestParam("nameOfDept") String nameOfDept){
         List<Employee> getEmployees =
                 employeeService.getEmployeesByDept(nameOfDept);
         if(getEmployees!= null){

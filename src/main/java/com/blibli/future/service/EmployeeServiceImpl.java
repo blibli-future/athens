@@ -27,8 +27,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
-    public void saveEmployee (Employee employee){
-        employeeRepository.save(employee);
+    public boolean saveEmployee (Employee employee){
+        if( employeeRepository.save(employee)!=null){
+            return true;
+        }
+        return false;
+
 
     }
     public boolean isEmployeeExist(String nik){
@@ -55,6 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         oldEmployee.setReligion(employee.getReligion());
         oldEmployee.setStartWorkingDate(employee.getStartWorkingDate());
         oldEmployee.setNameOfDept(employee.getNameOfDept());
+        oldEmployee.setStatus(employee.getStatus());
 
        if( employeeRepository.save(oldEmployee)!=null){
            return true;
