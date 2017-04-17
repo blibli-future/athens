@@ -184,7 +184,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         for(String tappingData : inputData) {
             String[] splitTappingData = tappingData.split(",");
 
-            try {//Which is better? parsing the string here, or create new method here?
+            try {//Which is better? parsing the string here, or create new method here in this class or other class?
                 String nik = splitTappingData[0];
                 LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));

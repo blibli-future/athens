@@ -1,6 +1,10 @@
 package com.blibli.future.service;
 
 import com.blibli.future.service.api.FileReaderComponent;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,16 +18,14 @@ import java.util.List;
 @Component
 public class FileReaderComponentImpl implements FileReaderComponent {
     @Override
-    public List<String> readFileAsStrings(MultipartFile file) {
+    public List<String> readFileAsStrings(MultipartFile file) {//Question: Is it Okay to do this? A class just for parsing a file?
         String filename = file.getContentType();
-        List<String> fileContent;
 
         if(filename.endsWith(".csv")) {
-            fileContent = readCsvAsList(file);
+            return readCsvAsList(file);
         } else {
             return null; //Or should it throws some "Unsupported file Type" ?
         }
-        return fileContent;
     }
 
     private List<String> readCsvAsList(MultipartFile csvFile) {
@@ -34,6 +36,24 @@ public class FileReaderComponentImpl implements FileReaderComponent {
             String line;
             while((line= reader.readLine()) != null) {
                 result.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private List<String> readXlsxAsList(MultipartFile xlsxFile) {
+        List<String> result = new ArrayList<>();
+        try {
+            Workbook workbook = new XSSFWorkbook(xlsxFile.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+
+            for(int i=0; i<sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                String buffer = row.getCell(0) + "," + row.getCell(1) + "," + row.getCell(2);
+                result.add(buffer);
             }
         } catch (IOException e) {
             e.printStackTrace();
