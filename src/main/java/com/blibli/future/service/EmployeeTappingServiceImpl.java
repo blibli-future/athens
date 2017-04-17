@@ -3,20 +3,19 @@ package com.blibli.future.service;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.repository.AttendanceRepository;
 import com.blibli.future.service.api.EmployeeTappingService;
-
+import com.blibli.future.service.api.FileReaderComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service //Question: Is it normal for all method in a service to return a boolean?
 public class EmployeeTappingServiceImpl implements EmployeeTappingService{
@@ -88,12 +87,15 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
     }
     private AttendanceRepository attendanceRepository;
+    private FileReaderComponent fileReaderComponent;
 
     @Autowired
-    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository) {
+    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository, FileReaderComponent fileReaderComponent) {
         this.attendanceRepository = attendanceRepository;
+        this.fileReaderComponent = fileReaderComponent;
     }
 
+    @Override
     public boolean processTapping(String type, String nik, LocalDate dateTap, LocalTime tapTime){
         if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
             if(type.equalsIgnoreCase("in")){
@@ -110,7 +112,8 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         else
             return false;
     }
-    
+
+    @Override
     public boolean processUpdateTapping(String type, String nik, LocalDate dateTap, LocalTime tapTime){
         if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
             if(type.equalsIgnoreCase("in")){
@@ -128,12 +131,13 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         else
             return false;
     }
-    
+
+    @Autowired
     public List<Attendance> processGetTapping(LocalDate dateStart, LocalDate dateEnd){
     	List<Attendance> listAttendance = new ArrayList<>();
         if(dateStart!=null && dateEnd!=null){
         	listAttendance = attendanceRepository.findByDateBetween(dateStart, dateEnd);
-        	return listAttendance;
+            return listAttendance;
         }
         return null;
     }
@@ -167,22 +171,20 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
     }
 
+    @Override
     public boolean addTapMachineFile(MultipartFile tapMachineFile) {
         List<TapData> tapDatas = new ArrayList<>();
-        List<String> inputData;
 
-        String fileName = tapMachineFile.getOriginalFilename();
+        List<String> inputData = fileReaderComponent.readFileAsStrings(tapMachineFile);
 
-        if(fileName.endsWith(".csv")) {
-            inputData = readCsvAsList(tapMachineFile);
-        } else {
-            return false; //Or should it throws some "Unsupported file Type" ?
+        if(inputData == null) {
+            return false;
         }
 
         for(String tappingData : inputData) {
-            String[] splitTappingData = tappingData.split(";");
+            String[] splitTappingData = tappingData.split(",");
 
-            try {//Which is better? parsing the string here, or at the readCsvAsListMethod?
+            try {//Which is better? parsing the string here, or create new method here?
                 String nik = splitTappingData[0];
                 LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
@@ -197,21 +199,5 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
 
         return addTapData(tapDatas);
-    }
-
-    private List<String> readCsvAsList(MultipartFile csvFile) {
-        List<String> result = new ArrayList<>();
-
-        try (InputStream inputStream = csvFile.getInputStream()) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while((line= reader.readLine()) != null) {
-                result.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
     }
 }
