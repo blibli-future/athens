@@ -194,12 +194,11 @@ public class AttendanceControllerTest {
         String chiefPosition ="Development Manager";
         String chiefPositionText ="Development manager";
         Boolean status=true;
-        LocalDate startWorkingDate = LocalDate.of(2016, 11, 13);
-        LocalDate endWorkingDate = LocalDate.of(2016, 11, 13);
-        Employee employee= new Employee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
-                nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
-
-        Mockito.when(employeeService.saveEmployee(employee)).thenReturn(true);
+        LocalDate startWorkingDate = LocalDate.now();
+        LocalDate endWorkingDate = LocalDate.now();
+        
+        Mockito.when(employeeService.saveEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+                nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status)).thenReturn(true);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/employees").accept(MediaType.APPLICATION_JSON)
@@ -222,7 +221,8 @@ public class AttendanceControllerTest {
                         .param("status", status.toString()))
         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeService).saveEmployee(employee);
+        Mockito.verify(employeeService).saveEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+                nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
     }
 
     @Test
@@ -244,27 +244,26 @@ public class AttendanceControllerTest {
 
     @Test
     public void employeeUpdateTests() throws Exception{
-        String nik ="1234";
-        String fullName="Employee FulName Ed";
+    	String nik ="1234";
+        String fullName="Employee Fulname";
+        Gender gender= Gender.FEMALE;
+        String position = "Sr. SD";
+        String level = "SDE";
+        String organizationalUnitText ="Commerce Engine";
+        String martialStatus = "Lajang";
+        String religion ="Katholik";
+        String nameOfDept="Technology-GDN";
         String chiefNik="9879";
         String chiefName="chief Name";
         String chiefPosition ="Development Manager";
         String chiefPositionText ="Development manager";
-        String level = "SDE";
-        LocalDate startWorkingDate = LocalDate.of(2016,03,01);
-        LocalDate endWorkingDate = LocalDate.of(2016, 05,05);
-        Gender gender= Gender.FEMALE;
-        String martialStatus = "Lajang";
-        String organizationalUnitText ="Commerce Engine";
-        String religion ="Katholik";
-        String nameOfDept="Technology-GDN";
-        String position = "Sr. SD";
         Boolean status=true;
+        LocalDate startWorkingDate = LocalDate.now();
+        LocalDate endWorkingDate = LocalDate.now();
 
-        Employee employee= new Employee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
-                nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
-
-
+        Mockito.when(employeeService.updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+                nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status)).thenReturn(true);
+        
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/employees").accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -283,14 +282,14 @@ public class AttendanceControllerTest {
                         .param("religion", religion)
                         .param("nameOfDept", nameOfDept)
                         .param("position",position)
-                        .param("status", status.toString())
-        ).andExpect(MockMvcResultMatchers.status().isOk());
+                        .param("status", status.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeService.updateEmployee(employee));
-
+        Mockito.verify(employeeService).updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+                nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
     }
 
-    @After
+    @After	
     public void tearDown() throws Exception {
       verifyNoMoreInteractions(this.employeeTappingService);
       verifyNoMoreInteractions(this.employeeShiftingService);

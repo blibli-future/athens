@@ -1,4 +1,5 @@
 package com.blibli.future.service;
+import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.repository.EmployeeRepository;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +29,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
-    public boolean saveEmployee (Employee employee){
-        if( employee!=null){
-            employeeRepository.save(employee);
+    public boolean saveEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
+            String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+            String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
+        if(true){
+            Employee emp = new Employee(nik, fullName,gender,position,level,
+            		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+            		chiefName,chiefPosition,chiefPositionText,
+            		startWorkingDate,endWorkingDate,status);
+            employeeRepository.save(emp);
             return true;
         }
         return false;
-
-
     }
     public boolean isEmployeeExist(String nik){
         if (employeeRepository.findOneByNik(nik) !=null){
@@ -44,31 +50,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-    public boolean updateEmployee (Employee employee){
-        Employee oldEmployee = employeeRepository.findOneByNik(employee.getNik());
-        oldEmployee.setPosition(employee.getPosition());
-        oldEmployee.setFullName(employee.getFullName());
-        oldEmployee.setChiefName(employee.getChiefName());
-        oldEmployee.setChiefNik(employee.getChiefNik());
-        oldEmployee.setChiefPosition(employee.getChiefPosition());
-        oldEmployee.setChiefPositionText(employee.getChiefPositionText());
-        oldEmployee.setEndWorkingDate(employee.getEndWorkingDate());
-        oldEmployee.setGender(employee.getGender());
-        oldEmployee.setLevel(employee.getLevel());
-        oldEmployee.setMaritalStatus(employee.getMaritalStatus());
-        oldEmployee.setOrganizationalUnitText(employee.getOrganizationalUnitText());
-        oldEmployee.setReligion(employee.getReligion());
-        oldEmployee.setStartWorkingDate(employee.getStartWorkingDate());
-        oldEmployee.setNameOfDept(employee.getNameOfDept());
-        oldEmployee.setStatus(employee.getStatus());
-
-       if( employee!=null){
-            employeeRepository.save(oldEmployee);
+    public boolean updateEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
+            String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+            String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
+       if(nik!=null){
+    	   Employee oldEmployee = employeeRepository.findOneByNik(nik);
+    	   oldEmployee.setChiefName(chiefName);
+    	   oldEmployee.setChiefNik(chiefNik);
+    	   oldEmployee.setChiefPosition(chiefPosition);
+    	   oldEmployee.setChiefPositionText(chiefPositionText);
+    	   oldEmployee.setEndWorkingDate(endWorkingDate);
+    	   oldEmployee.setFullName(fullName);
+    	   oldEmployee.setGender(gender);
+    	   oldEmployee.setLevel(level);
+    	   oldEmployee.setMaritalStatus(maritalStatus);
+    	   oldEmployee.setNameOfDept(nameOfDept);
+    	   oldEmployee.setOrganizationalUnitText(organizationalUnitText);
+    	   oldEmployee.setReligion(religion);
+    	   oldEmployee.setStartWorkingDate(startWorkingDate);
+    	   oldEmployee.setStatus(status);
+           employeeRepository.save(oldEmployee);
            return true;
        }
        return false;
-
-
     }
 
 

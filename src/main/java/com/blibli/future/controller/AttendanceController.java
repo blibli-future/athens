@@ -126,18 +126,22 @@ public class AttendanceController {
     public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
                                    @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
                                    @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
-                                   @RequestParam("level") String level, @RequestParam("startWorkingDate") LocalDate startWorkingDate,
-                                   @RequestParam("endWorkingDate") LocalDate endWorkingDate, @RequestParam("gender") Gender gender,
-                                   @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
+                                   @RequestParam("level") String level, @RequestParam("startWorkingDate") String startWorkingDate,
+                                   @RequestParam("endWorkingDate") String endWorkingDate, @RequestParam("gender") String gender,
+                                   @RequestParam("martialStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
                                    @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
-                                   @RequestParam("position") String position,@RequestParam("status") Boolean status){
+                                   @RequestParam("position") String position,@RequestParam("status") String status){
 
-        Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate,status);
-
-        if (employeeService.isEmployeeExist(nik)){
-            employeeService.saveEmployee(emp);
+    	Boolean statusConvert = Boolean.parseBoolean(status);
+    	Gender genderConvert = Gender.valueOf(gender);
+    	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
+    	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
+        Boolean employeeAdded = employeeService.saveEmployee(nik, fullName,genderConvert,position,level,
+        		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+        		chiefName,chiefPosition,chiefPositionText,
+        		startWorkingDateConvert,endWorkingDateConvert,statusConvert);
+        if (employeeAdded){
             return new ResponseEntity(true, HttpStatus.OK);
-
         }
             return new ResponseEntity(true, HttpStatus.BAD_REQUEST);
 
@@ -154,26 +158,27 @@ public class AttendanceController {
 
     @PutMapping("employees")
     public ResponseEntity employeeUpdate(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
-                                         @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
-                                         @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
-                                         @RequestParam("level") String level, @RequestParam("startWorkingDate") LocalDate startWorkingDate,
-                                         @RequestParam("endWorkingDate") LocalDate endWorkingDate, @RequestParam("gender") Gender gender,
-                                         @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-                                         @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,
-                                         @RequestParam("status") Boolean status){
+            @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
+            @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
+            @RequestParam("level") String level, @RequestParam("startWorkingDate") String startWorkingDate,
+            @RequestParam("endWorkingDate") String endWorkingDate, @RequestParam("gender") String gender,
+            @RequestParam("martialStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
+            @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
+            @RequestParam("position") String position,@RequestParam("status") String status){
 
-        Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate,status);
-        if(employeeService.updateEmployee(emp)){
+    	Boolean statusConvert = Boolean.parseBoolean(status);
+    	Gender genderConvert = Gender.valueOf(gender);
+    	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
+    	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
+    	Boolean employeeUpdated =
+    			employeeService.updateEmployee(nik, fullName,genderConvert,position,level,
+    	        		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+    	        		chiefName,chiefPosition,chiefPositionText,
+    	        		startWorkingDateConvert,endWorkingDateConvert,statusConvert);
+        if(employeeUpdated){
             return new ResponseEntity(true, HttpStatus.OK);
         }
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
 
     }
-
-
-
-
-
-
-
     }
