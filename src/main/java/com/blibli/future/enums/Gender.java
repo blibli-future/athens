@@ -14,16 +14,5 @@ public enum Gender {
     public String getName() {
         return name;
     }
-    
-    public Gender parse(String gender){
-    	if(gender.equalsIgnoreCase("MALE"))
-    	{
-    		return MALE;
-    	}
-    	else if(gender.equalsIgnoreCase("FEMALE")){
-    		return FEMALE;
-    	}
-    	return null;
-    }
 }
 
