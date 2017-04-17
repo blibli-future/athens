@@ -28,7 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public boolean saveEmployee (Employee employee){
-        if( employeeRepository.save(employee)!=null){
+        if( employee!=null){
+            employeeRepository.save(employee);
             return true;
         }
         return false;
@@ -61,7 +62,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         oldEmployee.setNameOfDept(employee.getNameOfDept());
         oldEmployee.setStatus(employee.getStatus());
 
-       if( employeeRepository.save(oldEmployee)!=null){
+       if( employee!=null){
+            employeeRepository.save(oldEmployee);
            return true;
        }
        return false;

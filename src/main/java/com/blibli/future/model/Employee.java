@@ -37,7 +37,9 @@ public class Employee {
     private LocalDate endWorkingDate;
     private Boolean status;
 
-    public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status) {
+    public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
+                    String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+                    String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status) {
         this.nik = nik;
         this.fullName = fullName;
         this.gender = gender;

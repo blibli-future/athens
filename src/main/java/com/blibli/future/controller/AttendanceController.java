@@ -129,7 +129,8 @@ public class AttendanceController {
                                    @RequestParam("level") String level, @RequestParam("startWorkingDate") LocalDate startWorkingDate,
                                    @RequestParam("endWorkingDate") LocalDate endWorkingDate, @RequestParam("gender") Gender gender,
                                    @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,@RequestParam("status") Boolean status){
+                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
+                                   @RequestParam("position") String position,@RequestParam("status") Boolean status){
 
         Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate,status);
 
@@ -138,10 +139,7 @@ public class AttendanceController {
             return new ResponseEntity(true, HttpStatus.OK);
 
         }
-        else {
-            employeeService.saveEmployee(emp);
-            return new ResponseEntity(true, HttpStatus.OK);
-        }
+            return new ResponseEntity(true, HttpStatus.BAD_REQUEST);
 
     }
     @GetMapping("employees")
@@ -161,7 +159,8 @@ public class AttendanceController {
                                          @RequestParam("level") String level, @RequestParam("startWorkingDate") LocalDate startWorkingDate,
                                          @RequestParam("endWorkingDate") LocalDate endWorkingDate, @RequestParam("gender") Gender gender,
                                          @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-                                         @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,@RequestParam("status") Boolean status){
+                                         @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept, @RequestParam("position") String position,
+                                         @RequestParam("status") Boolean status){
 
         Employee emp = new Employee(nik, fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,nameOfDept,chiefName,chiefNik,chiefPosition,chiefPositionText,startWorkingDate,endWorkingDate,status);
         if(employeeService.updateEmployee(emp)){
