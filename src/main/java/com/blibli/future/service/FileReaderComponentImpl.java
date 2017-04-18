@@ -1,6 +1,7 @@
 package com.blibli.future.service;
 
 import com.blibli.future.service.api.FileReaderComponent;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,8 +24,10 @@ public class FileReaderComponentImpl implements FileReaderComponent {
 
         if(filename.endsWith(".csv")) {
             return readCsvAsList(file);
-        } else {
-            return null; //Or should it throws some "Unsupported file Type" ?
+        } else if(filename.endsWith(".xlsx")){
+            return readXlsxAsList(file);
+        } else if(filename.endsWith(".xls")) {
+            return
         }
     }
 
@@ -48,6 +51,24 @@ public class FileReaderComponentImpl implements FileReaderComponent {
         List<String> result = new ArrayList<>();
         try {
             Workbook workbook = new XSSFWorkbook(xlsxFile.getInputStream());
+            Sheet sheet = workbook.getSheetAt(0);
+
+            for(int i=0; i<sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                String buffer = row.getCell(0) + "," + row.getCell(1) + "," + row.getCell(2);
+                result.add(buffer);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private List<String> readXlsAsList(MultipartFile xlsFile) {
+        List<String> result = new ArrayList<>();
+        try {
+            Workbook workbook = new HSSFWorkbook(xlsFile.getInputStream());
             Sheet sheet = workbook.getSheetAt(0);
 
             for(int i=0; i<sheet.getLastRowNum(); i++) {
