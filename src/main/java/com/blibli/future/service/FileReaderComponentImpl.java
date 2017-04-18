@@ -27,7 +27,9 @@ public class FileReaderComponentImpl implements FileReaderComponent {
         } else if(filename.endsWith(".xlsx")){
             return readXlsxAsList(file);
         } else if(filename.endsWith(".xls")) {
-            return
+            return readXlsAsList(file);
+        } else {
+            return null; //or throw "Unsupported file"
         }
     }
 

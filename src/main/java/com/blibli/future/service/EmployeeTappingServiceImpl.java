@@ -132,7 +132,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
             return false;
     }
 
-    @Autowired
+    @Override
     public List<Attendance> processGetTapping(LocalDate dateStart, LocalDate dateEnd){
     	List<Attendance> listAttendance = new ArrayList<>();
         if(dateStart!=null && dateEnd!=null){
