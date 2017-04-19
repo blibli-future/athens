@@ -1,9 +1,10 @@
 package com.blibli.future.service;
 
+import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.repository.AttendanceRepository;
 import com.blibli.future.service.api.EmployeeTappingService;
-import com.blibli.future.service.api.FileReaderComponent;
+import com.blibli.future.service.api.FileReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service //Question: Is it normal for all method in a service to return a boolean?
-public class EmployeeTappingServiceImpl implements EmployeeTappingService{
+@Service
+public class EmployeeTappingServiceImpl implements EmployeeTappingService {
     private class MachineKey{
         private String nik;
         private LocalDate date;
@@ -87,12 +88,12 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
     }
     private AttendanceRepository attendanceRepository;
-    private FileReaderComponent fileReaderComponent;
+    private FileReaderService fileReaderService;
 
     @Autowired
-    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository, FileReaderComponent fileReaderComponent) {
+    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository, FileReaderService fileReaderService) {
         this.attendanceRepository = attendanceRepository;
-        this.fileReaderComponent = fileReaderComponent;
+        this.fileReaderService = fileReaderService;
     }
 
     @Override
@@ -142,7 +143,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         return null;
     }
 
-    public boolean addTapData(TapData tapData){
+    public boolean createAttendance(TapData tapData){
         Attendance attendance = new Attendance(tapData.getNik(), tapData.getTapDate(), tapData.getTapTime(), null);
         if(attendanceRepository.save(attendance)!=null){
             return true;
@@ -151,7 +152,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
     }
 
-    public boolean addTapData(List<TapData> tapDataList) {
+    public List<Attendance> createAttendance(List<TapData> tapDataList) {
         Map<MachineKey, Attendance> attendances = new HashMap<>();
 
         for(TapData tapData : tapDataList) {
@@ -164,40 +165,27 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
             }
         }
 
-        if(attendanceRepository.save(attendances.values()) != null){
-            return true;
-        } else {
-            return false;
-        }
+        return attendanceRepository.save(attendances.values());
     }
 
     @Override
-    public boolean addTapMachineFile(MultipartFile tapMachineFile) {
+    public List<Attendance> addTapMachineFile(MultipartFile tapMachineFile) throws UnreadableFile, DateTimeParseException {
         List<TapData> tapDatas = new ArrayList<>();
+        List<String> inputData;
 
-        List<String> inputData = fileReaderComponent.readFileAsStrings(tapMachineFile);
-
-        if(inputData == null) {
-            return false;
-        }
+        inputData = fileReaderService.readFileAsStrings(tapMachineFile);
 
         for(String tappingData : inputData) {
             String[] splitTappingData = tappingData.split(",");
 
-            try {//Which is better? parsing the string here, or create new method here in this class or other class?
-                String nik = splitTappingData[0];
-                LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
-                TapData tapData = new TapData(nik, tapTime, tapDate);
-                tapDatas.add(tapData);
-            } catch (DateTimeParseException e) {
-                //Question: LocalDate.parse  will throw an exception if unable to parse the string,
-                //          Is it better to catch it here? or should it throw the exception into the controller?
-                System.out.println("Unable to parse : " + e.getParsedString());
-                e.printStackTrace();
-            }
+            //Which is better? parsing the string here, or create new method here in this class or other class?
+            String nik = splitTappingData[0];
+            LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
+            TapData tapData = new TapData(nik, tapTime, tapDate);
+            tapDatas.add(tapData);
         }
 
-        return addTapData(tapDatas);
+        return createAttendance(tapDatas);
     }
 }

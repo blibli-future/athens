@@ -1,12 +1,13 @@
 package com.blibli.future.service;
 
-import com.blibli.future.service.api.FileReaderComponent;
+import com.blibli.future.exception.UnreadableFile;
+import com.blibli.future.service.api.FileReaderService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -16,11 +17,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class FileReaderComponentImpl implements FileReaderComponent {
+@Service
+public class FileReaderServiceImpl implements FileReaderService {
     @Override
-    public List<String> readFileAsStrings(MultipartFile file) {//Question: Is it Okay to do this? A class just for parsing a file?
-        String filename = file.getContentType();
+    public List<String> readFileAsStrings(MultipartFile file) throws UnreadableFile {
+        String filename = file.getContentType().toLowerCase();
 
         if(filename.endsWith(".csv")) {
             return readCsvAsList(file);
@@ -28,9 +29,10 @@ public class FileReaderComponentImpl implements FileReaderComponent {
             return readXlsxAsList(file);
         } else if(filename.endsWith(".xls")) {
             return readXlsAsList(file);
-        } else {
-            return null; //or throw "Unsupported file"
         }
+
+        throw new UnreadableFile("Unknown extension");
+
     }
 
     private List<String> readCsvAsList(MultipartFile csvFile) {
@@ -39,11 +41,12 @@ public class FileReaderComponentImpl implements FileReaderComponent {
         try (InputStream inputStream = csvFile.getInputStream()) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
-            while((line= reader.readLine()) != null) {
+            while((line = reader.readLine()) != null) {
                 result.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO(?): throw the reason(?)
+            return null;
         }
 
         return result;
@@ -61,7 +64,8 @@ public class FileReaderComponentImpl implements FileReaderComponent {
                 result.add(buffer);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO(?): throw the reason(?)
+            return null;
         }
 
         return result;
@@ -79,7 +83,8 @@ public class FileReaderComponentImpl implements FileReaderComponent {
                 result.add(buffer);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO(?): throw the reason(?)
+            return null;
         }
 
         return result;
