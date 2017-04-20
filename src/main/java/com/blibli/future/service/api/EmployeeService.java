@@ -1,10 +1,19 @@
 package com.blibli.future.service.api;
 
+import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Employee;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public interface EmployeeService {
-	public void deleteEmployee(String nik);
-	public void saveEmployee (Employee employee);
+
+	public boolean saveEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
+            String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+            String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status);
 	public boolean isEmployeeExist(String nik);
-	public void updateEmployee (Employee employee);
+	public boolean updateEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
+            String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+            String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status);
+	public List<Employee> getEmployeesByDept (String nameOfDept);
 }
