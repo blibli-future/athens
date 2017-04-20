@@ -1,25 +1,22 @@
 package com.blibli.future.controller;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
+import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
-import com.blibli.future.service.api.EmployeeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
@@ -38,16 +35,16 @@ public class AttendanceController {
 
     @PostMapping("/employees/taps/upload")
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
-        if(file == null) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        try {
+            employeeTappingService.addTapMachineFile(file);
+        } catch (UnreadableFile e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.PRECONDITION_FAILED);
+        } catch (DateTimeParseException e) {
+            return new ResponseEntity(e.getParsedString(), HttpStatus.PRECONDITION_FAILED);
         }
 
-        boolean fileUploaded = employeeTappingService.addTapMachineFile(file);
-        
-        if(fileUploaded) {
-            return new ResponseEntity(HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+        //Question: Should it report the successfully created AttendanceData?
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("employees/taps")

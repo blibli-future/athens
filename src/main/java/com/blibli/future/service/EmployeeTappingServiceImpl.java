@@ -1,25 +1,25 @@
 package com.blibli.future.service;
 
+import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.repository.AttendanceRepository;
 import com.blibli.future.service.api.EmployeeTappingService;
-
+import com.blibli.future.service.api.FileReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-@Service //Question: Is it normal for all method in a service to return a boolean?
-public class EmployeeTappingServiceImpl implements EmployeeTappingService{
+@Service
+public class EmployeeTappingServiceImpl implements EmployeeTappingService {
     private class MachineKey{
         private String nik;
         private LocalDate date;
@@ -88,12 +88,15 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
     }
     private AttendanceRepository attendanceRepository;
+    private FileReaderService fileReaderService;
 
     @Autowired
-    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository) {
+    public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository, FileReaderService fileReaderService) {
         this.attendanceRepository = attendanceRepository;
+        this.fileReaderService = fileReaderService;
     }
 
+    @Override
     public boolean processTapping(String type, String nik, LocalDate dateTap, LocalTime tapTime){
         if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
             if(type.equalsIgnoreCase("in")){
@@ -110,7 +113,8 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         else
             return false;
     }
-    
+
+    @Override
     public boolean processUpdateTapping(String type, String nik, LocalDate dateTap, LocalTime tapTime){
         if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
             if(type.equalsIgnoreCase("in")){
@@ -128,17 +132,18 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         else
             return false;
     }
-    
+
+    @Override
     public List<Attendance> processGetTapping(LocalDate dateStart, LocalDate dateEnd){
     	List<Attendance> listAttendance = new ArrayList<>();
         if(dateStart!=null && dateEnd!=null){
         	listAttendance = attendanceRepository.findByDateBetween(dateStart, dateEnd);
-        	return listAttendance;
+            return listAttendance;
         }
         return null;
     }
 
-    public boolean addTapData(TapData tapData){
+    public boolean createAttendance(TapData tapData){
         Attendance attendance = new Attendance(tapData.getNik(), tapData.getTapDate(), tapData.getTapTime(), null);
         if(attendanceRepository.save(attendance)!=null){
             return true;
@@ -147,7 +152,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
         }
     }
 
-    public boolean addTapData(List<TapData> tapDataList) {
+    public List<Attendance> createAttendance(List<TapData> tapDataList) {
         Map<MachineKey, Attendance> attendances = new HashMap<>();
 
         for(TapData tapData : tapDataList) {
@@ -160,58 +165,27 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService{
             }
         }
 
-        if(attendanceRepository.save(attendances.values()) != null){
-            return true;
-        } else {
-            return false;
-        }
+        return attendanceRepository.save(attendances.values());
     }
 
-    public boolean addTapMachineFile(MultipartFile tapMachineFile) {
+    @Override
+    public List<Attendance> addTapMachineFile(MultipartFile tapMachineFile) throws UnreadableFile, DateTimeParseException {
         List<TapData> tapDatas = new ArrayList<>();
         List<String> inputData;
 
-        String fileName = tapMachineFile.getOriginalFilename();
-
-        if(fileName.endsWith(".csv")) {
-            inputData = readCsvAsList(tapMachineFile);
-        } else {
-            return false; //Or should it throws some "Unsupported file Type" ?
-        }
+        inputData = fileReaderService.readFileAsStrings(tapMachineFile);
 
         for(String tappingData : inputData) {
-            String[] splitTappingData = tappingData.split(";");
+            String[] splitTappingData = tappingData.split(",");
 
-            try {//Which is better? parsing the string here, or at the readCsvAsListMethod?
-                String nik = splitTappingData[0];
-                LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
-                TapData tapData = new TapData(nik, tapTime, tapDate);
-                tapDatas.add(tapData);
-            } catch (DateTimeParseException e) {
-                //Question: LocalDate.parse  will throw an exception if unable to parse the string,
-                //          Is it better to catch it here? or should it throw the exception into the controller?
-                System.out.println("Unable to parse : " + e.getParsedString());
-                e.printStackTrace();
-            }
+            //Which is better? parsing the string here, or create new method here in this class or other class?
+            String nik = splitTappingData[0];
+            LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
+            TapData tapData = new TapData(nik, tapTime, tapDate);
+            tapDatas.add(tapData);
         }
 
-        return addTapData(tapDatas);
-    }
-
-    private List<String> readCsvAsList(MultipartFile csvFile) {
-        List<String> result = new ArrayList<>();
-
-        try (InputStream inputStream = csvFile.getInputStream()) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while((line= reader.readLine()) != null) {
-                result.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
+        return createAttendance(tapDatas);
     }
 }
