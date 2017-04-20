@@ -35,18 +35,15 @@ public class AttendanceController {
 
     @PostMapping("/employees/taps/upload")
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
-        if(file == null) {
-            return new ResponseEntity(HttpStatus.PRECONDITION_FAILED);
-        }
-
         try {
-            List<Attendance> savedAttendance = employeeTappingService.addTapMachineFile(file);
+            employeeTappingService.addTapMachineFile(file);
         } catch (UnreadableFile e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.PRECONDITION_FAILED);
         } catch (DateTimeParseException e) {
             return new ResponseEntity(e.getParsedString(), HttpStatus.PRECONDITION_FAILED);
         }
 
+        //Question: Should it report the successfully created AttendanceData?
         return new ResponseEntity(HttpStatus.OK);
     }
 

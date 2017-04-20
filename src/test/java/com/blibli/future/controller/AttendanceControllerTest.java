@@ -1,5 +1,6 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeShiftingServiceImpl;
@@ -18,12 +19,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class AttendanceControllerTest {
     @InjectMocks
@@ -42,12 +44,12 @@ public class AttendanceControllerTest {
     }
 
     @Test
-    public void uploadAttendanceFileTest_CsvFile() throws Exception {
+    public void uploadAttendanceFileTest_success() throws Exception {
         MediaType mediaType = new MediaType("text", "csv");
         MockMultipartFile multipartFile = new MockMultipartFile("file",  "testing".getBytes("UTF-8"));
 
         Mockito.when(employeeTappingService.addTapMachineFile(multipartFile))
-                .thenReturn(true);
+                .thenReturn(new ArrayList<Attendance>());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.fileUpload("/employees/taps/upload")
@@ -55,6 +57,42 @@ public class AttendanceControllerTest {
                         .accept(mediaType)
                         .contentType(mediaType)
         ).andExpect(MockMvcResultMatchers.status().isOk());
+
+        Mockito.verify(employeeTappingService).addTapMachineFile(multipartFile);
+    }
+
+    @Test
+    public void uploadAttendanceFileTest_WrongFile() throws Exception {
+        MediaType mediaType = new MediaType("text", "csv");
+        MockMultipartFile multipartFile = new MockMultipartFile("file",  "testing".getBytes("UTF-8"));
+
+        Mockito.when(employeeTappingService.addTapMachineFile(multipartFile))
+                .thenThrow(UnreadableFile.class);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.fileUpload("/employees/taps/upload")
+                        .file(multipartFile)
+                        .accept(mediaType)
+                        .contentType(mediaType)
+        ).andExpect(MockMvcResultMatchers.status().isPreconditionFailed());
+
+        Mockito.verify(employeeTappingService).addTapMachineFile(multipartFile);
+    }
+
+    @Test
+    public void uploadAttendanceFileTest_UnableToParse() throws Exception {
+        MediaType mediaType = new MediaType("text", "csv");
+        MockMultipartFile multipartFile = new MockMultipartFile("file",  "testing".getBytes("UTF-8"));
+
+        Mockito.when(employeeTappingService.addTapMachineFile(multipartFile))
+                .thenThrow(DateTimeParseException.class);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.fileUpload("/employees/taps/upload")
+                        .file(multipartFile)
+                        .accept(mediaType)
+                        .contentType(mediaType)
+        ).andExpect(MockMvcResultMatchers.status().isPreconditionFailed());
 
         Mockito.verify(employeeTappingService).addTapMachineFile(multipartFile);
     }
