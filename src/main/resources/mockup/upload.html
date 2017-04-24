@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
     <!-- Latest compiled and minified CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -39,9 +40,28 @@
 </nav>
 <br/>
 <div class="container">
+    <div class="row">
+        <div class="alert alert-danger">
+           <strong>Warning</strong> The file can't be uploaded
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert alert-success">
+           <strong>Succes</strong> The file successfully uploaded
+        </div>
+    </div>
 
     <h3>Upload Absensi</h3>
-    <input type="file" id="uploadAbsensi">
+    <div class="row">
+        <div class="col-lg-2">
+            <input type="file" id="uploadAbsensi" >
+        </div>
+        <div class="col-md-1">
+            <input type="submit" class="btn btn-primary btn-xs " >
+        </div>
+    </div>
+
+
 
 </div>
 </body>
