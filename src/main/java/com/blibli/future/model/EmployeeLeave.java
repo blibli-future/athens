@@ -1,6 +1,6 @@
 package com.blibli.future.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,11 +20,21 @@ public class EmployeeLeave {
 
 	private String nik;
 	private String idLeave;
-	private Date startDate;
-	private Date endDate;
-	private Date requestDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private LocalDate requestDate;
 	private String status;
 	private String reason;
+	
+	public EmployeeLeave(String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason){
+		this.nik = nik;
+		this.idLeave = idLeave;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.reason = reason;
+		this.requestDate = LocalDate.now();
+		this.status = "Waiting";
+	}
 
 	public String getId() {
 		return id;
