@@ -32,15 +32,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     public boolean saveEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
             String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
             String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
-        if(true){
+        if(isEmployeeExist(nik)){
+            return false;
+        }else{
             Employee emp = new Employee(nik, fullName,gender,position,level,
-            		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
-            		chiefName,chiefPosition,chiefPositionText,
-            		startWorkingDate,endWorkingDate,status);
+                    organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+                    chiefName,chiefPosition,chiefPositionText,
+                    startWorkingDate,endWorkingDate,status);
             employeeRepository.save(emp);
             return true;
         }
-        return false;
+
+
     }
     public boolean isEmployeeExist(String nik){
         if (employeeRepository.findOneByNik(nik) !=null){
