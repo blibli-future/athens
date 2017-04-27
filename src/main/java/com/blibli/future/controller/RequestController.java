@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blibli.future.service.api.RequestService;
+import com.blibli.future.service.api.LeaveService;
 
 @RestController
 public class RequestController {
-	private RequestService requestService;
+	private LeaveService requestService;
 	
 	@Autowired
-	RequestController(RequestService requestService){
+	RequestController(LeaveService requestService){
 		this.requestService = requestService;
 	}
 	

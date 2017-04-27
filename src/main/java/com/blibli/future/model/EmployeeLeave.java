@@ -60,27 +60,27 @@ public class EmployeeLeave {
 		this.idLeave = idLeave;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
-	public Date getRequestDate() {
+	public LocalDate getRequestDate() {
 		return requestDate;
 	}
 
-	public void setRequestDate(Date requestDate) {
+	public void setRequestDate(LocalDate requestDate) {
 		this.requestDate = requestDate;
 	}
 

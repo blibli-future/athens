@@ -8,17 +8,15 @@ import org.springframework.stereotype.Service;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.repository.EmployeeLeaveRepository;
-import com.blibli.future.service.api.RequestService;
+import com.blibli.future.service.api.LeaveService;
 
 @Service
-public class RequestServiceImpl implements RequestService{
+public class LeaveServiceImpl implements LeaveService{
 	private EmployeeLeaveRepository employeeLeaveRepository;
-	private EmployeeAbsencePermit employeeAbsencePermit;
 	
 	@Autowired
-	public RequestServiceImpl(EmployeeLeaveRepository employeeLeaveRepository, EmployeeAbsencePermit employeeAbsencePermit){
+	public LeaveServiceImpl(EmployeeLeaveRepository employeeLeaveRepository, EmployeeAbsencePermit employeeAbsencePermit){
 		this.employeeLeaveRepository = employeeLeaveRepository;
-		this.employeeAbsencePermit = employeeAbsencePermit;
 	}
 
 	@Override
