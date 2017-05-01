@@ -1,12 +1,11 @@
 package com.blibli.future.model;
 
-import java.sql.Date;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.GenericGenerator;
+import java.sql.Date;
 
 @Entity
 public class EmployeeAbsencePermit {
@@ -20,6 +19,8 @@ public class EmployeeAbsencePermit {
 	private Date startDate;
 	private Date endDate;
 	private String reason;
+
+	public EmployeeAbsencePermit() {}
 
 	public String getId() {
 		return id;

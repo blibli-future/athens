@@ -1,9 +1,8 @@
 package com.blibli.future.model;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 @Entity
 public class Shift {
@@ -17,6 +16,8 @@ public class Shift {
 	private String endDay;
 	private String departmentEmployee;
 	private String location;
+
+	public Shift() {}
 
 	public String getId() {
 		return id;

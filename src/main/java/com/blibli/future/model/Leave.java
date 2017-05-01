@@ -13,6 +13,8 @@ public class Leave {
 	private String maritalStatus;
 	private String religion;
 
+	public Leave() {}
+
 	public String getId() {
 		return id;
 	}

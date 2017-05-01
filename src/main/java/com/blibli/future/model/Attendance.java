@@ -14,6 +14,8 @@ public class Attendance {
 	private LocalTime tapIn;
 	private LocalTime tapOut;
 
+    public Attendance() {}
+
     public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
         this.nik = nik;
         this.date = date;
