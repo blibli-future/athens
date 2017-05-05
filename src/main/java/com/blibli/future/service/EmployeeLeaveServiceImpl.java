@@ -1,6 +1,8 @@
 package com.blibli.future.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ public class EmployeeLeaveServiceImpl implements EmployeeLeaveService{
 	private EmployeeLeaveRepository employeeLeaveRepository;
 	
 	@Autowired
-	public EmployeeLeaveServiceImpl(EmployeeLeaveRepository employeeLeaveRepository, EmployeeAbsencePermit employeeAbsencePermit){
+	public EmployeeLeaveServiceImpl(EmployeeLeaveRepository employeeLeaveRepository){
 		this.employeeLeaveRepository = employeeLeaveRepository;
 	}
 
@@ -33,12 +35,13 @@ public class EmployeeLeaveServiceImpl implements EmployeeLeaveService{
 	}
 
 	@Override
-	public EmployeeLeave getLeaveRequest(String nik) {
+	public List<EmployeeLeave> getLeaveRequest(String nik) {
 		if(nik!=null)
 		{
-			EmployeeLeave employeeLeave = employeeLeaveRepository.findByNik(nik);
-			if(employeeLeave!=null)
-				return employeeLeave;
+			List<EmployeeLeave> listEmployeeLeave = new ArrayList<>();
+			listEmployeeLeave = employeeLeaveRepository.findByNik(nik);
+			if(listEmployeeLeave!=null)
+				return listEmployeeLeave;
 			else
 				System.out.println("getLeaveRequest null!");
 		}
