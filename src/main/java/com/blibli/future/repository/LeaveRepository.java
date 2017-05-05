@@ -7,5 +7,5 @@ import com.blibli.future.model.Leave;
 
 @Repository
 public interface LeaveRepository extends JpaRepository<Leave, String> {
-
+	
 }

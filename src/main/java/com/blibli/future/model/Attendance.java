@@ -13,6 +13,7 @@ public class Attendance {
 	private LocalDate date;
 	private LocalTime tapIn;
 	private LocalTime tapOut;
+	private boolean isLate; //untuk keterangan latenya (used later for request)
 
     public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
         this.nik = nik;

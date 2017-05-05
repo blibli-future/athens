@@ -1,28 +1,31 @@
 package com.blibli.future.controller;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blibli.future.service.api.LeaveService;
+import com.blibli.future.model.EmployeeAbsencePermit;
+import com.blibli.future.model.EmployeeLeave;
+import com.blibli.future.service.api.EmployeeLeaveService;
 
 @RestController
 public class RequestController {
-	private LeaveService requestService;
+	private EmployeeLeaveService requestService;
 	
 	@Autowired
-	RequestController(LeaveService requestService){
+	RequestController(EmployeeLeaveService requestService){
 		this.requestService = requestService;
 	}
 	
 	@PostMapping()
-	public ResponseEntity sentRequest(@RequestParam("nik") String nik,
+	public ResponseEntity sentLeaveRequest(@RequestParam("nik") String nik,
             @RequestParam("idLeave") String idLeave,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,
@@ -32,6 +35,20 @@ public class RequestController {
     	
     	boolean Requested = requestService.sentRequest(nik, idLeave, startDateConvert, endDateConvert, reason);
     	if(Requested)
+    	{
+    		return new ResponseEntity(true, HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    	}
+	}
+	
+	@GetMapping()
+	public ResponseEntity<List<EmployeeLeave>> getLeaveRequest(@RequestParam("nik") String nik){
+    	
+		List<EmployeeLeave> employeeLeaveGetted ;
+    	if(true)
     	{
     		return new ResponseEntity(true, HttpStatus.OK);
     	}

@@ -7,5 +7,5 @@ import com.blibli.future.model.EmployeeLeave;
 
 @Repository
 public interface EmployeeLeaveRepository extends JpaRepository<EmployeeLeave, String> {
-
+	public EmployeeLeave findByNik(String nik);
 }
