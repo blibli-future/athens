@@ -9,6 +9,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.blibli.future.enums.Status;
+
 @Entity
 public class EmployeeLeave {
 
@@ -23,7 +25,7 @@ public class EmployeeLeave {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private LocalDate requestDate;
-	private String status;
+	private Status status;
 	private String reason;
 	
 	public EmployeeLeave(String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason){
@@ -33,7 +35,7 @@ public class EmployeeLeave {
 		this.endDate = endDate;
 		this.reason = reason;
 		this.requestDate = LocalDate.now();
-		this.status = "Waiting";
+		this.status = Status.WAITING;
 	}
 
 	public String getId() {

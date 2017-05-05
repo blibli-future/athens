@@ -8,6 +8,8 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.blibli.future.enums.Status;
+
 @Entity
 public class EmployeeAbsencePermit {
 	@Id
@@ -20,7 +22,7 @@ public class EmployeeAbsencePermit {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String reason;
-	private String status;
+	private Status status;
 	
 	public EmployeeAbsencePermit(String nik, String idAbsencePermit, 
 			LocalDate startDate, LocalDate endDate, String reason){
@@ -29,7 +31,7 @@ public class EmployeeAbsencePermit {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.reason = reason;
-		this.status = "Waiting";
+		this.status = Status.WAITING;
 	}
 
 	public String getId() {

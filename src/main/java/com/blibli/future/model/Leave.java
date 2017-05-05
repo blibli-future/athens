@@ -12,6 +12,14 @@ public class Leave {
 	private String gender;
 	private String maritalStatus;
 	private String religion;
+	
+	public Leave(String id, String name, String gender, String maritalStatus, String religion){
+		this.gender = gender;
+		this.maritalStatus = maritalStatus;
+		this.religion = religion;
+		this.id = id;
+		this.name = name;
+	}
 
 	public String getId() {
 		return id;

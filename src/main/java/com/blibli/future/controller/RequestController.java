@@ -13,18 +13,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
+import com.blibli.future.model.Leave;
 import com.blibli.future.service.api.EmployeeAbsencePermitService;
 import com.blibli.future.service.api.EmployeeLeaveService;
+import com.blibli.future.service.api.LeaveService;
 
 @RestController
 public class RequestController {
 	private EmployeeLeaveService employeeLeaveService;
 	private EmployeeAbsencePermitService employeeAbsencePermitService;
+	private LeaveService leaveService;
 	
 	@Autowired
-	RequestController(EmployeeLeaveService employeeLeaveService, EmployeeAbsencePermitService employeeAbsencePermitService){
+	RequestController(EmployeeLeaveService employeeLeaveService, EmployeeAbsencePermitService employeeAbsencePermitService,
+			LeaveService leaveService){
 		this.employeeLeaveService = employeeLeaveService;
 		this.employeeAbsencePermitService = employeeAbsencePermitService;
+		this.leaveService = leaveService;
 	}
 	
 	@PostMapping()
@@ -92,6 +97,22 @@ public class RequestController {
     	else
     	{
     		return new ResponseEntity(employeeAbsencePermitGetted, HttpStatus.BAD_REQUEST);
+    	}
+	}
+	
+	@GetMapping()
+	public ResponseEntity<List<Leave>> getLeave(@RequestParam("gender") String gender,
+			@RequestParam("maritalStatus") String maritalStatus,
+			@RequestParam("religion") String religion){
+    	
+		List<Leave> leaveGetted = leaveService.getLeave(gender, maritalStatus, religion);
+    	if(leaveGetted!=null)
+    	{
+    		return new ResponseEntity(leaveGetted, HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity(leaveGetted, HttpStatus.BAD_REQUEST);
     	}
 	}
 }
