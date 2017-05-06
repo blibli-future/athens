@@ -86,11 +86,11 @@ public class EmployeeLeave {
 		this.requestDate = requestDate;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
