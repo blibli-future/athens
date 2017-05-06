@@ -1,17 +1,12 @@
 package com.blibli.future.service;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.Year;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.repository.EmployeeLeaveRepository;
 import com.blibli.future.service.api.EmployeeLeaveService;
