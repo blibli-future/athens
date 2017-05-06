@@ -53,8 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public boolean updateEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
             String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
             String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
-       if(nik!=null){
-    	   Employee oldEmployee = employeeRepository.findOneByNik(nik);
+    		Employee oldEmployee = employeeRepository.findOneByNik(nik);
+    	if(oldEmployee!=null){
     	   oldEmployee.setChiefName(chiefName);
     	   oldEmployee.setChiefNik(chiefNik);
     	   oldEmployee.setChiefPosition(chiefPosition);

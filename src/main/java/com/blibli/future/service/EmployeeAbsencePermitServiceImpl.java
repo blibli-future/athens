@@ -1,10 +1,7 @@
 package com.blibli.future.service;
 
 import java.time.LocalDate;
-import java.time.Year;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +36,15 @@ public class EmployeeAbsencePermitServiceImpl implements EmployeeAbsencePermitSe
 		if(nik!=null)
 		{
 			//Get First Date Of Year
-			Calendar cal = Calendar.getInstance();
-			cal.set(Calendar.YEAR, Year.now().getValue());
-			cal.set(Calendar.DAY_OF_YEAR, 1); 
-			LocalDate dateStart = cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			int year = LocalDate.now().getYear();
+			int month = 1;
+			int dayOfMonth = 1;
+			LocalDate dateStart = LocalDate.of(year, month, dayOfMonth);
 			//Get End Date Of Year
-			cal.set(Calendar.YEAR, Year.now().getValue());
-			cal.set(Calendar.MONTH, 11); // 11 = december
-			cal.set(Calendar.DAY_OF_MONTH, 31);
-			LocalDate dateEnd = cal.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			year = LocalDate.now().getYear();
+			month = 12;
+			dayOfMonth = 31;
+			LocalDate dateEnd = LocalDate.of(year, month, dayOfMonth);
 			
 			List<EmployeeAbsencePermit> listEmployeeAbsencePermit = new ArrayList<>();
 			listEmployeeAbsencePermit = employeeAbsencePermitRepository.findByNikAndRequestDateBetween(nik, dateStart, dateEnd);

@@ -78,7 +78,7 @@ public class RequestController {
     	}
 	}
 	
-	@GetMapping(base+leave) //belum aku sertakan tahun
+	@GetMapping(base+leave)
 	public ResponseEntity<List<EmployeeLeave>> getLeaveRequest(@RequestParam("nik") String nik){
     	
 		List<EmployeeLeave> employeeLeaveGetted = employeeLeaveService.getLeaveRequest(nik);
@@ -112,7 +112,7 @@ public class RequestController {
     	}
 	}
 	
-	@GetMapping(base+absencepermit) //belum aku sertakan tahun
+	@GetMapping(base+absencepermit)
 	public ResponseEntity<List<EmployeeAbsencePermit>> getAbsencePermitRequest(@RequestParam("nik") String nik){
     	
 		List<EmployeeAbsencePermit> employeeAbsencePermitGetted = employeeAbsencePermitService.getAbsencePermitRequest(nik);
