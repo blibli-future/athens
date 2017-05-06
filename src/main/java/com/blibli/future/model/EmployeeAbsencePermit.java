@@ -21,6 +21,7 @@ public class EmployeeAbsencePermit {
 	private String idAbsencePermit;
 	private LocalDate startDate;
 	private LocalDate endDate;
+	private LocalDate requestDate;
 	private String reason;
 	private Status status;
 	
@@ -32,6 +33,7 @@ public class EmployeeAbsencePermit {
 		this.endDate = endDate;
 		this.reason = reason;
 		this.status = Status.WAITING;
+		this.requestDate = LocalDate.now();
 	}
 
 	public String getId() {

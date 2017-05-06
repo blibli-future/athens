@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,11 @@ import com.blibli.future.service.api.LeaveService;
 
 @RestController
 public class RequestController {
+	private final String base = "/request/";
+	private final String leave = "leave/";
+	private final String leaveListing = "leave/list/";
+	private final String absencepermit = "absencepermit/";
+	
 	private EmployeeLeaveService employeeLeaveService;
 	private EmployeeAbsencePermitService employeeAbsencePermitService;
 	private LeaveService leaveService;
@@ -32,7 +38,7 @@ public class RequestController {
 		this.leaveService = leaveService;
 	}
 	
-	@PostMapping()
+	@PostMapping(base+leave)
 	public ResponseEntity sentLeaveRequest(@RequestParam("nik") String nik,
             @RequestParam("idLeave") String idLeave,
             @RequestParam("startDate") String startDate,
@@ -52,7 +58,27 @@ public class RequestController {
     	}
 	}
 	
-	@GetMapping() //belum aku sertakan tahun
+	@PutMapping(base+leave)
+	public ResponseEntity updateLeaveRequest(@RequestParam("id") String id ,@RequestParam("nik") String nik,
+            @RequestParam("idLeave") String idLeave,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("reason") String reason){
+		LocalDate startDateConvert = LocalDate.parse(startDate);
+    	LocalDate endDateConvert = LocalDate.parse(endDate);
+    	
+    	boolean Requested = employeeLeaveService.updateLeaveRequest(id, nik, idLeave, startDateConvert, endDateConvert, reason);
+    	if(Requested)
+    	{
+    		return new ResponseEntity(true, HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    	}
+	}
+	
+	@GetMapping(base+leave) //belum aku sertakan tahun
 	public ResponseEntity<List<EmployeeLeave>> getLeaveRequest(@RequestParam("nik") String nik){
     	
 		List<EmployeeLeave> employeeLeaveGetted = employeeLeaveService.getLeaveRequest(nik);
@@ -66,7 +92,7 @@ public class RequestController {
     	}
 	}
 	
-	@PostMapping()
+	@PostMapping(base+absencepermit)
 	public ResponseEntity sentAbsencePermitRequest(@RequestParam("nik") String nik,
             @RequestParam("idAbsencePermit") String idAbsencePermit,
             @RequestParam("startDate") String startDate,
@@ -86,7 +112,7 @@ public class RequestController {
     	}
 	}
 	
-	@GetMapping() //belum aku sertakan tahun
+	@GetMapping(base+absencepermit) //belum aku sertakan tahun
 	public ResponseEntity<List<EmployeeAbsencePermit>> getAbsencePermitRequest(@RequestParam("nik") String nik){
     	
 		List<EmployeeAbsencePermit> employeeAbsencePermitGetted = employeeAbsencePermitService.getAbsencePermitRequest(nik);
@@ -100,7 +126,27 @@ public class RequestController {
     	}
 	}
 	
-	@GetMapping()
+	@PutMapping(base+absencepermit)
+	public ResponseEntity updateAbsencePermitRequest(@RequestParam("id") String id ,@RequestParam("nik") String nik,
+            @RequestParam("idAbsencePermit") String idAbsencePermit,
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("reason") String reason){
+		LocalDate startDateConvert = LocalDate.parse(startDate);
+    	LocalDate endDateConvert = LocalDate.parse(endDate);
+    	
+    	boolean Requested = employeeAbsencePermitService.updateAbsencePermitRequest(id, nik, idAbsencePermit, startDateConvert, endDateConvert, reason);
+    	if(Requested)
+    	{
+    		return new ResponseEntity(true, HttpStatus.OK);
+    	}
+    	else
+    	{
+    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    	}
+	}
+	
+	@GetMapping(base+leaveListing)
 	public ResponseEntity<List<Leave>> getLeave(@RequestParam("gender") String gender,
 			@RequestParam("maritalStatus") String maritalStatus,
 			@RequestParam("religion") String religion){
