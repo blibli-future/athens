@@ -1,5 +1,7 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Attendance;
@@ -224,8 +226,8 @@ public class AttendanceControllerTest {
         String position = "Sr. SD";
         String level = "SDE";
         String organizationalUnitText ="Commerce Engine";
-        String martialStatus = "Lajang";
-        String religion ="Katholik";
+        MaritalStatus martialStatus = MaritalStatus.LAJANG;
+        Religion religion = Religion.KATHOLIK;
         String nameOfDept="Technology-GDN";
         String chiefNik="9879";
         String chiefName="chief Name";
@@ -251,9 +253,9 @@ public class AttendanceControllerTest {
                         .param("startWorkingDate",startWorkingDate.toString())
                         .param("endWorkingDate",endWorkingDate.toString())
                         .param("gender",gender.toString())
-                        .param("martialStatus",martialStatus)
+                        .param("martialStatus",martialStatus.toString())
                         .param("organizationalUnitText",organizationalUnitText)
-                        .param("religion", religion)
+                        .param("religion", religion.toString())
                         .param("nameOfDept", nameOfDept)
                         .param("position",position)
                         .param("status", status.toString()))
@@ -288,8 +290,8 @@ public class AttendanceControllerTest {
         String position = "Sr. SD";
         String level = "SDE";
         String organizationalUnitText ="Commerce Engine";
-        String martialStatus = "Lajang";
-        String religion ="Katholik";
+        MaritalStatus martialStatus = MaritalStatus.LAJANG;
+        Religion religion =Religion.KATHOLIK;
         String nameOfDept="Technology-GDN";
         String chiefNik="9879";
         String chiefName="chief Name";
@@ -315,9 +317,9 @@ public class AttendanceControllerTest {
                         .param("startWorkingDate",startWorkingDate.toString())
                         .param("endWorkingDate",endWorkingDate.toString())
                         .param("gender",gender.toString())
-                        .param("martialStatus",martialStatus)
+                        .param("martialStatus",martialStatus.toString())
                         .param("organizationalUnitText",organizationalUnitText)
-                        .param("religion", religion)
+                        .param("religion", religion.toString())
                         .param("nameOfDept", nameOfDept)
                         .param("position",position)
                         .param("status", status.toString()))

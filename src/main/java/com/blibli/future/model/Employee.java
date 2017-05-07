@@ -6,6 +6,8 @@
 package com.blibli.future.model;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,8 +28,8 @@ public class Employee {
     private String position;
     private String level;
     private String organizationalUnitText;
-    private String maritalStatus;
-    private String religion;
+    private MaritalStatus maritalStatus;
+    private Religion religion;
     private String nameOfDept;
     private String chiefNik;
     private String chiefName;
@@ -38,7 +40,7 @@ public class Employee {
     private Boolean status;
 
     public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
-                    String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+                    MaritalStatus maritalStatus, Religion religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
                     String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status) {
         this.nik = nik;
         this.fullName = fullName;
@@ -114,19 +116,19 @@ public class Employee {
         this.organizationalUnitText = organizationalUnitText;
     }
 
-    public String getMaritalStatus() {
+    public MaritalStatus getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(String maritalStatus) {
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
-    public String getReligion() {
+    public Religion getReligion() {
         return religion;
     }
 
-    public void setReligion(String religion) {
+    public void setReligion(Religion religion) {
         this.religion = religion;
     }
 
