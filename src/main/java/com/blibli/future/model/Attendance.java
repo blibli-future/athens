@@ -68,4 +68,25 @@ public class Attendance {
     public void setTapOut(LocalTime tapOut) {
         this.tapOut = tapOut;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+
+        Attendance that = (Attendance) o;
+
+        if(attendanceKey != null ? !attendanceKey.equals(that.attendanceKey) : that.attendanceKey != null) return false;
+        if(tapIn != null ? !tapIn.equals(that.tapIn) : that.tapIn != null) return false;
+        return tapOut != null ? tapOut.equals(that.tapOut) : that.tapOut == null;
+    }
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "attendanceKey=" + attendanceKey +
+                ", tapIn=" + tapIn +
+                ", tapOut=" + tapOut +
+                '}';
+    }
 }
