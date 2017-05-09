@@ -2,7 +2,8 @@ package com.blibli.future.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Entity
 public class Shift {
@@ -10,10 +11,10 @@ public class Shift {
 	private String id;
 
 	private String name;
-	private Timestamp startHour;
-	private Timestamp endHour;
-	private String startDay;
-	private String endDay;
+	private LocalTime startHour;
+	private LocalTime endHour;
+	private DayOfWeek startDay;
+	private DayOfWeek endDay;
 	private String departmentEmployee;
 	private String location;
 
@@ -35,35 +36,35 @@ public class Shift {
 		this.name = name;
 	}
 
-	public Timestamp getStartHour() {
+	public LocalTime getStartHour() {
 		return startHour;
 	}
 
-	public void setStartHour(Timestamp startHour) {
+	public void setStartHour(LocalTime startHour) {
 		this.startHour = startHour;
 	}
 
-	public Timestamp getEndHour() {
+	public LocalTime getEndHour() {
 		return endHour;
 	}
 
-	public void setEndHour(Timestamp endHour) {
+	public void setEndHour(LocalTime endHour) {
 		this.endHour = endHour;
 	}
 
-	public String getStartDay() {
+	public DayOfWeek getStartDay() {
 		return startDay;
 	}
 
-	public void setStartDay(String startDay) {
+	public void setStartDay(DayOfWeek startDay) {
 		this.startDay = startDay;
 	}
 
-	public String getEndDay() {
+	public DayOfWeek getEndDay() {
 		return endDay;
 	}
 
-	public void setEndDay(String endDay) {
+	public void setEndDay(DayOfWeek endDay) {
 		this.endDay = endDay;
 	}
 
@@ -82,5 +83,4 @@ public class Shift {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
 }
