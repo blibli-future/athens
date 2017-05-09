@@ -44,7 +44,7 @@ public class ShiftServiceImpl implements ShiftService{
         Shift searchedShift = shiftRepository.findOne(shiftId);
 
         if(null == searchedShift) {
-            throw new IdNotFoundException("Shift with ID: " + shiftId + "is not found in the database");
+            throw new IdNotFoundException("Shift with ID: " + shiftId + " was not found in the database");
         }
         return searchedShift;
     }
@@ -54,7 +54,7 @@ public class ShiftServiceImpl implements ShiftService{
         Shift newShift = shiftRepository.findOne(shiftId);
 
         if(null == newShift) {
-            throw new IdNotFoundException("Shift with ID: " + shiftId + "was not found in the database");
+            throw new IdNotFoundException("Shift with ID: " + shiftId + " was not found in the database");
         }
 
         newShift.setName(updatedShiftVO.getName());
@@ -70,8 +70,8 @@ public class ShiftServiceImpl implements ShiftService{
 
     @Override
     public void deleteShift(String shiftId) throws IdNotFoundException {
-        if(shiftRepository.exists(shiftId)) {
-            throw new IdNotFoundException("Shift with ID: " + shiftId + "is not found in the database");
+        if(!shiftRepository.exists(shiftId)) {
+            throw new IdNotFoundException("Shift with ID: " + shiftId + " was not found in the database");
         }
 
         shiftRepository.delete(shiftId);

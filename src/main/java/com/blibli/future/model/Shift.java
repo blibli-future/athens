@@ -83,4 +83,35 @@ public class Shift {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+
+		Shift shift = (Shift) o;
+
+		if(id != null ? !id.equals(shift.id) : shift.id != null) return false;
+		if(name != null ? !name.equals(shift.name) : shift.name != null) return false;
+		if(startHour != null ? !startHour.equals(shift.startHour) : shift.startHour != null) return false;
+		if(endHour != null ? !endHour.equals(shift.endHour) : shift.endHour != null) return false;
+		if(startDay != shift.startDay) return false;
+		if(endDay != shift.endDay) return false;
+		if(departmentEmployee != null ? !departmentEmployee.equals(shift.departmentEmployee) : shift.departmentEmployee != null)
+			return false;
+		return location != null ? location.equals(shift.location) : shift.location == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
+		result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
+		result = 31 * result + (startDay != null ? startDay.hashCode() : 0);
+		result = 31 * result + (endDay != null ? endDay.hashCode() : 0);
+		result = 31 * result + (departmentEmployee != null ? departmentEmployee.hashCode() : 0);
+		result = 31 * result + (location != null ? location.hashCode() : 0);
+		return result;
+	}
 }
