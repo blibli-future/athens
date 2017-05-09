@@ -1,6 +1,8 @@
 package com.blibli.future.controller;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
@@ -131,10 +133,13 @@ public class AttendanceController {
 
     	Boolean statusConvert = Boolean.parseBoolean(status);
     	Gender genderConvert = Gender.valueOf(gender);
+        MaritalStatus maritalConvert = MaritalStatus.valueOf(maritalStatus);
+        Religion religionConvert = Religion.valueOf(religion);
+
     	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
     	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
         Boolean employeeAdded = employeeService.saveEmployee(nik, fullName,genderConvert,position,level,
-        		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+        		organizationalUnitText,maritalConvert,religionConvert,nameOfDept,chiefNik,
         		chiefName,chiefPosition,chiefPositionText,
         		startWorkingDateConvert,endWorkingDateConvert,statusConvert);
         if (employeeAdded){
@@ -165,11 +170,13 @@ public class AttendanceController {
 
     	Boolean statusConvert = Boolean.parseBoolean(status);
     	Gender genderConvert = Gender.valueOf(gender);
+        MaritalStatus maritalConvert = MaritalStatus.valueOf(maritalStatus);
+        Religion religionConvert = Religion.valueOf(religion);
     	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
     	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
     	Boolean employeeUpdated =
     			employeeService.updateEmployee(nik, fullName,genderConvert,position,level,
-    	        		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+    	        		organizationalUnitText,maritalConvert,religionConvert,nameOfDept,chiefNik,
     	        		chiefName,chiefPosition,chiefPositionText,
     	        		startWorkingDateConvert,endWorkingDateConvert,statusConvert);
         if(employeeUpdated){
