@@ -1,8 +1,10 @@
 package com.blibli.future.service;
 
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.valueObject.ShiftVO;
+import org.hamcrest.Matchers;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
@@ -63,9 +65,17 @@ public class ShiftServiceImplTest {
         Assert.assertEquals(shift1, actual);
     }
 
-    //TODO: How to test this?
+    @Test
     public void getShiftById_ThrowIdNotFoundException() throws Exception {
+        Mockito.when(shiftRepository.findOne(TEST)).thenReturn(null);
 
+        try {
+            shiftService.getShiftById(TEST);
+        } catch (Exception e) {
+            Assert.assertThat(e, Matchers.instanceOf(IdNotFoundException.class));
+        }
+
+        Mockito.verify(shiftRepository).findOne(TEST);
     }
 
     @Test
@@ -81,8 +91,17 @@ public class ShiftServiceImplTest {
         Mockito.verify(shiftRepository).save(shift1);
     }
 
+    @Test
     public void updateShift_ThrowIdNotFoundException() throws Exception {
+        Mockito.when(shiftRepository.findOne(TEST)).thenReturn(null);
 
+        try {
+            shiftService.updateShift(TEST, shiftVOMock);
+        } catch (Exception e) {
+            Assert.assertThat(e, Matchers.instanceOf(IdNotFoundException.class));
+        }
+
+        Mockito.verify(shiftRepository).findOne(TEST);
     }
 
     @Test
@@ -96,8 +115,17 @@ public class ShiftServiceImplTest {
         Mockito.verify(shiftRepository).delete(TEST);
     }
 
+    @Test
     public void deleteShift_ThrowIdNotFoundException() throws Exception  {
+        Mockito.when(shiftRepository.exists(TEST)).thenReturn(false);
 
+        try {
+            shiftService.deleteShift(TEST);
+        } catch (Exception e) {
+            Assert.assertThat(e, Matchers.instanceOf(IdNotFoundException.class));
+        }
+
+        Mockito.verify(shiftRepository).exists(TEST);
     }
 
     @Before
