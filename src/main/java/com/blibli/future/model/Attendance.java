@@ -15,6 +15,8 @@ public class Attendance {
 	private LocalTime tapOut;
 	private boolean isLate; //untuk keterangan latenya (used later for request)
 
+    public Attendance() {}
+
     public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
         this.nik = nik;
         this.date = date;

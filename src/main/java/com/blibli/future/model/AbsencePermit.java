@@ -9,6 +9,8 @@ public class AbsencePermit {
 	private String id;
 	private String name;
 
+	public AbsencePermit() {}
+
 	public String getId() {
 		return id;
 	}

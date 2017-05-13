@@ -1,5 +1,7 @@
 package com.blibli.future.service;
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.repository.EmployeeRepository;
@@ -30,17 +32,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public boolean saveEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
-            String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
-            String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
-        if(true){
+                                 MaritalStatus maritalStatus, Religion religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+                                 String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
+        if(isEmployeeExist(nik)){
+            return false;
+        }else{
             Employee emp = new Employee(nik, fullName,gender,position,level,
-            		organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
-            		chiefName,chiefPosition,chiefPositionText,
-            		startWorkingDate,endWorkingDate,status);
+                    organizationalUnitText,maritalStatus,religion,nameOfDept,chiefNik,
+                    chiefName,chiefPosition,chiefPositionText,
+                    startWorkingDate,endWorkingDate,status);
             employeeRepository.save(emp);
             return true;
         }
-        return false;
+
+
     }
     public boolean isEmployeeExist(String nik){
         if (employeeRepository.findOneByNik(nik) !=null){
@@ -51,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     public boolean updateEmployee (String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
-            String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
+            MaritalStatus maritalStatus, Religion religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
             String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status){
     		Employee oldEmployee = employeeRepository.findOneByNik(nik);
     	if(oldEmployee!=null){

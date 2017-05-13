@@ -23,6 +23,8 @@ public class Leave {
 		this.name = name;
 	}
 
+	public Leave() {}
+
 	public String getId() {
 		return id;
 	}

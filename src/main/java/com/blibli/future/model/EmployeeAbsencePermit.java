@@ -1,12 +1,11 @@
 package com.blibli.future.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.GenericGenerator;
+import java.sql.Date;
 
 import com.blibli.future.enums.Status;
 
@@ -35,6 +34,8 @@ public class EmployeeAbsencePermit {
 		this.status = Status.WAITING;
 		this.requestDate = LocalDate.now();
 	}
+
+	public EmployeeAbsencePermit() {}
 
 	public String getId() {
 		return id;

@@ -1,14 +1,15 @@
 package com.blibli.future.controller;
 
-import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
+import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeServiceImpl;
 import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -224,8 +224,8 @@ public class AttendanceControllerTest {
         String position = "Sr. SD";
         String level = "SDE";
         String organizationalUnitText ="Commerce Engine";
-        String martialStatus = "Lajang";
-        String religion ="Katholik";
+        MaritalStatus maritalStatus = MaritalStatus.LAJANG;
+        Religion religion = Religion.KATHOLIK;
         String nameOfDept="Technology-GDN";
         String chiefNik="9879";
         String chiefName="chief Name";
@@ -235,7 +235,7 @@ public class AttendanceControllerTest {
         LocalDate startWorkingDate = LocalDate.now();
         LocalDate endWorkingDate = LocalDate.now();
         
-        Mockito.when(employeeService.saveEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+        Mockito.when(employeeService.saveEmployee(nik,fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,
                 nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status)).thenReturn(true);
 
         mockMvc.perform(
@@ -251,15 +251,15 @@ public class AttendanceControllerTest {
                         .param("startWorkingDate",startWorkingDate.toString())
                         .param("endWorkingDate",endWorkingDate.toString())
                         .param("gender",gender.toString())
-                        .param("martialStatus",martialStatus)
+                        .param("maritalStatus",maritalStatus.toString())
                         .param("organizationalUnitText",organizationalUnitText)
-                        .param("religion", religion)
+                        .param("religion", religion.toString())
                         .param("nameOfDept", nameOfDept)
                         .param("position",position)
                         .param("status", status.toString()))
         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeService).saveEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+        Mockito.verify(employeeService).saveEmployee(nik,fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,
                 nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
     }
 
@@ -288,8 +288,8 @@ public class AttendanceControllerTest {
         String position = "Sr. SD";
         String level = "SDE";
         String organizationalUnitText ="Commerce Engine";
-        String martialStatus = "Lajang";
-        String religion ="Katholik";
+        MaritalStatus maritalStatus = MaritalStatus.LAJANG;
+        Religion religion =Religion.KATHOLIK;
         String nameOfDept="Technology-GDN";
         String chiefNik="9879";
         String chiefName="chief Name";
@@ -299,7 +299,7 @@ public class AttendanceControllerTest {
         LocalDate startWorkingDate = LocalDate.now();
         LocalDate endWorkingDate = LocalDate.now();
 
-        Mockito.when(employeeService.updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+        Mockito.when(employeeService.updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,
                 nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status)).thenReturn(true);
         
         mockMvc.perform(
@@ -315,15 +315,15 @@ public class AttendanceControllerTest {
                         .param("startWorkingDate",startWorkingDate.toString())
                         .param("endWorkingDate",endWorkingDate.toString())
                         .param("gender",gender.toString())
-                        .param("martialStatus",martialStatus)
+                        .param("maritalStatus",maritalStatus.toString())
                         .param("organizationalUnitText",organizationalUnitText)
-                        .param("religion", religion)
+                        .param("religion", religion.toString())
                         .param("nameOfDept", nameOfDept)
                         .param("position",position)
                         .param("status", status.toString()))
         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeService).updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,martialStatus,religion,
+        Mockito.verify(employeeService).updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,
                 nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
     }
 

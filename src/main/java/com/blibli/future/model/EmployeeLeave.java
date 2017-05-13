@@ -1,13 +1,12 @@
 package com.blibli.future.model;
 
+import org.hibernate.annotations.GenericGenerator;
 import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.GenericGenerator;
+import java.sql.Date;
 
 import com.blibli.future.enums.Status;
 
@@ -37,6 +36,8 @@ public class EmployeeLeave {
 		this.requestDate = LocalDate.now();
 		this.status = Status.WAITING;
 	}
+
+	public EmployeeLeave() {}
 
 	public String getId() {
 		return id;
