@@ -13,19 +13,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.blibli.future.enums.Gender;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.model.Leave;
-import com.blibli.future.repository.EmployeeLeaveRepository;
 import com.blibli.future.service.EmployeeAbsencePermitServiceImpl;
 import com.blibli.future.service.EmployeeLeaveServiceImpl;
 import com.blibli.future.service.LeaveServiceImpl;
@@ -39,9 +36,6 @@ public class RequestControllerTest {
 	private EmployeeAbsencePermitServiceImpl employeeAbsencePermitServiceImpl;
 	@Mock
 	private LeaveServiceImpl leaveServiceImpl;
-	
-	@Autowired
-	EmployeeLeaveRepository employeeLeaveRepository;
 	
 	private MockMvc mockMvc;
 	private final String base = "/request/";
@@ -189,7 +183,7 @@ public class RequestControllerTest {
 		String religion = "KRISTEN";
 		
 		List<Leave> leave = new ArrayList<>();
-		Mockito.when(leaveServiceImpl.getLeave(gender, maritalStatus, religion)).thenReturn(leave);
+		Mockito.when(leaveServiceImpl.getLeave(Gender.valueOf(gender), maritalStatus, religion)).thenReturn(leave);
 		
 		mockMvc.perform(
                 MockMvcRequestBuilders.get(base+leaveListing).accept(MediaType.APPLICATION_JSON)
@@ -199,7 +193,7 @@ public class RequestControllerTest {
                 .param("religion", religion))
 		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		Mockito.verify(leaveServiceImpl).getLeave(gender, maritalStatus, religion);
+		Mockito.verify(leaveServiceImpl).getLeave(Gender.valueOf(gender), maritalStatus, religion);
 	}
 	
 	@After	

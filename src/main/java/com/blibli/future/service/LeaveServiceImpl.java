@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.blibli.future.enums.Gender;
 import com.blibli.future.model.Leave;
 import com.blibli.future.repository.LeaveRepository;
 import com.blibli.future.service.api.LeaveService;
@@ -20,10 +21,14 @@ public class LeaveServiceImpl implements LeaveService{
 	}
 	
 	@Override
-	public List<Leave> getLeave(String gender, String maritalStatus, String religion) {
+	public List<Leave> getLeave(Gender gender, String maritalStatus, String religion) {
 		if(gender!=null && maritalStatus!=null && religion!=null)
 		{
-			return leaveRepository.findByGenderAndMaritalStatusAndReligion(gender, maritalStatus, religion);
+			List<Leave> leave = leaveRepository.findByGenderAndMaritalStatusAndReligion(gender.getName(), maritalStatus, religion);
+			if(leave!=null)
+				return leave;
+			else
+				return null;
 		}
 		return null;
 	}
