@@ -13,7 +13,8 @@ import java.util.Date;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeeVo implements Serializable{
-    private String nik;
+	private static final long serialVersionUID = -5803908690580045466L;
+	private String nik;
     private String fullName;
     private Gender gender;
     private String position;
