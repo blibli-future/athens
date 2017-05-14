@@ -1,34 +1,30 @@
-
 package com.blibli.future.model;
 
+import com.blibli.future.model.primaryKey.AttendanceKey;
+
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 public class Attendance {
-	@Id
-	private String nik;
-	private LocalDate date;
+	@EmbeddedId
+    private AttendanceKey attendanceKey;
 	private LocalTime tapIn;
 	private LocalTime tapOut;
-	private boolean isLate; //untuk keterangan latenya (used later for request)
 
     public Attendance() {}
 
-    public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
-        this.nik = nik;
-        this.date = date;
-        this.tapIn = tapIn;
-        this.tapOut = tapOut;
+    //TODO: IMPLEMENT TAP TIME LOGIC
+    public Attendance(String nik, LocalDate date, LocalTime tap) {
+        this(nik, date, tap, null);
     }
 
-    public Attendance(String nik, LocalDate date, LocalTime tapIn) {
-        this.nik = nik;
-        this.date = date;
+    public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
+        this.attendanceKey = new AttendanceKey(nik, date);
         this.tapIn = tapIn;
-        this.tapOut = null;
+        this.tapOut = tapOut;
     }
 
     public void assign(LocalTime tapTime) {
@@ -49,19 +45,11 @@ public class Attendance {
     }
 
     public String getNik() {
-        return nik;
-    }
-
-    public void setNik(String nik) {
-        this.nik = nik;
+        return this.attendanceKey.getNik();
     }
 
     public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
+        return this.attendanceKey.getDate();
     }
 
     public LocalTime getTapIn() {
@@ -87,26 +75,15 @@ public class Attendance {
 
         Attendance that = (Attendance) o;
 
-        if(nik != null ? !nik.equals(that.nik) : that.nik != null) return false;
-        if(date != null ? !date.equals(that.date) : that.date != null) return false;
+        if(attendanceKey != null ? !attendanceKey.equals(that.attendanceKey) : that.attendanceKey != null) return false;
         if(tapIn != null ? !tapIn.equals(that.tapIn) : that.tapIn != null) return false;
         return tapOut != null ? tapOut.equals(that.tapOut) : that.tapOut == null;
     }
 
     @Override
-    public int hashCode() {
-        int result = nik != null ? nik.hashCode() : 0;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (tapIn != null ? tapIn.hashCode() : 0);
-        result = 31 * result + (tapOut != null ? tapOut.hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Attendance{" +
-                "nik='" + nik + '\'' +
-                ", date=" + date +
+                "attendanceKey=" + attendanceKey +
                 ", tapIn=" + tapIn +
                 ", tapOut=" + tapOut +
                 '}';
