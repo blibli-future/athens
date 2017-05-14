@@ -7,27 +7,26 @@ import com.blibli.future.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EmployeeAbsencePermitVo implements Serializable {
-	private static final long serialVersionUID = -4521810996465893249L;
+public class EmployeeLeaveVo implements Serializable{
+	private static final long serialVersionUID = -4398914737949811884L;
 	private String id;
 	private String nik;
-	private String idAbsencePermit;
+	private String idLeave;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private LocalDate requestDate;
-	private String reason;
 	private Status status;
+	private String reason;
 	
-	public EmployeeAbsencePermitVo(String id, String nik, String idAbsencePermit, 
-			LocalDate startDate, LocalDate endDate, String reason){
+	public EmployeeLeaveVo(String id, String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason){
 		this.id = id;
 		this.nik = nik;
-		this.idAbsencePermit = idAbsencePermit;
+		this.idLeave = idLeave;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.reason = reason;
-		this.status = Status.WAITING;
 		this.requestDate = LocalDate.now();
+		this.status = Status.WAITING;
 	}
 	
 	public String getId() {
@@ -42,11 +41,11 @@ public class EmployeeAbsencePermitVo implements Serializable {
 	public void setNik(String nik) {
 		this.nik = nik;
 	}
-	public String getIdAbsencePermit() {
-		return idAbsencePermit;
+	public String getIdLeave() {
+		return idLeave;
 	}
-	public void setIdAbsencePermit(String idAbsencePermit) {
-		this.idAbsencePermit = idAbsencePermit;
+	public void setIdLeave(String idLeave) {
+		this.idLeave = idLeave;
 	}
 	public LocalDate getStartDate() {
 		return startDate;
@@ -66,17 +65,17 @@ public class EmployeeAbsencePermitVo implements Serializable {
 	public void setRequestDate(LocalDate requestDate) {
 		this.requestDate = requestDate;
 	}
-	public String getReason() {
-		return reason;
-	}
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
 	public Status getStatus() {
 		return status;
 	}
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 	
 	
