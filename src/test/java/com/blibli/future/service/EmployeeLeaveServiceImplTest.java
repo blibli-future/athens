@@ -1,7 +1,10 @@
 package com.blibli.future.service;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.anything;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.repository.EmployeeLeaveRepository;
 
@@ -40,11 +44,12 @@ public class EmployeeLeaveServiceImplTest {
 				
 		this.employeeLeaveService.sentLeaveRequest(nik, idLeave, startDate, endDate, reason);
 		
-		Mockito.verify(employeeLeaveRepository).save(this.employeeLeave);
+		Mockito.verify(employeeLeaveRepository).save(any(EmployeeLeave.class));
 	}
 	
 	@Test
 	public void updateLeaveRequestTest() throws Exception{
+		this.id = "uuu";
 		this.nik = "9999";
 		this.idLeave = "123";
 		this.reason = "this reason";
@@ -58,7 +63,8 @@ public class EmployeeLeaveServiceImplTest {
 		this.employeeLeaveService.updateLeaveRequest(id, nik, idLeave, startDate, endDate, reason);
 		
 		Mockito.verify(employeeLeaveRepository).findById(id);
-		Mockito.verify(employeeLeaveRepository).save(this.employeeLeave);
+		Mockito.verify(employeeLeaveRepository).delete(any(EmployeeLeave.class));
+		Mockito.verify(employeeLeaveRepository).save(any(EmployeeLeave.class));
 	}
 	
 	@Test
