@@ -37,12 +37,10 @@ public class EmployeeLeaveServiceImplTest {
 		this.endDate = LocalDate.of(2016, 12, 31);
 		
 		this.employeeLeave = new EmployeeLeave(nik, idLeave, startDate, endDate, reason);
-		
-		Mockito.when(employeeLeaveRepository.save(this.employeeLeave)).thenReturn(this.employeeLeave);
-		
+				
 		this.employeeLeaveService.sentLeaveRequest(nik, idLeave, startDate, endDate, reason);
 		
-		Mockito.verify((employeeLeaveRepository).save(this.employeeLeave));
+		Mockito.verify(employeeLeaveRepository).save(this.employeeLeave);
 	}
 	
 	@Test
@@ -56,12 +54,11 @@ public class EmployeeLeaveServiceImplTest {
 		this.employeeLeave = new EmployeeLeave(nik, idLeave, startDate, endDate, reason);
 		
 		Mockito.when(employeeLeaveRepository.findById(id)).thenReturn(this.employeeLeave);
-		Mockito.when(employeeLeaveRepository.save(this.employeeLeave)).thenReturn(this.employeeLeave);
-		
+
 		this.employeeLeaveService.updateLeaveRequest(id, nik, idLeave, startDate, endDate, reason);
 		
-		Mockito.verify((employeeLeaveRepository).findById(id));
-		Mockito.verify((employeeLeaveRepository).save(this.employeeLeave));
+		Mockito.verify(employeeLeaveRepository).findById(id);
+		Mockito.verify(employeeLeaveRepository).save(this.employeeLeave);
 	}
 	
 	@Test
@@ -91,7 +88,7 @@ public class EmployeeLeaveServiceImplTest {
 		
 		this.employeeLeaveService.getLeaveRequest(nik);
 		
-		Mockito.verify((employeeLeaveRepository).findByNikAndRequestDateBetween(nik, dateStartSearch, dateEndSearch));
+		Mockito.verify(employeeLeaveRepository).findByNikAndRequestDateBetween(nik, dateStartSearch, dateEndSearch);
 	}
 	
 	@Before
