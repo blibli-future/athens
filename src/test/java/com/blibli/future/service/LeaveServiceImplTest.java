@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.blibli.future.model.Leave;
 import com.blibli.future.repository.LeaveRepository;
 
@@ -29,22 +31,24 @@ public class LeaveServiceImplTest {
 	@Test
 	public void getLeaveTest() throws Exception{
 		Gender gender;
-		String maritalStatus, religion,name, id;
+		MaritalStatus maritalStatus; 
+		Religion religion;
+		String name, id;
 		id = "1234";
-		name = "JOKO";
+		name = "SBG";
 		gender = Gender.MALE;
-		maritalStatus = "KAWIN";
-		religion = "KRISTEN";
+		maritalStatus = MaritalStatus.LAJANG;
+		religion = Religion.KRISTEN;
 		
-		List<Leave> leave = new ArrayList<>();
-		Leave leaveFiller = new Leave(id, name, gender, maritalStatus, religion);
-		leave.add(leaveFiller);
+		List<Leave> leaveList = new ArrayList<>();
+		this.leave = new Leave(id, name, gender, maritalStatus, religion);
+		leaveList.add(this.leave);
 		
-		Mockito.when(leaveRepository.findByGenderAndMaritalStatusAndReligion(gender.getName(), maritalStatus, religion)).thenReturn(leave);
+		Mockito.when(leaveRepository.findByGenderAndMaritalStatusAndReligion(gender.getName(), maritalStatus.getStatus(), religion.getName())).thenReturn(leaveList);
 		
 		this.leaveService.getLeave(gender, maritalStatus, religion);
 		
-		Mockito.verify(leaveRepository).findByGenderAndMaritalStatusAndReligion(gender.getName(), maritalStatus, religion);
+		Mockito.verify(leaveRepository).findByGenderAndMaritalStatusAndReligion(gender.getName(), maritalStatus.getStatus(), religion.getName());
 	}
 	
 	@Before

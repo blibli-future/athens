@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.model.Leave;
@@ -183,7 +185,7 @@ public class RequestControllerTest {
 		String religion = "KRISTEN";
 		
 		List<Leave> leave = new ArrayList<>();
-		Mockito.when(leaveServiceImpl.getLeave(Gender.valueOf(gender), maritalStatus, religion)).thenReturn(leave);
+		Mockito.when(leaveServiceImpl.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion))).thenReturn(leave);
 		
 		mockMvc.perform(
                 MockMvcRequestBuilders.get(base+leaveListing).accept(MediaType.APPLICATION_JSON)
@@ -193,7 +195,7 @@ public class RequestControllerTest {
                 .param("religion", religion))
 		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		Mockito.verify(leaveServiceImpl).getLeave(Gender.valueOf(gender), maritalStatus, religion);
+		Mockito.verify(leaveServiceImpl).getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
 	}
 	
 	@After	
