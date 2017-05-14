@@ -1,4 +1,4 @@
-package com.blibli.future.valueObject;
+package com.blibli.future.vo;
 
 import com.blibli.future.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -12,7 +12,7 @@ import java.util.Date;
  * Created by amesa on 3/24/17.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EmployeeVO implements Serializable{
+public class EmployeeVo implements Serializable{
     private String nik;
     private String fullName;
     private Gender gender;
@@ -29,7 +29,7 @@ public class EmployeeVO implements Serializable{
     private LocalDate startWorkingDate;
     private LocalDate endWorkingDate;
 
-    public EmployeeVO(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate) {
+    public EmployeeVo(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate) {
         this.nik = nik;
         this.fullName = fullName;
         this.gender = gender;
