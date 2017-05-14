@@ -2,6 +2,8 @@ package com.blibli.future.repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -24,6 +26,9 @@ public class AttendanceRepositoryTest {
 //	private static final String NIK = "nik";
 //	private static final LocalDate LOCAL_DATE =LocalDate.of(2017, 5, 14);
 //	private static final LocalTime LOCAL_TIME =	LocalTime.now();
+    private Attendance attendance1;
+    private Attendance attendance2;
+    private Attendance attendance3;
 
 	
 	  @Autowired
@@ -32,22 +37,26 @@ public class AttendanceRepositoryTest {
 	  @Test
 	    public void findByAttendanceKeyTest() throws Exception {
 	        AttendanceKey key = new AttendanceKey("NIK-1", LocalDate.of(2017, 3, 1));
-	        Assert.assertThat(this.attendanceRepository.findByAttendanceKey(key), Matchers.equalTo(1));
+	        Assert.assertThat(this.attendanceRepository.findByAttendanceKey(key), Matchers.equalTo(this.attendance1));
 	    }
 
 	    @Test
 	    public void findByAttendanceKeyDateBetweenTest() throws Exception {
 	        LocalDate firstDate = LocalDate.of(2017, 2, 1);
 	        LocalDate secondDate = LocalDate.of(2017, 4, 1);
-	        Assert.assertThat(this.attendanceRepository.findByAttendanceKeyDateBetween(firstDate, secondDate), Matchers.equalTo(2));
+	        
+	        List<Attendance> attendList = new ArrayList<>();
+	        attendList.add(this.attendance1);
+	        attendList.add(this.attendance3);
+	        
+	        Assert.assertThat(this.attendanceRepository.findByAttendanceKeyDateBetween(firstDate, secondDate), Matchers.equalTo(attendList));
 	    }
 
 	    @Before
 	    public void setUp() throws Exception{
-	        Attendance attendance1 = new Attendance("NIK-1", LocalDate.of(2017, 3, 1), EARLY_TIME, LATE_TIME);
-	        Attendance attendance2 = new Attendance("NIK-1", LocalDate.of(2017, 5, 1), EARLY_TIME, LATE_TIME);
-	        Attendance attendance3 = new Attendance("NIK-2", LocalDate.of(2017, 3, 1), EARLY_TIME, LATE_TIME);
-
+	    	this.attendance1 = new Attendance("NIK-1", LocalDate.of(2017, 3, 1), EARLY_TIME, LATE_TIME);
+	    	this.attendance2 = new Attendance("NIK-1", LocalDate.of(2017, 5, 1), EARLY_TIME, LATE_TIME);
+	    	this.attendance3 = new Attendance("NIK-2", LocalDate.of(2017, 3, 1), EARLY_TIME, LATE_TIME);
 	        this.attendanceRepository.save(attendance1);
 	        this.attendanceRepository.save(attendance2);
 	        this.attendanceRepository.save(attendance3);
