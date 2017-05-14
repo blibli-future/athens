@@ -127,7 +127,7 @@ public class AttendanceController {
                                    @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
                                    @RequestParam("level") String level, @RequestParam("startWorkingDate") String startWorkingDate,
                                    @RequestParam("endWorkingDate") String endWorkingDate, @RequestParam("gender") String gender,
-                                   @RequestParam("martialStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
+                                   @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
                                    @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
                                    @RequestParam("position") String position,@RequestParam("status") String status){
 
@@ -135,9 +135,9 @@ public class AttendanceController {
     	Gender genderConvert = Gender.valueOf(gender);
         MaritalStatus maritalConvert = MaritalStatus.valueOf(maritalStatus);
         Religion religionConvert = Religion.valueOf(religion);
-
     	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
     	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
+    	
         Boolean employeeAdded = employeeService.saveEmployee(nik, fullName,genderConvert,position,level,
         		organizationalUnitText,maritalConvert,religionConvert,nameOfDept,chiefNik,
         		chiefName,chiefPosition,chiefPositionText,
@@ -164,7 +164,7 @@ public class AttendanceController {
             @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
             @RequestParam("level") String level, @RequestParam("startWorkingDate") String startWorkingDate,
             @RequestParam("endWorkingDate") String endWorkingDate, @RequestParam("gender") String gender,
-            @RequestParam("martialStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
+            @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
             @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
             @RequestParam("position") String position,@RequestParam("status") String status){
 

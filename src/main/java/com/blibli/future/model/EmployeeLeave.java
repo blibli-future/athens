@@ -1,13 +1,14 @@
 package com.blibli.future.model;
 
-import java.sql.Date;
-
+import org.hibernate.annotations.GenericGenerator;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Date;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.blibli.future.enums.Status;
 
 @Entity
 public class EmployeeLeave {
@@ -20,11 +21,23 @@ public class EmployeeLeave {
 
 	private String nik;
 	private String idLeave;
-	private Date startDate;
-	private Date endDate;
-	private Date requestDate;
-	private String status;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private LocalDate requestDate;
+	private Status status;
 	private String reason;
+	
+	public EmployeeLeave(String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason){
+		this.nik = nik;
+		this.idLeave = idLeave;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.reason = reason;
+		this.requestDate = LocalDate.now();
+		this.status = Status.WAITING;
+	}
+
+	public EmployeeLeave() {}
 
 	public String getId() {
 		return id;
@@ -50,35 +63,35 @@ public class EmployeeLeave {
 		this.idLeave = idLeave;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
-	public Date getRequestDate() {
+	public LocalDate getRequestDate() {
 		return requestDate;
 	}
 
-	public void setRequestDate(Date requestDate) {
+	public void setRequestDate(LocalDate requestDate) {
 		this.requestDate = requestDate;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 

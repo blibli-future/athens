@@ -1,10 +1,10 @@
 package com.blibli.future.model;
 
-import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class EmployeeShift {
@@ -16,7 +16,9 @@ public class EmployeeShift {
 
 	private String nik;
 	private String idShift;
-	
+
+	public EmployeeShift() {}
+
 	public EmployeeShift(String idShift, String nik){
 		this.idShift = idShift;
 		this.nik = nik;
