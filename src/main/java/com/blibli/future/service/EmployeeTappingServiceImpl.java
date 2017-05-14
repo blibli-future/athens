@@ -2,6 +2,7 @@ package com.blibli.future.service;
 
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
+import com.blibli.future.model.primaryKey.AttendanceKey;
 import com.blibli.future.repository.AttendanceRepository;
 import com.blibli.future.service.api.EmployeeTappingService;
 import com.blibli.future.service.api.FileReaderService;
@@ -104,7 +105,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
                 attendanceRepository.save(attendance);
             }
             else{
-                Attendance attendance = attendanceRepository.findOneByNikAndDate(nik, dateTap);
+                Attendance attendance = attendanceRepository.findByAttendanceKey(new AttendanceKey(nik, dateTap));
                 attendance.setTapOut(tapTime);
                 attendanceRepository.save(attendance);
             }
@@ -118,12 +119,12 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
     public boolean processUpdateTapping(String type, String nik, LocalDate dateTap, LocalTime tapTime){
         if(type!=null && tapTime!=null && dateTap!=null && nik!=null){
             if(type.equalsIgnoreCase("in")){
-            	Attendance attendance = attendanceRepository.findOneByNikAndDate(nik, dateTap);
+            	Attendance attendance = attendanceRepository.findByAttendanceKey(new AttendanceKey(nik, dateTap));
                 attendance.setTapIn(tapTime);
                 attendanceRepository.save(attendance);
             }
             else{
-                Attendance attendance = attendanceRepository.findOneByNikAndDate(nik, dateTap);
+                Attendance attendance = attendanceRepository.findByAttendanceKey(new AttendanceKey(nik, dateTap));
                 attendance.setTapOut(tapTime);
                 attendanceRepository.save(attendance);
             }
@@ -137,7 +138,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
     public List<Attendance> processGetTapping(LocalDate dateStart, LocalDate dateEnd){
     	List<Attendance> listAttendance = new ArrayList<>();
         if(dateStart!=null && dateEnd!=null){
-        	listAttendance = attendanceRepository.findByDateBetween(dateStart, dateEnd);
+        	listAttendance = attendanceRepository.findByAttendanceKeyDateBetween(dateStart, dateEnd);
             return listAttendance;
         }
         return null;
