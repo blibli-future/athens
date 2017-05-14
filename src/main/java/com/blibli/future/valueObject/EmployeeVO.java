@@ -1,16 +1,18 @@
 package com.blibli.future.valueObject;
 
 import com.blibli.future.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 
 /**
  * Created by amesa on 3/24/17.
  */
-public class EmployeeVO {
-
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class EmployeeVO implements Serializable{
     private String nik;
     private String fullName;
     private Gender gender;
@@ -22,15 +24,12 @@ public class EmployeeVO {
     private String nameOfDept;
     private String chiefNik;
     private String chiefName;
-
-
-
     private String chiefPosition;
     private String chiefPositionText;
-    private Date startWorkingDate;
-    private Date endWorkingDate;
+    private LocalDate startWorkingDate;
+    private LocalDate endWorkingDate;
 
-    public EmployeeVO(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, Date startWorkingDate, Date endWorkingDate) {
+    public EmployeeVO(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate) {
         this.nik = nik;
         this.fullName = fullName;
         this.gender = gender;
@@ -152,19 +151,19 @@ public class EmployeeVO {
         this.chiefPositionText = chiefPositionText;
     }
 
-    public Date getStartWorkingDate() {
+    public LocalDate getStartWorkingDate() {
         return startWorkingDate;
     }
 
-    public void setStartWorkingDate(Date startWorkingDate) {
+    public void setStartWorkingDate(LocalDate startWorkingDate) {
         this.startWorkingDate = startWorkingDate;
     }
 
-    public Date getEndWorkingDate() {
+    public LocalDate getEndWorkingDate() {
         return endWorkingDate;
     }
 
-    public void setEndWorkingDate(Date endWorkingDate) {
+    public void setEndWorkingDate(LocalDate endWorkingDate) {
         this.endWorkingDate = endWorkingDate;
     }
 }
