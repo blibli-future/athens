@@ -9,5 +9,5 @@ import com.blibli.future.model.Leave;
 
 @Repository
 public interface LeaveRepository extends JpaRepository<Leave, String> {
-	public List<Leave> findByGenderAndMaritalStatusAndReligion(String gender, String maritalStatus, String religion);
+	List<Leave> findByGenderAndMaritalStatusAndReligion(String gender, String maritalStatus, String religion);
 }

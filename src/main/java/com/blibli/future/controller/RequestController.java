@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.model.Leave;
@@ -151,10 +153,8 @@ public class RequestController {
 	public ResponseEntity<List<Leave>> getLeave(@RequestParam("gender") String gender,
 			@RequestParam("maritalStatus") String maritalStatus,
 			@RequestParam("religion") String religion){
-		
-		Gender genderConv = Gender.valueOf(gender);
     	
-		List<Leave> leaveGetted = leaveService.getLeave(genderConv, maritalStatus, religion);
+		List<Leave> leaveGetted = leaveService.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
     	if(leaveGetted!=null)
     	{
     		return new ResponseEntity(leaveGetted, HttpStatus.OK);
