@@ -14,9 +14,9 @@ import java.time.LocalTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttendanceVo implements Serializable {
+	private static final long serialVersionUID = -1488649585498344022L;
 
-
-    public AttendanceVo(AttendanceKey attendanceKey, LocalTime tapIn, LocalTime tapOut, String nik, LocalDate date) {
+	public AttendanceVo(AttendanceKey attendanceKey, LocalTime tapIn, LocalTime tapOut, String nik, LocalDate date) {
         this.attendanceKey = attendanceKey;
         this.tapIn = tapIn;
         this.tapOut = tapOut;

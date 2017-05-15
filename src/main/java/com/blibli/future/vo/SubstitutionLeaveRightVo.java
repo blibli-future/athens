@@ -10,8 +10,8 @@ import java.time.LocalDate;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SubstitutionLeaveRightVo implements Serializable {
-    private String id;
-
+	private static final long serialVersionUID = -2633999422402173206L;
+	private String id;
     private String nik;
     private LocalDate createdDate;
     private LocalDate expiredDate;

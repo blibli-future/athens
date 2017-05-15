@@ -11,7 +11,8 @@ import java.sql.Timestamp;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ShiftVo implements Serializable {
-    private String id;
+	private static final long serialVersionUID = -1184247090700393486L;
+	private String id;
     private String name;
     private Timestamp startHour;
     private Timestamp endHour;

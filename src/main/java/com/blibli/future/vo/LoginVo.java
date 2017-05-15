@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginVo implements Serializable {
-    private String nik;
+	private static final long serialVersionUID = 8835070050119198236L;
+	private String nik;
     private String password;
     private String idRole;
 

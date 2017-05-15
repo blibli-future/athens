@@ -12,7 +12,8 @@ import java.io.Serializable;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LeaveVo implements Serializable{
-    private String id;
+	private static final long serialVersionUID = 198674384864687614L;
+	private String id;
     private String name;
     private Gender gender;
     private MaritalStatus maritalStatus;

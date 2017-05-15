@@ -10,8 +10,9 @@ import java.time.LocalDate;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttendanceKeyVo implements Serializable  {
+	private static final long serialVersionUID = 7155621036375606250L;
 
-    public AttendanceKeyVo(String nik, LocalDate date) {
+	public AttendanceKeyVo(String nik, LocalDate date) {
         this.nik = nik;
         this.date = date;
     }
