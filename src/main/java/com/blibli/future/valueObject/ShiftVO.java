@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class ShiftVO {
+	private String id;
     private String name;
     private LocalTime startHour;
     private LocalTime endHour;
@@ -15,8 +16,9 @@ public class ShiftVO {
     public ShiftVO() {
     }
 
-    public ShiftVO(String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
-        this.name = name;
+    public ShiftVO(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
+        this.id = id;
+    	this.name = name;
         this.startHour = startHour;
         this.endHour = endHour;
         this.startDay = startDay;
@@ -24,8 +26,17 @@ public class ShiftVO {
         this.departmentEmployee = departmentEmployee;
         this.location = location;
     }
+    
 
-    public String getName() {
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
         return name;
     }
 

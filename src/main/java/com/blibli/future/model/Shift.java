@@ -19,6 +19,17 @@ public class Shift {
 	private String location;
 
 	public Shift() {}
+	
+	public Shift(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
+        this.id = id;
+    	this.name = name;
+        this.startHour = startHour;
+        this.endHour = endHour;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.departmentEmployee = departmentEmployee;
+        this.location = location;
+    }
 
 	public String getId() {
 		return id;

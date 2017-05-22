@@ -28,6 +28,7 @@ public class ShiftServiceImpl implements ShiftService{
     public Shift createShift(ShiftVO newShiftVO) {
         //TODO: What is the best practice to wrap all this VO -> Model conversion in a single method
         Shift newShift = new Shift();
+        newShift.setId(newShiftVO.getId());
         newShift.setName(newShiftVO.getName());
         newShift.setStartHour(newShiftVO.getStartHour());
         newShift.setEndHour(newShiftVO.getEndHour());
