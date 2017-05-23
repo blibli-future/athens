@@ -3,7 +3,8 @@ package com.blibli.future.service;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.ShiftRepository;
-import com.blibli.future.valueObject.ShiftVO;
+import com.blibli.future.vo.ShiftVo;
+
 import org.hamcrest.Matchers;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -27,7 +28,7 @@ public class ShiftServiceImplTest {
 
     private List<Shift> listMock;
     private Shift shift1;
-    private ShiftVO shiftVOMock;
+    private ShiftVo shiftVOMock;
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -136,7 +137,7 @@ public class ShiftServiceImplTest {
 
         listMock = new ArrayList(Arrays.asList(shift1));
 
-        shiftVOMock = new ShiftVO();
+        shiftVOMock = new ShiftVo();
     }
 
     @After

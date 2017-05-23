@@ -1,29 +1,24 @@
 package com.blibli.future.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
-/**
- * Created by amesa on 5/14/17.
- */
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class ShiftVo implements Serializable {
-	private static final long serialVersionUID = -1184247090700393486L;
+public class ShiftVo {
 	private String id;
     private String name;
-    private Timestamp startHour;
-    private Timestamp endHour;
-    private String startDay;
-    private String endDay;
+    private LocalTime startHour;
+    private LocalTime endHour;
+    private DayOfWeek startDay;
+    private DayOfWeek endDay;
     private String departmentEmployee;
     private String location;
 
-    public ShiftVo(String id, String name, Timestamp startHour, Timestamp endHour, String startDay, String endDay, String departmentEmployee, String location) {
+    public ShiftVo() {
+    }
+
+    public ShiftVo(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
         this.id = id;
-        this.name = name;
+    	this.name = name;
         this.startHour = startHour;
         this.endHour = endHour;
         this.startDay = startDay;
@@ -31,16 +26,17 @@ public class ShiftVo implements Serializable {
         this.departmentEmployee = departmentEmployee;
         this.location = location;
     }
+    
 
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getName() {
+	public String getName() {
         return name;
     }
 
@@ -48,35 +44,35 @@ public class ShiftVo implements Serializable {
         this.name = name;
     }
 
-    public Timestamp getStartHour() {
+    public LocalTime getStartHour() {
         return startHour;
     }
 
-    public void setStartHour(Timestamp startHour) {
+    public void setStartHour(LocalTime startHour) {
         this.startHour = startHour;
     }
 
-    public Timestamp getEndHour() {
+    public LocalTime getEndHour() {
         return endHour;
     }
 
-    public void setEndHour(Timestamp endHour) {
+    public void setEndHour(LocalTime endHour) {
         this.endHour = endHour;
     }
 
-    public String getStartDay() {
+    public DayOfWeek getStartDay() {
         return startDay;
     }
 
-    public void setStartDay(String startDay) {
+    public void setStartDay(DayOfWeek startDay) {
         this.startDay = startDay;
     }
 
-    public String getEndDay() {
+    public DayOfWeek getEndDay() {
         return endDay;
     }
 
-    public void setEndDay(String endDay) {
+    public void setEndDay(DayOfWeek endDay) {
         this.endDay = endDay;
     }
 
@@ -94,5 +90,34 @@ public class ShiftVo implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+
+        ShiftVo shiftVO = (ShiftVo) o;
+
+        if(name != null ? !name.equals(shiftVO.name) : shiftVO.name != null) return false;
+        if(startHour != null ? !startHour.equals(shiftVO.startHour) : shiftVO.startHour != null) return false;
+        if(endHour != null ? !endHour.equals(shiftVO.endHour) : shiftVO.endHour != null) return false;
+        if(startDay != shiftVO.startDay) return false;
+        if(endDay != shiftVO.endDay) return false;
+        if(departmentEmployee != null ? !departmentEmployee.equals(shiftVO.departmentEmployee) : shiftVO.departmentEmployee != null)
+            return false;
+        return location != null ? location.equals(shiftVO.location) : shiftVO.location == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
+        result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
+        result = 31 * result + (startDay != null ? startDay.hashCode() : 0);
+        result = 31 * result + (endDay != null ? endDay.hashCode() : 0);
+        result = 31 * result + (departmentEmployee != null ? departmentEmployee.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        return result;
     }
 }

@@ -3,7 +3,7 @@ package com.blibli.future.controller;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.service.api.ShiftService;
-import com.blibli.future.valueObject.ShiftVO;
+import com.blibli.future.vo.ShiftVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import net.minidev.json.JSONArray;
@@ -39,7 +39,7 @@ public class ShiftControllerTest {
     private Shift shift1;
     private Shift shift2;
     private List collectionMock;
-    private ShiftVO shiftVOMock;
+    private ShiftVo shiftVOMock;
 
     private ObjectWriter objectWriter = new ObjectMapper().writer();
 
@@ -165,7 +165,7 @@ public class ShiftControllerTest {
 
         this.collectionMock = new ArrayList(Arrays.asList(shift1, shift2));
 
-        shiftVOMock = new ShiftVO();
+        shiftVOMock = new ShiftVo();
     }
 
     @After

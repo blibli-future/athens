@@ -3,7 +3,8 @@ package com.blibli.future.controller;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.service.api.ShiftService;
-import com.blibli.future.valueObject.ShiftVO;
+import com.blibli.future.vo.ShiftVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ShiftController {
     }
 
     @PostMapping(value = BASE_PATH)
-    public ResponseEntity<Shift> createNewShift(@RequestBody ShiftVO shiftVO) {
+    public ResponseEntity<Shift> createNewShift(@RequestBody ShiftVo shiftVO) {
         return new ResponseEntity<Shift>(this.shiftService.createShift(shiftVO), HttpStatus.OK);
     }
 
@@ -46,7 +47,7 @@ public class ShiftController {
     }
 
     @PutMapping(value = PATH_WITH_ID)
-    public ResponseEntity updateShift(@PathVariable String id, @RequestBody ShiftVO shiftVO) {
+    public ResponseEntity updateShift(@PathVariable String id, @RequestBody ShiftVo shiftVO) {
         try {
             return new ResponseEntity(this.shiftService.updateShift(id, shiftVO), HttpStatus.OK);
         } catch (IdNotFoundException e) {

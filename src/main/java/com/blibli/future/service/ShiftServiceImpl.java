@@ -4,7 +4,8 @@ import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.service.api.ShiftService;
-import com.blibli.future.valueObject.ShiftVO;
+import com.blibli.future.vo.ShiftVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class ShiftServiceImpl implements ShiftService{
     }
 
     @Override
-    public Shift createShift(ShiftVO newShiftVO) {
+    public Shift createShift(ShiftVo newShiftVO) {
         //TODO: What is the best practice to wrap all this VO -> Model conversion in a single method
         Shift newShift = new Shift();
         newShift.setId(newShiftVO.getId());
@@ -51,7 +52,7 @@ public class ShiftServiceImpl implements ShiftService{
     }
 
     @Override
-    public Shift updateShift(String shiftId, ShiftVO updatedShiftVO) throws IdNotFoundException {
+    public Shift updateShift(String shiftId, ShiftVo updatedShiftVO) throws IdNotFoundException {
         Shift newShift = shiftRepository.findOne(shiftId);
 
         if(null == newShift) {
