@@ -2,7 +2,8 @@ package com.blibli.future.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Entity
 public class Shift {
@@ -10,14 +11,25 @@ public class Shift {
 	private String id;
 
 	private String name;
-	private Timestamp startHour;
-	private Timestamp endHour;
-	private String startDay;
-	private String endDay;
+	private LocalTime startHour;
+	private LocalTime endHour;
+	private DayOfWeek startDay;
+	private DayOfWeek endDay;
 	private String departmentEmployee;
 	private String location;
 
 	public Shift() {}
+	
+	public Shift(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
+        this.id = id;
+    	this.name = name;
+        this.startHour = startHour;
+        this.endHour = endHour;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.departmentEmployee = departmentEmployee;
+        this.location = location;
+    }
 
 	public String getId() {
 		return id;
@@ -35,35 +47,35 @@ public class Shift {
 		this.name = name;
 	}
 
-	public Timestamp getStartHour() {
+	public LocalTime getStartHour() {
 		return startHour;
 	}
 
-	public void setStartHour(Timestamp startHour) {
+	public void setStartHour(LocalTime startHour) {
 		this.startHour = startHour;
 	}
 
-	public Timestamp getEndHour() {
+	public LocalTime getEndHour() {
 		return endHour;
 	}
 
-	public void setEndHour(Timestamp endHour) {
+	public void setEndHour(LocalTime endHour) {
 		this.endHour = endHour;
 	}
 
-	public String getStartDay() {
+	public DayOfWeek getStartDay() {
 		return startDay;
 	}
 
-	public void setStartDay(String startDay) {
+	public void setStartDay(DayOfWeek startDay) {
 		this.startDay = startDay;
 	}
 
-	public String getEndDay() {
+	public DayOfWeek getEndDay() {
 		return endDay;
 	}
 
-	public void setEndDay(String endDay) {
+	public void setEndDay(DayOfWeek endDay) {
 		this.endDay = endDay;
 	}
 
@@ -83,4 +95,34 @@ public class Shift {
 		this.location = location;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if(this == o) return true;
+		if(o == null || getClass() != o.getClass()) return false;
+
+		Shift shift = (Shift) o;
+
+		if(id != null ? !id.equals(shift.id) : shift.id != null) return false;
+		if(name != null ? !name.equals(shift.name) : shift.name != null) return false;
+		if(startHour != null ? !startHour.equals(shift.startHour) : shift.startHour != null) return false;
+		if(endHour != null ? !endHour.equals(shift.endHour) : shift.endHour != null) return false;
+		if(startDay != shift.startDay) return false;
+		if(endDay != shift.endDay) return false;
+		if(departmentEmployee != null ? !departmentEmployee.equals(shift.departmentEmployee) : shift.departmentEmployee != null)
+			return false;
+		return location != null ? location.equals(shift.location) : shift.location == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id != null ? id.hashCode() : 0;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
+		result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
+		result = 31 * result + (startDay != null ? startDay.hashCode() : 0);
+		result = 31 * result + (endDay != null ? endDay.hashCode() : 0);
+		result = 31 * result + (departmentEmployee != null ? departmentEmployee.hashCode() : 0);
+		result = 31 * result + (location != null ? location.hashCode() : 0);
+		return result;
+	}
 }
