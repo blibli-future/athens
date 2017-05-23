@@ -41,7 +41,7 @@ public class ShiftControllerTest {
     private List collectionMock;
     private ShiftVO shiftVOMock;
 
-    ObjectWriter objectWriter = new ObjectMapper().writer();
+    private ObjectWriter objectWriter = new ObjectMapper().writer();
 
     @Test
     public void getAllShiftTest() throws Exception {
