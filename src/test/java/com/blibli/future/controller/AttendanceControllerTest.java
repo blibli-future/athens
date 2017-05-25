@@ -10,6 +10,9 @@ import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeServiceImpl;
 import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
+import com.blibli.future.vo.EmployeeShiftVo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,8 +45,8 @@ public class AttendanceControllerTest {
     private MockMvc mockMvc;
     @Mock
     private EmployeeServiceImpl employeeService;
-
-
+    
+    private ObjectWriter objectWriter = new ObjectMapper().writer();
 
     @Before
     public void setUp() {
@@ -107,19 +110,21 @@ public class AttendanceControllerTest {
     
     @Test
     public void employeeShiftingTest() throws Exception {
-        String idShiftMock = "9999";
-        String nikMock = "1234";
-
-        Mockito.when(employeeShiftingService.processShifting(idShiftMock, nikMock)).thenReturn(true);
+        EmployeeShiftVo employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
+        EmployeeShift employeeShiftMock = new EmployeeShift("shift", "nik");
+        
+        Mockito.when(employeeShiftingService.processShifting(employeeShiftMock)).thenReturn(employeeShiftMock);
+        
+        String employeeShiftVo = objectWriter.writeValueAsString(employeeShiftVoMock);
         
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/employees/shift").accept(MediaType.APPLICATION_JSON)
+        		MockMvcRequestBuilders.post("/employees/shift")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("idShift", idShiftMock)
-                .param("nik", nikMock))
+                .content(employeeShiftVo)
+        		)
         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeShiftingService).processShifting(idShiftMock, nikMock);
+        Mockito.verify(employeeShiftingService).processShifting(employeeShiftMock);
     }
     
     @Test

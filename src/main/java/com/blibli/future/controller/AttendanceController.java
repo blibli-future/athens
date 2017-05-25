@@ -10,6 +10,10 @@ import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
+import com.blibli.future.vo.EmployeeShiftVo;
+
+import org.dozer.DozerBeanMapperSingletonWrapper;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +30,9 @@ public class AttendanceController {
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
-
+    
+    private Mapper mapper = DozerBeanMapperSingletonWrapper.getInstance();
+    
     @Autowired
     public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService) {
         this.employeeTappingService = employeeTappingService;
@@ -91,13 +97,9 @@ public class AttendanceController {
     }
 
     @PostMapping("employees/shift")
-    public ResponseEntity employeeShifting(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted =
-    			employeeShiftingService.processShifting(idShift, nik);
-        if(employeeShifted) {
-            return new ResponseEntity(true, HttpStatus.OK);
-        }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<EmployeeShift> employeeShifting(@RequestBody EmployeeShiftVo employeeShiftVo) {
+    	EmployeeShift employeeShift = mapper.map(employeeShiftVo, EmployeeShift.class);
+        return new ResponseEntity<EmployeeShift>(employeeShiftingService.processShifting(employeeShift), HttpStatus.OK);
     }
 
     @PutMapping("employees/shift")
