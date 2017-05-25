@@ -2,9 +2,11 @@ package com.blibli.future.service;
 
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.blibli.future.service.api.ConverterService;
 
+@Service
 public class ConverterServiceImpl implements ConverterService {
 	  @Autowired
 	  private Mapper mapper;
