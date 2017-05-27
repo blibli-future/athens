@@ -37,17 +37,15 @@ public class AttendanceController {
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
-
-    @Autowired
     private ConverterService converterService;
     
     
     @Autowired
-    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService) {
+    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService, ConverterService converterService) {
         this.employeeTappingService = employeeTappingService;
         this.employeeService = employeeService;
         this.employeeShiftingService = employeeShiftingService;
-
+        this.converterService = converterService;
     }
 
     @PostMapping("/employees/taps/upload")
