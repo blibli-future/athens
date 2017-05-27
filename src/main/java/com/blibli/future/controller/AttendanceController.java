@@ -5,8 +5,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import org.dozer.DozerBeanMapperSingletonWrapper;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,11 +103,12 @@ public class AttendanceController {
 
     @PostMapping("employees/shift")
     public ResponseEntity<EmployeeShift> employeeShifting(@RequestBody EmployeeShiftVo employeeShiftVo) {
-//    	EmployeeShift employeeShift = mapper.map(employeeShiftVo, EmployeeShift.class);
-    	
     	EmployeeShift employeeShift = converterService.map(employeeShiftVo, EmployeeShift.class);
-    	
-        return new ResponseEntity<EmployeeShift>(employeeShiftingService.processShifting(employeeShift), HttpStatus.OK);
+    	EmployeeShift employeeShifted = employeeShiftingService.processShifting(employeeShift);
+    	if(employeeShifted!=null)
+    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.OK);
+    	else
+    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("employees/shift")

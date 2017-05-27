@@ -56,14 +56,6 @@ public class AttendanceControllerTest {
     
     private ObjectWriter objectWriter = new ObjectMapper().writer();
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.attendanceController).build();
-        employeeShiftVoMock = new EmployeeShiftVo();
-        employeeShiftMock = new EmployeeShift();
-    }
-
     @Test
     public void uploadAttendanceFileTest_success() throws Exception {
         MediaType mediaType = new MediaType("text", "csv");
@@ -122,7 +114,7 @@ public class AttendanceControllerTest {
     public void employeeShiftingTest() throws Exception {
     	String employeeShiftVo = objectWriter.writeValueAsString(employeeShiftVoMock);
         
-    	Mockito.when(converterService.map(employeeShiftVo, EmployeeShift.class)).thenReturn(employeeShiftMock);
+    	Mockito.when(converterService.map(employeeShiftVoMock, EmployeeShift.class)).thenReturn(employeeShiftMock);
         Mockito.when(employeeShiftingService.processShifting(employeeShiftMock)).thenReturn(employeeShiftMock);
         
         mockMvc.perform(
@@ -339,6 +331,14 @@ public class AttendanceControllerTest {
 
         Mockito.verify(employeeService).updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,
                 nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
+    }
+    
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(this.attendanceController).build();
+        employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
+        employeeShiftMock = new EmployeeShift("shift", "nik");
     }
 
     @After	
