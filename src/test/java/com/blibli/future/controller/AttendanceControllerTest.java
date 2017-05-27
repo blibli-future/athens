@@ -7,9 +7,13 @@ import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
+import com.blibli.future.service.ConverterServiceImpl;
 import com.blibli.future.service.EmployeeServiceImpl;
 import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
+import com.blibli.future.vo.EmployeeShiftVo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +34,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 public class AttendanceControllerTest {
@@ -39,17 +44,17 @@ public class AttendanceControllerTest {
     private EmployeeTappingServiceImpl employeeTappingService;
     @Mock
     private EmployeeShiftingServiceImpl employeeShiftingService;
-    private MockMvc mockMvc;
     @Mock
     private EmployeeServiceImpl employeeService;
-
-
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.attendanceController).build();
-    }
+    @Mock
+    private ConverterServiceImpl converterService;
+    
+    EmployeeShiftVo employeeShiftVoMock;
+    EmployeeShift employeeShiftMock;
+    
+    private MockMvc mockMvc;
+    
+    private ObjectWriter objectWriter = new ObjectMapper().writer();
 
     @Test
     public void uploadAttendanceFileTest_success() throws Exception {
@@ -107,19 +112,20 @@ public class AttendanceControllerTest {
     
     @Test
     public void employeeShiftingTest() throws Exception {
-        String idShiftMock = "9999";
-        String nikMock = "1234";
-
-        Mockito.when(employeeShiftingService.processShifting(idShiftMock, nikMock)).thenReturn(true);
+    	String employeeShiftVo = objectWriter.writeValueAsString(employeeShiftVoMock);
+        
+    	Mockito.when(converterService.map(employeeShiftVoMock, EmployeeShift.class)).thenReturn(employeeShiftMock);
+        Mockito.when(employeeShiftingService.processShifting(employeeShiftMock)).thenReturn(employeeShiftMock);
         
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/employees/shift").accept(MediaType.APPLICATION_JSON)
+        		MockMvcRequestBuilders.post("/employees/shift")
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("idShift", idShiftMock)
-                .param("nik", nikMock))
+                .content(employeeShiftVo)
+        		)
         .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeShiftingService).processShifting(idShiftMock, nikMock);
+        Mockito.verify(converterService).map(employeeShiftVoMock, EmployeeShift.class);
+        Mockito.verify(employeeShiftingService).processShifting(employeeShiftMock);
     }
     
     @Test
@@ -325,6 +331,14 @@ public class AttendanceControllerTest {
 
         Mockito.verify(employeeService).updateEmployee(nik,fullName,gender,position,level,organizationalUnitText,maritalStatus,religion,
                 nameOfDept, chiefNik,chiefName,chiefPosition,chiefPositionText, startWorkingDate,endWorkingDate,status);
+    }
+    
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(this.attendanceController).build();
+        employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
+        employeeShiftMock = new EmployeeShift("shift", "nik");
     }
 
     @After	

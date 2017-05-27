@@ -1,5 +1,21 @@
 package com.blibli.future.controller;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
@@ -7,32 +23,27 @@ import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeShift;
+import com.blibli.future.service.api.ConverterService;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
-import java.util.List;
+import com.blibli.future.vo.EmployeeShiftVo;
 
 @RestController
 public class AttendanceController {
+	
     private EmployeeTappingService employeeTappingService;
     private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
-
+    private ConverterService converterService;
+    
+    
     @Autowired
-    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService) {
+    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService, ConverterService converterService) {
         this.employeeTappingService = employeeTappingService;
         this.employeeService = employeeService;
         this.employeeShiftingService = employeeShiftingService;
-
+        this.converterService = converterService;
     }
 
     @PostMapping("/employees/taps/upload")
@@ -91,13 +102,13 @@ public class AttendanceController {
     }
 
     @PostMapping("employees/shift")
-    public ResponseEntity employeeShifting(@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShifted =
-    			employeeShiftingService.processShifting(idShift, nik);
-        if(employeeShifted) {
-            return new ResponseEntity(true, HttpStatus.OK);
-        }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<EmployeeShift> employeeShifting(@RequestBody EmployeeShiftVo employeeShiftVo) {
+    	EmployeeShift employeeShift = converterService.map(employeeShiftVo, EmployeeShift.class);
+    	EmployeeShift employeeShifted = employeeShiftingService.processShifting(employeeShift);
+    	if(employeeShifted!=null)
+    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.OK);
+    	else
+    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("employees/shift")
