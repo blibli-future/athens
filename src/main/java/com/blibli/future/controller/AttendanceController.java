@@ -22,10 +22,10 @@ import com.blibli.future.enums.Religion;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
-import com.blibli.future.model.EmployeeShift;
+//import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.api.ConverterService;
 import com.blibli.future.service.api.EmployeeService;
-import com.blibli.future.service.api.EmployeeShiftingService;
+//import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
 import com.blibli.future.vo.EmployeeShiftVo;
 
@@ -33,18 +33,17 @@ import com.blibli.future.vo.EmployeeShiftVo;
 public class AttendanceController {
 	
     private EmployeeTappingService employeeTappingService;
-    private EmployeeShiftingService employeeShiftingService;
     private EmployeeService employeeService;
     private ConverterService converterService;
     
     
-    @Autowired
-    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService, ConverterService converterService) {
-        this.employeeTappingService = employeeTappingService;
-        this.employeeService = employeeService;
-        this.employeeShiftingService = employeeShiftingService;
-        this.converterService = converterService;
-    }
+//    @Autowired
+//    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService, ConverterService converterService) {
+//        this.employeeTappingService = employeeTappingService;
+//        this.employeeService = employeeService;
+//        this.employeeShiftingService = employeeShiftingService;
+//        this.converterService = converterService;
+//    }
 
     @PostMapping("/employees/taps/upload")
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
@@ -101,36 +100,36 @@ public class AttendanceController {
         return new ResponseEntity(employeeTapGetted, HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("employees/shift")
-    public ResponseEntity<EmployeeShift> employeeShifting(@RequestBody EmployeeShiftVo employeeShiftVo) {
-    	EmployeeShift employeeShift = converterService.map(employeeShiftVo, EmployeeShift.class);
-    	EmployeeShift employeeShifted = employeeShiftingService.processShifting(employeeShift);
-    	if(employeeShifted!=null)
-    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.OK);
-    	else
-    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.BAD_REQUEST);
-    }
-
-    @PutMapping("employees/shift")
-    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShiftLama") String idShiftLama, 
-    		@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-    	boolean employeeShiftUpdated =
-    			employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik);
-        if(employeeShiftUpdated) {
-            return new ResponseEntity(true, HttpStatus.OK);
-        }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
-    }
-
-    @GetMapping("employees/shift")
-    public ResponseEntity<List<EmployeeShift>> employeeShiftingGet(@RequestParam("idShift") String idShift) {
-    	List<EmployeeShift> employeeShiftGetted =
-    			employeeShiftingService.processGetShifting(idShift);
-        if(employeeShiftGetted!=null) {
-            return new ResponseEntity(employeeShiftGetted, HttpStatus.OK);
-        }
-        return new ResponseEntity(employeeShiftGetted, HttpStatus.BAD_REQUEST);
-    }
+//    @PostMapping("employees/shift")
+//    public ResponseEntity<EmployeeShift> employeeShifting(@RequestBody EmployeeShiftVo employeeShiftVo) {
+//    	EmployeeShift employeeShift = converterService.map(employeeShiftVo, EmployeeShift.class);
+//    	EmployeeShift employeeShifted = employeeShiftingService.processShifting(employeeShift);
+//    	if(employeeShifted!=null)
+//    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.OK);
+//    	else
+//    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @PutMapping("employees/shift")
+//    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShiftLama") String idShiftLama, 
+//    		@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
+//    	boolean employeeShiftUpdated =
+//    			employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik);
+//        if(employeeShiftUpdated) {
+//            return new ResponseEntity(true, HttpStatus.OK);
+//        }
+//        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @GetMapping("employees/shift")
+//    public ResponseEntity<List<EmployeeShift>> employeeShiftingGet(@RequestParam("idShift") String idShift) {
+//    	List<EmployeeShift> employeeShiftGetted =
+//    			employeeShiftingService.processGetShifting(idShift);
+//        if(employeeShiftGetted!=null) {
+//            return new ResponseEntity(employeeShiftGetted, HttpStatus.OK);
+//        }
+//        return new ResponseEntity(employeeShiftGetted, HttpStatus.BAD_REQUEST);
+//    }
     
     @PostMapping("employees")
     public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,

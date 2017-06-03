@@ -3,7 +3,6 @@ import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
 import com.blibli.future.model.Employee;
-import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
 

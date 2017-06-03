@@ -9,9 +9,10 @@ import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  *
@@ -38,7 +39,16 @@ public class Employee {
     private LocalDate startWorkingDate;
     private LocalDate endWorkingDate;
     private Boolean status;
+    @ManyToMany()
+    @JoinTable
+    private Set<Shift> shifts;
+    
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeAbsencePermit> employeeAbsencesPermit;
 
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeLeave> employeeLeave;
+    
     public Employee() {}
 
     public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
@@ -189,4 +199,10 @@ public class Employee {
     public void setEndWorkingDate(LocalDate endWorkingDate) {
         this.endWorkingDate = endWorkingDate;
     }
+    
+//    @ManyToMany()
+//    @JoinTable(name="employeeShift", joinColumns = @JoinColumn(name="nik", referencedColumnName="nik"), inverseJoinColumns=@JoinColumn(name = "shiftId", referencedColumnName = "id"))
+//    public Set<Shift> getShift() {
+//        return shifts;
+//    }
 }

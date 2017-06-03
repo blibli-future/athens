@@ -6,30 +6,35 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 import com.blibli.future.enums.Status;
 
 @Entity
-public class EmployeeLeave {
-
+public class EmployeeLeave implements Serializable{
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Column(name = "id", unique = true)
-	private String id;
-
-	private String nik;
-	private String idLeave;
+	@ManyToOne()
+	@JoinColumn(name = "nik")
+	private Employee employee;
+	
+	@Id
+	@ManyToOne()
+	@JoinColumn(name = "idLeave")
+	private Leave leave;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private LocalDate requestDate;
 	private Status status;
 	private String reason;
 	
-	public EmployeeLeave(String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason){
-		this.nik = nik;
-		this.idLeave = idLeave;
+	
+	
+	public EmployeeLeave(LocalDate startDate, LocalDate endDate, String reason){
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.reason = reason;
@@ -38,30 +43,6 @@ public class EmployeeLeave {
 	}
 
 	public EmployeeLeave() {}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getNik() {
-		return nik;
-	}
-
-	public void setNik(String nik) {
-		this.nik = nik;
-	}
-
-	public String getIdLeave() {
-		return idLeave;
-	}
-
-	public void setIdLeave(String idLeave) {
-		this.idLeave = idLeave;
-	}
 
 	public LocalDate getStartDate() {
 		return startDate;

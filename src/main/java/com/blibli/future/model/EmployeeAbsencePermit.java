@@ -5,29 +5,32 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 import com.blibli.future.enums.Status;
 
 @Entity
-public class EmployeeAbsencePermit {
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
-
-	private String nik;
-	private String idAbsencePermit;
+public class EmployeeAbsencePermit implements Serializable{
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private LocalDate requestDate;
 	private String reason;
 	private Status status;
+	@Id
+	@ManyToOne()
+	@JoinColumn(name = "nik")
+	private Employee employee;
+	@Id
+	@ManyToOne()
+	@JoinColumn(name = "idAbsencePermit")
+	private AbsencePermit absencePermit;
 	
-	public EmployeeAbsencePermit(String nik, String idAbsencePermit, 
-			LocalDate startDate, LocalDate endDate, String reason){
-		this.nik = nik;
-		this.idAbsencePermit = idAbsencePermit;
+	public EmployeeAbsencePermit(LocalDate startDate, LocalDate endDate, String reason){
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.reason = reason;
@@ -36,30 +39,6 @@ public class EmployeeAbsencePermit {
 	}
 
 	public EmployeeAbsencePermit() {}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getNik() {
-		return nik;
-	}
-
-	public void setNik(String nik) {
-		this.nik = nik;
-	}
-
-	public String getIdAbsencePermit() {
-		return idAbsencePermit;
-	}
-
-	public void setIdAbsencePermit(String idAbsencePermit) {
-		this.idAbsencePermit = idAbsencePermit;
-	}
 
 	public LocalDate getStartDate() {
 		return startDate;

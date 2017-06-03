@@ -2,8 +2,11 @@ package com.blibli.future.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Entity
 public class Shift {
@@ -17,7 +20,9 @@ public class Shift {
 	private DayOfWeek endDay;
 	private String departmentEmployee;
 	private String location;
-
+	@ManyToMany(mappedBy = "shifts")
+	private Set<Employee> employees;
+	
 	public Shift() {}
 	
 	public Shift(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
@@ -94,6 +99,11 @@ public class Shift {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	
+//	@ManyToMany(mappedBy = "shifts")
+//	public Set<Employee> getEmployees() {
+//        return employees;
+//    }
 
 	@Override
 	public boolean equals(Object o) {

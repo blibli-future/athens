@@ -6,7 +6,7 @@ import java.util.List;
 import com.blibli.future.model.EmployeeLeave;
 
 public interface EmployeeLeaveService {
-	public boolean sentLeaveRequest(String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason);
-	public List<EmployeeLeave> getLeaveRequest(String nik);
-	public boolean updateLeaveRequest(String id, String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason);
+//	public boolean sentLeaveRequest(String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason);
+//	public List<EmployeeLeave> getLeaveRequest(String nik);
+//	public boolean updateLeaveRequest(String id, String nik, String idLeave, LocalDate startDate, LocalDate endDate, String reason);
 }

@@ -1,7 +1,11 @@
 package com.blibli.future.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
@@ -16,6 +20,8 @@ public class Leave {
 	private Gender gender;
 	private MaritalStatus maritalStatus;
 	private Religion religion;
+	@OneToMany(mappedBy = "leave")
+    private Set<EmployeeLeave> employeeLeave;
 	
 	public Leave(String id, String name, Gender gender, MaritalStatus maritalStatus, Religion religion){
 		this.gender = gender;
