@@ -8,17 +8,17 @@ import javax.persistence.Id;
 import java.util.Set;
 
 @Entity
-public class AthensCredentials {
+public class AthensCredential {
     @Id
     private String email;
     private String nik;
     @ElementCollection
     private Set<Role> roles;
 
-    public AthensCredentials() {
+    public AthensCredential() {
     }
 
-    public AthensCredentials(String email, String nik, Set<Role> roles) {
+    public AthensCredential(String email, String nik, Set<Role> roles) {
         this.email = email;
         this.nik = nik;
         this.roles = roles;

@@ -34,8 +34,8 @@ public class AuthenticationControllerTest {
     private final String MESSAGE = "message";
 
     @Test
-    public void authenticate_Success() throws Exception {
-        Mockito.when(authenticationService.createToken(USERNAME, PASSWORD)).thenReturn(JWT_TOKEN);
+    public void login_Success() throws Exception {
+        Mockito.when(authenticationService.authenticate(USERNAME, PASSWORD)).thenReturn(JWT_TOKEN);
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new AuthenticationResponse(JWT_TOKEN));
@@ -48,12 +48,12 @@ public class AuthenticationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
 
-        Mockito.verify(authenticationService).createToken(USERNAME, PASSWORD);
+        Mockito.verify(authenticationService).authenticate(USERNAME, PASSWORD);
     }
 
     @Test
-    public void authenticate_Fail() throws Exception {
-        Mockito.when(authenticationService.createToken(USERNAME, PASSWORD)).thenThrow(new Exception(MESSAGE));
+    public void login_Fail() throws Exception {
+        Mockito.when(authenticationService.authenticate(USERNAME, PASSWORD)).thenThrow(new Exception(MESSAGE));
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new ErrorResponse(MESSAGE));
@@ -66,7 +66,7 @@ public class AuthenticationControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
 
-        Mockito.verify(authenticationService).createToken(USERNAME, PASSWORD);
+        Mockito.verify(authenticationService).authenticate(USERNAME, PASSWORD);
     }
 
     @Before

@@ -27,9 +27,9 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = LOGIN_URL)
-    public ResponseEntity<AthensResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+    public ResponseEntity<AthensResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
-            String jwtToken = authenticationService.createToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
+            String jwtToken = authenticationService.authenticate(authenticationRequest.getNik(), authenticationRequest.getPassword());
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
