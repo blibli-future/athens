@@ -99,11 +99,18 @@ public class Shift {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	public Set<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
+	}
 	
-//	@ManyToMany(mappedBy = "shifts")
-//	public Set<Employee> getEmployees() {
-//        return employees;
-//    }
+	public void addEmployees(Employee employees) {
+		this.employees.add(employees);
+	}
 
 	@Override
 	public boolean equals(Object o) {

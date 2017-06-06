@@ -1,9 +1,10 @@
 package com.blibli.future.model;
 
-import com.blibli.future.model.primaryKey.AttendanceKey;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+
+import com.blibli.future.model.primaryKey.AttendanceKey;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
