@@ -27,6 +27,8 @@ public class EmployeeAbsencePermit implements Serializable{
 	private Status status;
 	private AbsencePermit absencePermit;
 	
+	public EmployeeAbsencePermit(){}
+	
 	public EmployeeAbsencePermit(Employee employee, AbsencePermit absencePermit,LocalDate startDate, LocalDate endDate, String reason){
 		this.employee = employee;
 		this.startDate = startDate;
@@ -166,5 +168,4 @@ public class EmployeeAbsencePermit implements Serializable{
 			return false;
 		return true;
 	}
-	
 }

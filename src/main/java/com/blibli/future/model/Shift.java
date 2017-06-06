@@ -113,33 +113,70 @@ public class Shift {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if(this == o) return true;
-		if(o == null || getClass() != o.getClass()) return false;
-
-		Shift shift = (Shift) o;
-
-		if(id != null ? !id.equals(shift.id) : shift.id != null) return false;
-		if(name != null ? !name.equals(shift.name) : shift.name != null) return false;
-		if(startHour != null ? !startHour.equals(shift.startHour) : shift.startHour != null) return false;
-		if(endHour != null ? !endHour.equals(shift.endHour) : shift.endHour != null) return false;
-		if(startDay != shift.startDay) return false;
-		if(endDay != shift.endDay) return false;
-		if(departmentEmployee != null ? !departmentEmployee.equals(shift.departmentEmployee) : shift.departmentEmployee != null)
-			return false;
-		return location != null ? location.equals(shift.location) : shift.location == null;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((departmentEmployee == null) ? 0 : departmentEmployee.hashCode());
+		result = prime * result + ((employees == null) ? 0 : employees.hashCode());
+		result = prime * result + ((endDay == null) ? 0 : endDay.hashCode());
+		result = prime * result + ((endHour == null) ? 0 : endHour.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((startDay == null) ? 0 : startDay.hashCode());
+		result = prime * result + ((startHour == null) ? 0 : startHour.hashCode());
+		return result;
 	}
 
 	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
-		result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
-		result = 31 * result + (startDay != null ? startDay.hashCode() : 0);
-		result = 31 * result + (endDay != null ? endDay.hashCode() : 0);
-		result = 31 * result + (departmentEmployee != null ? departmentEmployee.hashCode() : 0);
-		result = 31 * result + (location != null ? location.hashCode() : 0);
-		return result;
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Shift other = (Shift) obj;
+		if (departmentEmployee == null) {
+			if (other.departmentEmployee != null)
+				return false;
+		} else if (!departmentEmployee.equals(other.departmentEmployee))
+			return false;
+		if (employees == null) {
+			if (other.employees != null)
+				return false;
+		} else if (!employees.equals(other.employees))
+			return false;
+		if (endDay != other.endDay)
+			return false;
+		if (endHour == null) {
+			if (other.endHour != null)
+				return false;
+		} else if (!endHour.equals(other.endHour))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (startDay != other.startDay)
+			return false;
+		if (startHour == null) {
+			if (other.startHour != null)
+				return false;
+		} else if (!startHour.equals(other.startHour))
+			return false;
+		return true;
 	}
+
 }

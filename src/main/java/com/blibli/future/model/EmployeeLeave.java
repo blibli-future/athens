@@ -49,7 +49,7 @@ public class EmployeeLeave implements Serializable{
 		this.id = id;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn()
 	public Employee getEmployee() {
 		return employee;
@@ -59,7 +59,7 @@ public class EmployeeLeave implements Serializable{
 		this.employee = employee;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn()
 	public Leave getLeave() {
 		return leave;
@@ -172,5 +172,5 @@ public class EmployeeLeave implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }
