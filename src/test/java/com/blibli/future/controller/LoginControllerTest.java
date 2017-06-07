@@ -3,7 +3,7 @@ package com.blibli.future.controller;
 import com.blibli.future.dto.AuthenticationRequest;
 import com.blibli.future.dto.response.AuthenticationResponse;
 import com.blibli.future.dto.response.ErrorResponse;
-import com.blibli.future.service.api.AuthenticationService;
+import com.blibli.future.service.api.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.After;
@@ -19,11 +19,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public class AuthenticationControllerTest {
+public class LoginControllerTest {
     @InjectMocks
-    private AuthenticationController authenticationController;
+    private LoginController loginController;
     @Mock
-    private AuthenticationService authenticationService;
+    private LoginService loginService;
 
     private MockMvc mockMvc;
     private ObjectWriter JsonWriter = new ObjectMapper().writer();
@@ -35,49 +35,49 @@ public class AuthenticationControllerTest {
 
     @Test
     public void login_Success() throws Exception {
-        Mockito.when(authenticationService.authenticate(USERNAME, PASSWORD)).thenReturn(JWT_TOKEN);
+        Mockito.when(loginService.createNewToken(USERNAME, PASSWORD)).thenReturn(JWT_TOKEN);
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new AuthenticationResponse(JWT_TOKEN));
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post(authenticationController.LOGIN_URL)
+                MockMvcRequestBuilders.post(loginController.LOGIN_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(authenticationRequestJson)
         )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
 
-        Mockito.verify(authenticationService).authenticate(USERNAME, PASSWORD);
+        Mockito.verify(loginService).createNewToken(USERNAME, PASSWORD);
     }
 
     @Test
     public void login_Fail() throws Exception {
-        Mockito.when(authenticationService.authenticate(USERNAME, PASSWORD)).thenThrow(new Exception(MESSAGE));
+        Mockito.when(loginService.createNewToken(USERNAME, PASSWORD)).thenThrow(new Exception(MESSAGE));
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new ErrorResponse(MESSAGE));
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post(authenticationController.LOGIN_URL)
+                MockMvcRequestBuilders.post(loginController.LOGIN_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(authenticationRequestJson)
         )
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
 
-        Mockito.verify(authenticationService).authenticate(USERNAME, PASSWORD);
+        Mockito.verify(loginService).createNewToken(USERNAME, PASSWORD);
     }
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.authenticationController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
 
     }
 
     @After
     public void tearDown() {
-        Mockito.verifyNoMoreInteractions(this.authenticationService);
+        Mockito.verifyNoMoreInteractions(this.loginService);
     }
 }

@@ -2,7 +2,7 @@ package com.blibli.future.service;
 
 import com.blibli.future.model.AthensCredential;
 import com.blibli.future.repository.AthensCredentialsRepository;
-import com.blibli.future.service.api.AuthenticationService;
+import com.blibli.future.service.api.LoginService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,18 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class LoginServiceImpl implements LoginService {
     private final AthensCredentialsRepository credentialsRepository;
 
     private final String ATHENS_SECRET_KEY = "ATHENS-SECRET";
 
     @Autowired
-    public AuthenticationServiceImpl(AthensCredentialsRepository credentialsRepository) {
+    public LoginServiceImpl(AthensCredentialsRepository credentialsRepository) {
         this.credentialsRepository = credentialsRepository;
     }
 
     @Override
-    public String authenticate(String username, String password) throws Exception {
+    public String createNewToken(String username, String password) throws Exception {
         AthensCredential credential = credentialsRepository.findByEmailAndNik(username, password);
 
         if(credential == null) {

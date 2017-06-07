@@ -16,9 +16,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-public class AuthenticationServiceTest {
+public class LoginServiceTest {
     @InjectMocks
-    private AuthenticationServiceImpl authenticationService;
+    private LoginServiceImpl authenticationService;
     @Mock
     private AthensCredentialsRepository credentialsRepository;
 
@@ -30,7 +30,7 @@ public class AuthenticationServiceTest {
     public void authenticateTest() throws Exception {
         Mockito.when(credentialsRepository.findByEmailAndNik(EMAIL, PASSWORD)).thenReturn(CREDENTIAL);
 
-        String result = authenticationService.authenticate(EMAIL, PASSWORD);
+        String result = authenticationService.createNewToken(EMAIL, PASSWORD);
 
         Claims claims = Jwts.claims();
         claims.put("nik", PASSWORD);
@@ -51,7 +51,7 @@ public class AuthenticationServiceTest {
         Mockito.when(credentialsRepository.findByEmailAndNik(EMAIL, PASSWORD)).thenReturn(null);
 
         try {
-            String result = authenticationService.authenticate(EMAIL, PASSWORD);
+            String result = authenticationService.createNewToken(EMAIL, PASSWORD);
         } catch (Exception e) {
             //TODO: Change the Exception CLass to a more meaningful one
             Assert.assertThat(e, Matchers.instanceOf(Exception.class));
