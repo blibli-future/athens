@@ -7,11 +7,10 @@ import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 //import com.blibli.future.model.EmployeeShift;
-import com.blibli.future.service.ConverterServiceImpl;
 import com.blibli.future.service.EmployeeServiceImpl;
 //import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
-import com.blibli.future.vo.EmployeeShiftVo;
+//import com.blibli.future.vo.EmployeeShiftVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.After;
@@ -46,10 +45,8 @@ public class AttendanceControllerTest {
 //    private EmployeeShiftingServiceImpl employeeShiftingService;
     @Mock
     private EmployeeServiceImpl employeeService;
-    @Mock
-    private ConverterServiceImpl converterService;
     
-    EmployeeShiftVo employeeShiftVoMock;
+    //EmployeeShiftVo employeeShiftVoMock;
     //EmployeeShift employeeShiftMock;
     
     private MockMvc mockMvc;
@@ -337,7 +334,7 @@ public class AttendanceControllerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(this.attendanceController).build();
-        employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
+        //employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
         //employeeShiftMock = new EmployeeShift("shift", "nik");
     }
 

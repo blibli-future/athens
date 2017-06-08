@@ -23,19 +23,16 @@ import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 //import com.blibli.future.model.EmployeeShift;
-import com.blibli.future.service.api.ConverterService;
 import com.blibli.future.service.api.EmployeeService;
 //import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
-import com.blibli.future.vo.EmployeeShiftVo;
+//import com.blibli.future.vo.EmployeeShiftVo;
 
 @RestController
 public class AttendanceController {
 	
     private EmployeeTappingService employeeTappingService;
-    private EmployeeService employeeService;
-    private ConverterService converterService;
-    
+    private EmployeeService employeeService;    
     
 //    @Autowired
 //    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService, ConverterService converterService) {

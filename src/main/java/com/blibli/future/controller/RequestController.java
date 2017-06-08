@@ -24,10 +24,14 @@ import com.blibli.future.service.api.LeaveService;
 
 @RestController
 public class RequestController {
-	private final String base = "/request/";
-	private final String leave = "leave/";
-	private final String leaveListing = "leave/list/";
-	private final String absencepermit = "absencepermit/";
+	public final String BASE_PATH = "/request";
+    public final String PATH_LEAVE = BASE_PATH + "/leave";
+    public final String PATH_LISTING_LEAVE = PATH_LEAVE + "/list";
+    public final String PATH_ABSENCE_PERMIT = BASE_PATH + "/absencepermit";
+//	private final String base = "/request/";
+//	private final String leave = "leave/";
+//	private final String leaveListing = "leave/list/";
+//	private final String absencepermit = "absencepermit/";
 	
 	//private EmployeeLeaveService employeeLeaveService;
 	//private EmployeeAbsencePermitService employeeAbsencePermitService;

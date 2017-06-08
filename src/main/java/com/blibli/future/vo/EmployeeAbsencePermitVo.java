@@ -32,6 +32,8 @@ public class EmployeeAbsencePermitVo implements Serializable {
 		this.requestDate = LocalDate.now();
 	}
 
+	public EmployeeAbsencePermitVo(){}
+	
 	public String getId() {
 		return id;
 	}

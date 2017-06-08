@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 import com.blibli.future.enums.AbsencePermit;
 import com.blibli.future.enums.Status;
+import com.blibli.future.vo.EmployeeAbsencePermitVo;
 
 @Entity
 
@@ -37,6 +38,19 @@ public class EmployeeAbsencePermit implements Serializable{
 		this.status = Status.WAITING;
 		this.requestDate = LocalDate.now();
 		this.absencePermit = absencePermit;
+	}
+	
+	public void updateEmployeeAbsencePermit(EmployeeAbsencePermitVo employeeAbsencePermit){
+		this.startDate = employeeAbsencePermit.getStartDate();
+		this.endDate = employeeAbsencePermit.getEndDate();
+		this.reason = employeeAbsencePermit.getReason();
+		this.status = employeeAbsencePermit.getStatus();
+		this.requestDate = employeeAbsencePermit.getRequestDate();
+		this.absencePermit = employeeAbsencePermit.getAbsencePermit();
+	}
+	
+	public static EmployeeAbsencePermit convertToEmployeeAbsencePermit(EmployeeAbsencePermitVo empAbsPerVo, Employee emp){
+		return new EmployeeAbsencePermit(emp, empAbsPerVo.getAbsencePermit(), empAbsPerVo.getStartDate(), empAbsPerVo.getEndDate(), empAbsPerVo.getReason());
 	}
 
 	@Id
