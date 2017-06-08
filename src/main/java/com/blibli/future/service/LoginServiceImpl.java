@@ -22,15 +22,13 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public String createNewToken(String username, String password) throws Exception {
-        AthensCredential credential = credentialsRepository.findByEmailAndNik(username, password);
+        AthensCredential credential = credentialsRepository.findByUsernameAndPassword(username, password);
 
         if(credential == null) {
             throw new Exception("Invalid username or password");
         }
 
-        Claims claims = Jwts.claims();
-
-        claims.put("nik", password);
+        Claims claims = Jwts.claims().setSubject(username);
 
         return Jwts.builder()
                 .setClaims(claims)

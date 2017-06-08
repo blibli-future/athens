@@ -22,18 +22,17 @@ public class LoginServiceTest {
     @Mock
     private AthensCredentialsRepository credentialsRepository;
 
-    private final String EMAIL = "Email";
+    private final String USERNAME = "Username";
     private final String PASSWORD = "Password";
     private final AthensCredential CREDENTIAL = new AthensCredential();
 
     @Test
     public void authenticateTest() throws Exception {
-        Mockito.when(credentialsRepository.findByEmailAndNik(EMAIL, PASSWORD)).thenReturn(CREDENTIAL);
+        Mockito.when(credentialsRepository.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(CREDENTIAL);
 
-        String result = authenticationService.createNewToken(EMAIL, PASSWORD);
+        String result = authenticationService.createNewToken(USERNAME, PASSWORD);
 
-        Claims claims = Jwts.claims();
-        claims.put("nik", PASSWORD);
+        Claims claims = Jwts.claims().setSubject(USERNAME);
 
         String expected =
                 Jwts.builder()
@@ -41,23 +40,23 @@ public class LoginServiceTest {
                         .signWith(SignatureAlgorithm.HS512, "ATHENS-SECRET")
                         .compact();
 
-        Mockito.verify(credentialsRepository).findByEmailAndNik(EMAIL, PASSWORD);
+        Mockito.verify(credentialsRepository).findByUsernameAndPassword(USERNAME, PASSWORD);
 
         Assert.assertEquals(expected, result);
     }
 
     @Test
     public void authenticateTest_Fail() throws Exception {
-        Mockito.when(credentialsRepository.findByEmailAndNik(EMAIL, PASSWORD)).thenReturn(null);
+        Mockito.when(credentialsRepository.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(null);
 
         try {
-            String result = authenticationService.createNewToken(EMAIL, PASSWORD);
+            String result = authenticationService.createNewToken(USERNAME, PASSWORD);
         } catch (Exception e) {
             //TODO: Change the Exception CLass to a more meaningful one
             Assert.assertThat(e, Matchers.instanceOf(Exception.class));
         }
 
-        Mockito.verify(credentialsRepository).findByEmailAndNik(EMAIL, PASSWORD);
+        Mockito.verify(credentialsRepository).findByUsernameAndPassword(USERNAME, PASSWORD);
     }
 
     @Before
