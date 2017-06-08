@@ -77,6 +77,68 @@ public class EmployeeLeaveVo implements Serializable{
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idLeave == null) ? 0 : idLeave.hashCode());
+		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
+		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
+		result = prime * result + ((requestDate == null) ? 0 : requestDate.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EmployeeLeaveVo other = (EmployeeLeaveVo) obj;
+		if (endDate == null) {
+			if (other.endDate != null)
+				return false;
+		} else if (!endDate.equals(other.endDate))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (idLeave == null) {
+			if (other.idLeave != null)
+				return false;
+		} else if (!idLeave.equals(other.idLeave))
+			return false;
+		if (nik == null) {
+			if (other.nik != null)
+				return false;
+		} else if (!nik.equals(other.nik))
+			return false;
+		if (reason == null) {
+			if (other.reason != null)
+				return false;
+		} else if (!reason.equals(other.reason))
+			return false;
+		if (requestDate == null) {
+			if (other.requestDate != null)
+				return false;
+		} else if (!requestDate.equals(other.requestDate))
+			return false;
+		if (startDate == null) {
+			if (other.startDate != null)
+				return false;
+		} else if (!startDate.equals(other.startDate))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
 }

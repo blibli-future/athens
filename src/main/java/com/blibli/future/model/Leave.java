@@ -15,7 +15,6 @@ import com.blibli.future.enums.Religion;
 public class Leave {
 	@Id
 	private String id;
-
 	private String name;
 	private Gender gender;
 	private MaritalStatus maritalStatus;
