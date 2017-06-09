@@ -77,12 +77,12 @@ public class EmployeeAbsencePermitServiceImplTest {
 	
 	@Test
 	public void updateAbsencePermitRequestTest() throws Exception{
-		Mockito.when(employeeAbsencePermitRepository.findById(employeeAbsencePermitVo.getId())).thenReturn(employeeAbsencePermit);
+		Mockito.when(employeeAbsencePermitRepository.findOneById(employeeAbsencePermitVo.getId())).thenReturn(employeeAbsencePermit);
 		Mockito.when(employeeAbsencePermitRepository.save(employeeAbsencePermit)).thenReturn(employeeAbsencePermit);
 		
 		EmployeeAbsencePermit employeeAbsenceOutput = employeeAbsencePermitService.updateAbsencePermitRequest(employeeAbsencePermitVo);
 		
-		Mockito.verify(employeeAbsencePermitRepository).findById(employeeAbsencePermitVo.getId());
+		Mockito.verify(employeeAbsencePermitRepository).findOneById(employeeAbsencePermitVo.getId());
 		Mockito.verify(employeeAbsencePermitRepository).save(employeeAbsencePermit);
 		
         Assert.assertEquals(employeeAbsenceOutput, employeeAbsencePermit);

@@ -38,12 +38,15 @@ public class EmployeeAbsencePermitRepositoryTest {
 	
 	List<EmployeeAbsencePermit> listEmployeeAbsencePermit;
 	
-	LocalDate dateStart;
-	LocalDate dateEnd;
+	
 	
 	@Test
 	public void findByEmployeeAndRequestDateBetweenTest() throws Exception{
-		Assert.assertThat(this.employeeAbsencePermitRepository.findByEmployeeAndRequestDateBetween(employee, dateStart, dateEnd), Matchers.equalTo(this.listEmployeeAbsencePermit));
+		LocalDate dateStart = LocalDate.of(2015, 11, 1);
+		LocalDate dateEnd = LocalDate.of(2017, 1, 31);
+		
+		int count = this.employeeAbsencePermitRepository.findByEmployeeAndRequestDateBetween(employee, dateStart, dateEnd).size();
+		Assert.assertThat(count, Matchers.equalTo(2));
 	}
 	
 	@Test
@@ -71,10 +74,7 @@ public class EmployeeAbsencePermitRepositoryTest {
 		this.listEmployeeAbsencePermit.add(eAP1);
 		this.listEmployeeAbsencePermit.add(eAP2);
 		
-		this.dateStart = LocalDate.of(2016, 11, 1);
-		this.dateEnd = LocalDate.of(2016, 12, 31);
-		
-		this.target = employeeAbsencePermitRepository.findById(this.employeeAbsencePermit1.getId());
+		this.target = employeeAbsencePermitRepository.findOneById(this.employeeAbsencePermit1.getId());
 		System.out.println(this.employeeAbsencePermit1.getId());
 		System.out.println(this.target.getId());
 		System.out.println("BESAR DAN PANJANG!");

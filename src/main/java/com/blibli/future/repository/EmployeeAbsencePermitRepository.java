@@ -11,5 +11,5 @@ import com.blibli.future.model.EmployeeAbsencePermit;
 @Repository
 public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeAbsencePermit, String>{
 	public List<EmployeeAbsencePermit> findByEmployeeAndRequestDateBetween(Employee employee, LocalDate dateStart,LocalDate dateEnd);
-	public EmployeeAbsencePermit findById(String id);
+	public EmployeeAbsencePermit findOneById(String id);
 }

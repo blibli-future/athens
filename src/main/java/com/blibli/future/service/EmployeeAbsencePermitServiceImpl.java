@@ -38,6 +38,8 @@ public class EmployeeAbsencePermitServiceImpl implements EmployeeAbsencePermitSe
 					//Log EmployeeAbsencePermit Is Saved Dudeh
 					return savedEmployeeAbsencePermit;
 				}
+				//Log fail dudeh
+				return null;
 			}
 			//Log Employee not found Dudeh
 			return null;
@@ -66,8 +68,12 @@ public class EmployeeAbsencePermitServiceImpl implements EmployeeAbsencePermitSe
 				
 				List<EmployeeAbsencePermit> listEmployeeAbsencePermit = new ArrayList<>();
 				listEmployeeAbsencePermit = employeeAbsencePermitRepository.findByEmployeeAndRequestDateBetween(emp, dateStart, dateEnd);
-				//Log sukses dudeh
-				return listEmployeeAbsencePermit;
+				if(listEmployeeAbsencePermit!=null){
+					//Log sukses dudeh
+					return listEmployeeAbsencePermit;
+				}
+				//Log null dudeh
+				return null;
 			}
 			//Log employee not found dudeh
 			return null;
@@ -79,7 +85,7 @@ public class EmployeeAbsencePermitServiceImpl implements EmployeeAbsencePermitSe
 	@Override
 	public EmployeeAbsencePermit updateAbsencePermitRequest(EmployeeAbsencePermitVo employeeAbsencePermitVo) {
 		if(employeeAbsencePermitVo!=null){
-			EmployeeAbsencePermit oldEmployeeAbsencePermit = employeeAbsencePermitRepository.findById(employeeAbsencePermitVo.getId());
+			EmployeeAbsencePermit oldEmployeeAbsencePermit = employeeAbsencePermitRepository.findOneById(employeeAbsencePermitVo.getId());
 			if(oldEmployeeAbsencePermit != null)
 			{
 				oldEmployeeAbsencePermit.updateEmployeeAbsencePermit(employeeAbsencePermitVo);
@@ -89,6 +95,8 @@ public class EmployeeAbsencePermitServiceImpl implements EmployeeAbsencePermitSe
 					//Log EmployeeAbsencePermit updated dudeh
 					return updatedEmployeeAbsencePermit;
 				}
+				//Log update fail dudeh
+				return null;
 			}
 			//Log EmployeeAbsencePermit not found dudeh
 			return null;

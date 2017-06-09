@@ -13,6 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.io.Serializable;
 
 import com.blibli.future.enums.Status;
+import com.blibli.future.vo.EmployeeLeaveVo;
 
 @Entity
 public class EmployeeLeave implements Serializable{
@@ -36,6 +37,19 @@ public class EmployeeLeave implements Serializable{
 	}
 
 	public EmployeeLeave() {}
+	
+	public void updateEmployeeLeave(EmployeeLeaveVo empLeaVo, Leave leave){
+		this.startDate = empLeaVo.getStartDate();
+		this.endDate = empLeaVo.getEndDate();
+		this.reason = empLeaVo.getReason();
+		this.status = empLeaVo.getStatus();
+		this.requestDate = empLeaVo.getRequestDate();
+		this.leave = leave;
+	}
+	
+	public static EmployeeLeave convertToEmployeeLeave(EmployeeLeaveVo empLeaVo, Employee emp, Leave lea){
+		return new EmployeeLeave(emp, lea, empLeaVo.getStartDate(), empLeaVo.getEndDate(), empLeaVo.getReason());
+	}
 	
 	@Id
 	@GeneratedValue(generator = "uuid")
