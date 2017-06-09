@@ -1,6 +1,7 @@
 package com.blibli.future.config;
 
 
+import com.blibli.future.security.JwtAuthenticationEntryPoint;
 import com.blibli.future.security.JwtAuthenticationFilter;
 import com.blibli.future.security.JwtAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter authenticationFilter;
-
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
     @Autowired
-    public WebSecurityConfiguration(JwtAuthenticationProvider authenticationProvider, JwtAuthenticationFilter authenticationFilter) {
+    public WebSecurityConfiguration(JwtAuthenticationProvider authenticationProvider, JwtAuthenticationFilter authenticationFilter, JwtAuthenticationEntryPoint authenticationEntryPoint) {
         this.authenticationProvider = authenticationProvider;
         this.authenticationFilter = authenticationFilter;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Override
@@ -32,6 +34,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**")
                 .authenticated()
                 .and()
-                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint);
     }
 }

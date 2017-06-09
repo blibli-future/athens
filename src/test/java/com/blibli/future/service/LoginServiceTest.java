@@ -3,9 +3,7 @@ package com.blibli.future.service;
 
 import com.blibli.future.model.AthensCredential;
 import com.blibli.future.repository.AthensCredentialsRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.blibli.future.util.JwtUtil;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
@@ -33,13 +31,7 @@ public class LoginServiceTest {
 
         String result = authenticationService.createNewToken(USERNAME, PASSWORD);
 
-        Claims claims = Jwts.claims().setSubject(USERNAME);
-
-        String expected =
-                Jwts.builder()
-                        .setClaims(claims)
-                        .signWith(SignatureAlgorithm.HS512, "ATHENS-SECRET")
-                        .compact();
+        String expected = JwtUtil.createTokenFor(CREDENTIAL);
 
         Mockito.verify(credentialsRepository).findByUsernameAndPassword(USERNAME, PASSWORD);
 

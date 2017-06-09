@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,7 @@ public class LoginController {
         String jwtToken;
         try {
             jwtToken = loginService.createNewToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
 
@@ -40,7 +41,7 @@ public class LoginController {
 
     @PostMapping("/signup")
     public ResponseEntity<AthensResponse> signupDummy(@RequestBody AuthenticationRequest request) {
-        String signupToken = loginService.createNewUser(request.getNik(), request.getPassword());
-        return new ResponseEntity<>(new AuthenticationResponse(signupToken), HttpStatus.OK);
+        String signUpToken = loginService.createNewUser(request.getNik(), request.getPassword());
+        return new ResponseEntity<>(new AuthenticationResponse(signUpToken), HttpStatus.OK);
     }
 }

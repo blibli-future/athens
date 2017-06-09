@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -53,7 +54,7 @@ public class LoginControllerTest {
 
     @Test
     public void login_Fail() throws Exception {
-        Mockito.when(loginService.createNewToken(USERNAME, PASSWORD)).thenThrow(new Exception(MESSAGE));
+        Mockito.when(loginService.createNewToken(USERNAME, PASSWORD)).thenThrow(new BadCredentialsException(MESSAGE));
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new ErrorResponse(MESSAGE));

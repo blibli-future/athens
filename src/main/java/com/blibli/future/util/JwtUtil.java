@@ -2,7 +2,7 @@ package com.blibli.future.util;
 
 import com.blibli.future.enums.Role;
 import com.blibli.future.model.AthensCredential;
-import com.blibli.future.security.JwtUserDetail;
+import com.blibli.future.security.model.JwtUserDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

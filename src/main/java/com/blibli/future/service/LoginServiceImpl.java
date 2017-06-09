@@ -6,6 +6,8 @@ import com.blibli.future.repository.AthensCredentialsRepository;
 import com.blibli.future.service.api.LoginService;
 import com.blibli.future.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -23,11 +25,11 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public String createNewToken(String username, String password) throws Exception {
+    public String createNewToken(String username, String password) throws AuthenticationException {
         AthensCredential credential = credentialsRepository.findByUsernameAndPassword(username, password);
 
         if(credential == null) {
-            throw new Exception("Invalid username or password");
+            throw new BadCredentialsException("Invalid username or password");
         }
 
         return JwtUtil.createTokenFor(credential);

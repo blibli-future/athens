@@ -1,8 +1,9 @@
 package com.blibli.future.service.api;
 
+import org.springframework.security.core.AuthenticationException;
+
 public interface LoginService {
-    //TODO: Change the exception into a more meaningful one
-    String createNewToken(String username, String password) throws Exception;
+    String createNewToken(String username, String password) throws AuthenticationException;
 
     String createNewUser(String username, String password);
 }

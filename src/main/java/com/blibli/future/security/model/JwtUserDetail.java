@@ -1,4 +1,4 @@
-package com.blibli.future.security;
+package com.blibli.future.security.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
