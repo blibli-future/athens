@@ -1,13 +1,15 @@
 package com.blibli.future.service;
 
+import com.blibli.future.enums.Role;
 import com.blibli.future.model.AthensCredential;
 import com.blibli.future.repository.AthensCredentialsRepository;
 import com.blibli.future.service.api.LoginService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.blibli.future.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -28,11 +30,15 @@ public class LoginServiceImpl implements LoginService {
             throw new Exception("Invalid username or password");
         }
 
-        Claims claims = Jwts.claims().setSubject(username);
+        return JwtUtil.createTokenFor(credential);
+    }
 
-        return Jwts.builder()
-                .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, this.ATHENS_SECRET_KEY)
-                .compact();
+    @Override
+    public String createNewUser(String username, String password) {
+        AthensCredential credential =
+                new AthensCredential(username, password, username, Stream.of(Role.EMPLOYEE).collect(Collectors.toSet()));
+        credentialsRepository.save(credential);
+
+        return JwtUtil.createTokenFor(credential);
     }
 }

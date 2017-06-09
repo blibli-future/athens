@@ -28,12 +28,19 @@ public class LoginController {
 
     @PostMapping(value = LOGIN_URL)
     public ResponseEntity<AthensResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
+        String jwtToken;
         try {
-            String jwtToken = loginService.createNewToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
+            jwtToken = loginService.createNewToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(new AuthenticationResponse("token"), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthenticationResponse(jwtToken), HttpStatus.OK);
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<AthensResponse> signupDummy(@RequestBody AuthenticationRequest request) {
+        String signupToken = loginService.createNewUser(request.getNik(), request.getPassword());
+        return new ResponseEntity<>(new AuthenticationResponse(signupToken), HttpStatus.OK);
     }
 }

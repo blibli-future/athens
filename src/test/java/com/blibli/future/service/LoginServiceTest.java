@@ -24,7 +24,8 @@ public class LoginServiceTest {
 
     private final String USERNAME = "Username";
     private final String PASSWORD = "Password";
-    private final AthensCredential CREDENTIAL = new AthensCredential();
+    private final String NIK = "Nik";
+    private final AthensCredential CREDENTIAL = new AthensCredential(USERNAME, PASSWORD, NIK, null);
 
     @Test
     public void authenticateTest() throws Exception {
