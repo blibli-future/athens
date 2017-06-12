@@ -7,5 +7,5 @@ import com.blibli.future.model.Shift;
 
 @Repository
 public interface ShiftRepository extends JpaRepository<Shift, String> {
-
+	public Shift findOneById(String id);
 }

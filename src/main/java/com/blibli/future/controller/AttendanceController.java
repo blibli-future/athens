@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,27 +23,31 @@ import com.blibli.future.enums.Religion;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
-//import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.api.EmployeeService;
-//import com.blibli.future.service.api.EmployeeShiftingService;
+import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
-//import com.blibli.future.vo.EmployeeShiftVo;
+
 
 @RestController
 public class AttendanceController {
 	
+	public final String BASE_PATH = "/employee";
+    public final String PATH_SHIFTING = BASE_PATH + "/shift";
+    public final String PATH_TAPS = BASE_PATH + "/taps";
+    public final String PATH_TAPS_UPLOAD = PATH_TAPS + "/upload";
+	
     private EmployeeTappingService employeeTappingService;
-    private EmployeeService employeeService;    
+    private EmployeeService employeeService;
+    private EmployeeShiftingService employeeShiftingService;
     
-//    @Autowired
-//    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService, ConverterService converterService) {
-//        this.employeeTappingService = employeeTappingService;
-//        this.employeeService = employeeService;
-//        this.employeeShiftingService = employeeShiftingService;
-//        this.converterService = converterService;
-//    }
+    @Autowired
+    public AttendanceController(EmployeeTappingService employeeTappingService, EmployeeService employeeService, EmployeeShiftingService employeeShiftingService) {
+        this.employeeTappingService = employeeTappingService;
+        this.employeeService = employeeService;
+        this.employeeShiftingService = employeeShiftingService;
+    }
 
-    @PostMapping("/employees/taps/upload")
+    @PostMapping(PATH_TAPS_UPLOAD)
     public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
         try {
             employeeTappingService.addTapMachineFile(file);
@@ -56,7 +61,7 @@ public class AttendanceController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("employees/taps")
+    @PostMapping(PATH_TAPS)
     public ResponseEntity employeeTapping(@RequestParam("type") String type,
                                           @RequestParam("tapTime") String tapTime,
                                           @RequestParam("dateTap") String dateTap,
@@ -71,7 +76,7 @@ public class AttendanceController {
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
     
-    @PutMapping("employees/taps")
+    @PutMapping(PATH_TAPS)
     public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") String tapTime,
     		@RequestParam("dateTap") String dateTap, @RequestParam("nik") String nik) {
     	LocalDate dateTapConvert = LocalDate.parse(dateTap);
@@ -84,7 +89,7 @@ public class AttendanceController {
         return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("employees/taps")
+    @GetMapping(PATH_TAPS)
     public ResponseEntity<List<Attendance>> employeeTappingGet(@RequestParam("dateStart") String dateStart, 
     		@RequestParam("dateEnd") String dateEnd) {
     	LocalDate dateStartConvert = LocalDate.parse(dateStart);
@@ -97,38 +102,37 @@ public class AttendanceController {
         return new ResponseEntity(employeeTapGetted, HttpStatus.BAD_REQUEST);
     }
 
-//    @PostMapping("employees/shift")
-//    public ResponseEntity<EmployeeShift> employeeShifting(@RequestBody EmployeeShiftVo employeeShiftVo) {
-//    	EmployeeShift employeeShift = converterService.map(employeeShiftVo, EmployeeShift.class);
-//    	EmployeeShift employeeShifted = employeeShiftingService.processShifting(employeeShift);
-//    	if(employeeShifted!=null)
-//    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.OK);
-//    	else
-//    		return new ResponseEntity<EmployeeShift>(employeeShifted, HttpStatus.BAD_REQUEST);
-//    }
-//
-//    @PutMapping("employees/shift")
-//    public ResponseEntity employeeShiftingUpdate(@RequestParam("idShiftLama") String idShiftLama, 
-//    		@RequestParam("idShift") String idShift, @RequestParam("nik") String nik) {
-//    	boolean employeeShiftUpdated =
-//    			employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik);
-//        if(employeeShiftUpdated) {
-//            return new ResponseEntity(true, HttpStatus.OK);
-//        }
-//        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
-//    }
-//
-//    @GetMapping("employees/shift")
-//    public ResponseEntity<List<EmployeeShift>> employeeShiftingGet(@RequestParam("idShift") String idShift) {
-//    	List<EmployeeShift> employeeShiftGetted =
-//    			employeeShiftingService.processGetShifting(idShift);
-//        if(employeeShiftGetted!=null) {
-//            return new ResponseEntity(employeeShiftGetted, HttpStatus.OK);
-//        }
-//        return new ResponseEntity(employeeShiftGetted, HttpStatus.BAD_REQUEST);
-//    }
+    @PostMapping(PATH_SHIFTING)
+    public ResponseEntity<Employee> employeeShifting(@RequestParam("nik") String nik, @RequestParam("idShift") String idShift) {
+    	Employee employeeShifted = employeeShiftingService.processShifting(nik,idShift);
+    	if(employeeShifted!=null)
+    		return new ResponseEntity<Employee>(employeeShifted, HttpStatus.OK);
+    	else
+    		return new ResponseEntity<Employee>(employeeShifted, HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping(PATH_SHIFTING)
+    public ResponseEntity<Employee> employeeShiftingUpdate(@RequestParam("nik") String nik, 
+    		@RequestParam("newShift") String newShift, @RequestParam("oldShift") String oldShift) {
+    	Employee employeeShiftUpdated =
+    			employeeShiftingService.employeeShiftingUpdate(nik, newShift, oldShift);
+        if(employeeShiftUpdated!=null) {
+            return new ResponseEntity<Employee>(employeeShiftUpdated, HttpStatus.OK);
+        }
+        return new ResponseEntity<Employee>(employeeShiftUpdated, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(PATH_SHIFTING)
+    public ResponseEntity<Set<Employee>> employeeShiftingGet(@RequestParam("idShift") String idShift) {
+    	Set<Employee> employeeShiftGetted =
+    			employeeShiftingService.processGetShifting(idShift);
+        if(employeeShiftGetted!=null) {
+            return new ResponseEntity<Set<Employee>>(employeeShiftGetted, HttpStatus.OK);
+        }
+        return new ResponseEntity<Set<Employee>>(employeeShiftGetted, HttpStatus.BAD_REQUEST);
+    }
     
-    @PostMapping("employees")
+    @PostMapping(BASE_PATH)
     public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
                                    @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
                                    @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
@@ -155,7 +159,7 @@ public class AttendanceController {
             return new ResponseEntity(true, HttpStatus.BAD_REQUEST);
 
     }
-    @GetMapping("employees")
+    @GetMapping(BASE_PATH)
     public ResponseEntity<List<Employee>> employeeGetByDepartment(@RequestParam("nameOfDept") String nameOfDept){
         List<Employee> getEmployees =
                 employeeService.getEmployeesByDept(nameOfDept);
@@ -165,7 +169,7 @@ public class AttendanceController {
         return new ResponseEntity(getEmployees, HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("employees")
+    @PutMapping(BASE_PATH)
     public ResponseEntity employeeUpdate(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
             @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
             @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,

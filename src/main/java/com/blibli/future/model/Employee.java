@@ -207,6 +207,10 @@ public class Employee {
 		this.shifts.add(shifts);
 	}
 	
+	public void deleteShifts(Shift shifts) {
+		this.shifts.remove(shifts);
+	}
+	
 	public Set<EmployeeAbsencePermit> getEmployeeAbsencePermits() {
 		return employeeAbsencePermits;
 	}

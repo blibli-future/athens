@@ -13,15 +13,14 @@ public class EmployeeAbsencePermitVo implements Serializable {
 	private static final long serialVersionUID = -4521810996465893249L;
 	private String id;
 	private String nik;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private LocalDate requestDate;
+	private String startDate;
+	private String endDate;
 	private String reason;
 	private Status status;
 	private AbsencePermit absencePermit;
 	
 	public EmployeeAbsencePermitVo(String id, String nik, AbsencePermit absencePermit, 
-			LocalDate startDate, LocalDate endDate, String reason){
+			String startDate, String endDate, String reason){
 		this.id = id;
 		this.nik = nik;
 		this.absencePermit = absencePermit;
@@ -29,7 +28,6 @@ public class EmployeeAbsencePermitVo implements Serializable {
 		this.endDate = endDate;
 		this.reason = reason;
 		this.status = Status.WAITING;
-		this.requestDate = LocalDate.now();
 	}
 
 	public EmployeeAbsencePermitVo(){}
@@ -50,28 +48,20 @@ public class EmployeeAbsencePermitVo implements Serializable {
 		this.nik = nik;
 	}
 
-	public LocalDate getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
-	}
-
-	public LocalDate getRequestDate() {
-		return requestDate;
-	}
-
-	public void setRequestDate(LocalDate requestDate) {
-		this.requestDate = requestDate;
 	}
 
 	public String getReason() {
@@ -111,7 +101,6 @@ public class EmployeeAbsencePermitVo implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
 		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
-		result = prime * result + ((requestDate == null) ? 0 : requestDate.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
@@ -148,11 +137,6 @@ public class EmployeeAbsencePermitVo implements Serializable {
 				return false;
 		} else if (!reason.equals(other.reason))
 			return false;
-		if (requestDate == null) {
-			if (other.requestDate != null)
-				return false;
-		} else if (!requestDate.equals(other.requestDate))
-			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
 				return false;
@@ -162,6 +146,5 @@ public class EmployeeAbsencePermitVo implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

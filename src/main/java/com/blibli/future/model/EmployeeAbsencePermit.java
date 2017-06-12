@@ -1,6 +1,7 @@
 package com.blibli.future.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,17 +41,18 @@ public class EmployeeAbsencePermit implements Serializable{
 		this.absencePermit = absencePermit;
 	}
 	
-	public void updateEmployeeAbsencePermit(EmployeeAbsencePermitVo employeeAbsencePermit){
-		this.startDate = employeeAbsencePermit.getStartDate();
-		this.endDate = employeeAbsencePermit.getEndDate();
-		this.reason = employeeAbsencePermit.getReason();
-		this.status = employeeAbsencePermit.getStatus();
-		this.requestDate = employeeAbsencePermit.getRequestDate();
-		this.absencePermit = employeeAbsencePermit.getAbsencePermit();
+	public void updateEmployeeAbsencePermit(EmployeeAbsencePermitVo employeeAbsencePermitVo){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		this.startDate = LocalDate.parse(employeeAbsencePermitVo.getStartDate(), formatter);
+		this.endDate = LocalDate.parse(employeeAbsencePermitVo.getEndDate(), formatter);
+		this.reason = employeeAbsencePermitVo.getReason();
+		this.status = employeeAbsencePermitVo.getStatus();
+		this.absencePermit = employeeAbsencePermitVo.getAbsencePermit();
 	}
 	
 	public static EmployeeAbsencePermit convertToEmployeeAbsencePermit(EmployeeAbsencePermitVo empAbsPerVo, Employee emp){
-		return new EmployeeAbsencePermit(emp, empAbsPerVo.getAbsencePermit(), empAbsPerVo.getStartDate(), empAbsPerVo.getEndDate(), empAbsPerVo.getReason());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return new EmployeeAbsencePermit(emp, empAbsPerVo.getAbsencePermit(), LocalDate.parse(empAbsPerVo.getStartDate(), formatter), LocalDate.parse(empAbsPerVo.getEndDate(), formatter), empAbsPerVo.getReason());
 	}
 
 	@Id

@@ -1,6 +1,7 @@
 package com.blibli.future.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,16 +40,17 @@ public class EmployeeLeave implements Serializable{
 	public EmployeeLeave() {}
 	
 	public void updateEmployeeLeave(EmployeeLeaveVo empLeaVo, Leave leave){
-		this.startDate = empLeaVo.getStartDate();
-		this.endDate = empLeaVo.getEndDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		this.startDate = LocalDate.parse(empLeaVo.getStartDate(), formatter);
+		this.endDate = LocalDate.parse(empLeaVo.getEndDate(), formatter);
 		this.reason = empLeaVo.getReason();
 		this.status = empLeaVo.getStatus();
-		this.requestDate = empLeaVo.getRequestDate();
 		this.leave = leave;
 	}
 	
 	public static EmployeeLeave convertToEmployeeLeave(EmployeeLeaveVo empLeaVo, Employee emp, Leave lea){
-		return new EmployeeLeave(emp, lea, empLeaVo.getStartDate(), empLeaVo.getEndDate(), empLeaVo.getReason());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return new EmployeeLeave(emp, lea, LocalDate.parse(empLeaVo.getStartDate(), formatter), LocalDate.parse(empLeaVo.getEndDate(), formatter), empLeaVo.getReason());
 	}
 	
 	@Id
