@@ -43,7 +43,7 @@ public class JwtAuthenticationToken implements Authentication {
 
     @Override
     public boolean isAuthenticated() {
-        return jwtToken == null;
+        return userDetail != null;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.blibli.future.util;
 
-import com.blibli.future.enums.Role;
 import com.blibli.future.model.AthensCredential;
 import com.blibli.future.security.model.JwtUserDetail;
 import io.jsonwebtoken.Claims;
@@ -8,7 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -34,9 +33,9 @@ public class JwtUtil {
             return new JwtUserDetail(
                     (String) claims.get("nik"),
                     claims.getSubject(),
-                    ((Set<Role>) claims.get("roles"))
+                    ((List<String>) claims.get("roles"))
                             .stream()
-                            .map(role -> new SimpleGrantedAuthority(role.getName()))
+                            .map(role -> new SimpleGrantedAuthority(role))
                             .collect(Collectors.toSet())
             );
         } catch (Exception e) {
