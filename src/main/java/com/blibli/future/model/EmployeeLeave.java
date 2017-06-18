@@ -26,6 +26,8 @@ public class EmployeeLeave implements Serializable{
 	private LocalDate requestDate;
 	private Status status;
 	private String reason;
+	private String approvedBy;
+	private LocalDate approvedDate;
 	
 	public EmployeeLeave(Employee employee, Leave leave, LocalDate startDate, LocalDate endDate, String reason){
 		this.employee = employee;
@@ -35,6 +37,8 @@ public class EmployeeLeave implements Serializable{
 		this.reason = reason;
 		this.requestDate = LocalDate.now();
 		this.status = Status.WAITING;
+		this.approvedBy = null;
+		this.approvedDate = null;
 	}
 
 	public EmployeeLeave() {}
@@ -124,10 +128,28 @@ public class EmployeeLeave implements Serializable{
 		this.reason = reason;
 	}
 
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public LocalDate getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(LocalDate approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((approvedBy == null) ? 0 : approvedBy.hashCode());
+		result = prime * result + ((approvedDate == null) ? 0 : approvedDate.hashCode());
 		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -148,6 +170,16 @@ public class EmployeeLeave implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeeLeave other = (EmployeeLeave) obj;
+		if (approvedBy == null) {
+			if (other.approvedBy != null)
+				return false;
+		} else if (!approvedBy.equals(other.approvedBy))
+			return false;
+		if (approvedDate == null) {
+			if (other.approvedDate != null)
+				return false;
+		} else if (!approvedDate.equals(other.approvedDate))
+			return false;
 		if (employee == null) {
 			if (other.employee != null)
 				return false;
@@ -187,5 +219,4 @@ public class EmployeeLeave implements Serializable{
 			return false;
 		return true;
 	}
-
 }
