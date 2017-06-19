@@ -1,8 +1,10 @@
 package com.blibli.future.enums;
 
 public enum AbsencePermit {
-	IJIN1("ijin1"),
-    IJIN2("ijin2");
+	UNPAID_LEAVE("Unpaid Leave"),
+    HOURLY("Hourly"),
+    SICK("Sick"),
+    SICK_WITH_HOSPITAL_LETTER("Sick With Hospital Letter");
 
     private String name;
     

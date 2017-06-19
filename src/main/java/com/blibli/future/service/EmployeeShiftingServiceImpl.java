@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.Shift;
@@ -11,6 +12,7 @@ import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.service.api.EmployeeShiftingService;
 
+@Service
 public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
 
 	@Autowired

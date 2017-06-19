@@ -180,8 +180,8 @@ public class RequestControllerTest {
         this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", "Ariel", "CEO", "Central", LocalDate.now(), LocalDate.now(), true);
         this.leave = new Leave("123", "Libur Tahun Baru", Gender.MALE, MaritalStatus.LAJANG, Religion.KRISTEN);
         
-        this.employeeAbsencePermit = new EmployeeAbsencePermit(employee, AbsencePermit.IJIN1, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Males");
-        this.employeeAbsencePermitVoMock = new EmployeeAbsencePermitVo("321", "11", AbsencePermit.IJIN1, "2017-01-06", "2017-01-09", "Males");
+        this.employeeAbsencePermit = new EmployeeAbsencePermit(employee, AbsencePermit.SICK, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Males");
+        this.employeeAbsencePermitVoMock = new EmployeeAbsencePermitVo("321", "11", AbsencePermit.SICK, "2017-01-06", "2017-01-09", "Males");
         
         this.employeeLeaveVoMock = new EmployeeLeaveVo("321", "11", "1", "2017-01-06", "2017-01-09", "Males");
         this.employeeLeave = new EmployeeLeave(employee, leave, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Males");

@@ -59,11 +59,11 @@ public class EmployeeAbsencePermitRepositoryTest {
 		this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", "PakBossku", "CEO", "Central", LocalDate.now(), LocalDate.now(), true);
 		Employee emp1 = this.employeeRepository.save(this.employee);
 		
-		this.employeeAbsencePermit1 = new EmployeeAbsencePermit(emp1, AbsencePermit.IJIN1, LocalDate.of(2016, 12, 12), LocalDate.of(2010, 12, 31), "MALES");
+		this.employeeAbsencePermit1 = new EmployeeAbsencePermit(emp1, AbsencePermit.SICK, LocalDate.of(2016, 12, 12), LocalDate.of(2010, 12, 31), "MALES");
 		EmployeeAbsencePermit eAP1 = this.employeeAbsencePermitRepository.save(this.employeeAbsencePermit1);
-		this.employeeAbsencePermit2 = new EmployeeAbsencePermit(emp1, AbsencePermit.IJIN2, LocalDate.of(2016, 12, 1), LocalDate.of(2010, 12, 15), "CAPEK");
+		this.employeeAbsencePermit2 = new EmployeeAbsencePermit(emp1, AbsencePermit.HOURLY, LocalDate.of(2016, 12, 1), LocalDate.of(2010, 12, 15), "CAPEK");
 		EmployeeAbsencePermit eAP2 = this.employeeAbsencePermitRepository.save(this.employeeAbsencePermit2);
-		this.employeeAbsencePermit3 = new EmployeeAbsencePermit(emp1, AbsencePermit.IJIN2, LocalDate.of(2010, 12, 12), LocalDate.of(2010, 12, 30), "LINU");
+		this.employeeAbsencePermit3 = new EmployeeAbsencePermit(emp1, AbsencePermit.HOURLY, LocalDate.of(2010, 12, 12), LocalDate.of(2010, 12, 30), "LINU");
 		EmployeeAbsencePermit eAP3 = this.employeeAbsencePermitRepository.save(this.employeeAbsencePermit3);
 		
 		this.employeeAbsencePermit1 = eAP1;
