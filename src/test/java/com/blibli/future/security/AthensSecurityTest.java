@@ -1,14 +1,18 @@
 package com.blibli.future.security;
 
+import com.blibli.future.controller.LoginController;
 import com.blibli.future.controller.ShiftController;
 import com.blibli.future.enums.Role;
 import com.blibli.future.model.AthensCredential;
+import com.blibli.future.service.api.LoginService;
 import com.blibli.future.util.JwtUtil;
 import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,18 +24,21 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AthensSecurityTest {
     @Autowired
     private ShiftController shiftController;
 
+    @Mock
+    private LoginService loginService;
+    @InjectMocks
+    private LoginController loginController;
     @LocalServerPort
     private int serverPort;
 
     @Test
     public void getAllShiftTest_anon() {
-        given().when().get("/shift")
+        given().when().get(shiftController.BASE_PATH)
                 .then()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED);
     }
