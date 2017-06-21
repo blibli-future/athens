@@ -41,6 +41,12 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<EmployeeLeave> employeeLeaves;
     
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Set<EmployeeYearlyLeave> employeeYearlyLeave;
+    
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Set<SubstitutionLeaveRight> substitutionLeaveRight;
+    
     public Employee() {}
 
     public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
@@ -65,6 +71,8 @@ public class Employee {
         this.employeeAbsencePermits = new HashSet<>();
         this.shifts = new HashSet<>();
         this.employeeLeaves = new HashSet<>();
+        this.employeeYearlyLeave = new HashSet<>();
+        this.substitutionLeaveRight = new HashSet<>();
     }
 
     public Boolean getStatus() {
@@ -234,6 +242,30 @@ public class Employee {
 	public void addEmployeeLeaves(EmployeeLeave employeeLeave) {
 		this.employeeLeaves.add(employeeLeave);
 	}
+	
+	public Set<EmployeeYearlyLeave> getEmployeeYearlyLeave() {
+		return employeeYearlyLeave;
+	}
+
+	public void setEmployeeYearlyLeave(Set<EmployeeYearlyLeave> employeeYearlyLeave) {
+		this.employeeYearlyLeave = employeeYearlyLeave;
+	}
+	
+	public void addEmployeeYearlyLeave(EmployeeYearlyLeave employeeYearlyLeave) {
+		this.employeeYearlyLeave.add(employeeYearlyLeave);
+	}
+
+	public Set<SubstitutionLeaveRight> getSubstitutionLeaveRight() {
+		return substitutionLeaveRight;
+	}
+
+	public void setSubstitutionLeaveRight(Set<SubstitutionLeaveRight> substitutionLeaveRight) {
+		this.substitutionLeaveRight = substitutionLeaveRight;
+	}
+	
+	public void addSubstitutionLeaveRight(SubstitutionLeaveRight substitutionLeaveRight) {
+		this.substitutionLeaveRight.add(substitutionLeaveRight);
+	}
 
 	@Override
 	public int hashCode() {
@@ -245,6 +277,7 @@ public class Employee {
 		result = prime * result + ((chiefPositionText == null) ? 0 : chiefPositionText.hashCode());
 		result = prime * result + ((employeeAbsencePermits == null) ? 0 : employeeAbsencePermits.hashCode());
 		result = prime * result + ((employeeLeaves == null) ? 0 : employeeLeaves.hashCode());
+		result = prime * result + ((employeeYearlyLeave == null) ? 0 : employeeYearlyLeave.hashCode());
 		result = prime * result + ((endWorkingDate == null) ? 0 : endWorkingDate.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
@@ -258,6 +291,7 @@ public class Employee {
 		result = prime * result + ((shifts == null) ? 0 : shifts.hashCode());
 		result = prime * result + ((startWorkingDate == null) ? 0 : startWorkingDate.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((substitutionLeaveRight == null) ? 0 : substitutionLeaveRight.hashCode());
 		return result;
 	}
 
@@ -299,6 +333,11 @@ public class Employee {
 			if (other.employeeLeaves != null)
 				return false;
 		} else if (!employeeLeaves.equals(other.employeeLeaves))
+			return false;
+		if (employeeYearlyLeave == null) {
+			if (other.employeeYearlyLeave != null)
+				return false;
+		} else if (!employeeYearlyLeave.equals(other.employeeYearlyLeave))
 			return false;
 		if (endWorkingDate == null) {
 			if (other.endWorkingDate != null)
@@ -356,7 +395,11 @@ public class Employee {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
+		if (substitutionLeaveRight == null) {
+			if (other.substitutionLeaveRight != null)
+				return false;
+		} else if (!substitutionLeaveRight.equals(other.substitutionLeaveRight))
+			return false;
 		return true;
 	}
- 
 }
