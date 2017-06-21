@@ -37,7 +37,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                         .collect(Collectors.toSet())
         );
 
-
         return new JwtAuthenticationToken(userDetail);
     }
 

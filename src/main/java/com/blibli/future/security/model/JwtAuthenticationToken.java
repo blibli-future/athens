@@ -23,7 +23,7 @@ public class JwtAuthenticationToken implements Authentication {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return userDetail.getAuthorities();
     }
 
     @Override

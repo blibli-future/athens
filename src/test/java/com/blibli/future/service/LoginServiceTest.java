@@ -1,6 +1,7 @@
 package com.blibli.future.service;
 
 
+import com.blibli.future.enums.Role;
 import com.blibli.future.model.AthensCredential;
 import com.blibli.future.repository.AthensCredentialsRepository;
 import com.blibli.future.util.JwtUtil;
@@ -13,6 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.authentication.BadCredentialsException;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LoginServiceTest {
     @InjectMocks
@@ -23,7 +28,7 @@ public class LoginServiceTest {
     private final String USERNAME = "Username";
     private final String PASSWORD = "Password";
     private final String NIK = "Nik";
-    private final AthensCredential CREDENTIAL = new AthensCredential(USERNAME, PASSWORD, NIK, null);
+    private final AthensCredential CREDENTIAL = new AthensCredential(USERNAME, PASSWORD, NIK, Stream.of(Role.ADMIN).collect(Collectors.toSet()));
 
     @Test
     public void authenticateTest() throws Exception {
@@ -43,10 +48,9 @@ public class LoginServiceTest {
         Mockito.when(credentialsRepository.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(null);
 
         try {
-            String result = authenticationService.createNewToken(USERNAME, PASSWORD);
+            authenticationService.createNewToken(USERNAME, PASSWORD);
         } catch (Exception e) {
-            //TODO: Change the Exception CLass to a more meaningful one
-            Assert.assertThat(e, Matchers.instanceOf(Exception.class));
+            Assert.assertThat(e, Matchers.instanceOf(BadCredentialsException.class));
         }
 
         Mockito.verify(credentialsRepository).findByUsernameAndPassword(USERNAME, PASSWORD);

@@ -7,6 +7,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,5 +26,16 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
             throw new JwtAuthenticationException("Invalid Token");
         }
         return this.getAuthenticationManager().authenticate(new JwtAuthenticationToken(jwtToken.replaceAll("Bearer ", "")));
+    }
+
+    @Override
+    protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
+        return true;
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        super.successfulAuthentication(request, response, chain, authResult);
+        chain.doFilter(request, response);
     }
 }

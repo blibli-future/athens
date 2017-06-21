@@ -5,6 +5,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import java.util.stream.Collectors;
+
 
 public class JwtUtil {
     private static final String JWT_SECRET_KEY = "ATHENS-SECRET";
@@ -13,7 +15,7 @@ public class JwtUtil {
         Claims claims = Jwts.claims();
         claims.setSubject(credential.getUsername());
         claims.put("nik", credential.getNik());
-        claims.put("roles", credential.getRoles());
+        claims.put("roles", credential.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet()));
 
         return Jwts.builder()
                 .setClaims(claims)
