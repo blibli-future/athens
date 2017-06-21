@@ -1,50 +1,67 @@
 package com.blibli.future.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import org.dozer.DozerBeanMapperSingletonWrapper;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.blibli.future.model.EmployeeShift;
-import com.blibli.future.repository.EmployeeShiftRepository;
+import com.blibli.future.model.Employee;
+import com.blibli.future.model.Shift;
+import com.blibli.future.repository.EmployeeRepository;
+import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.service.api.EmployeeShiftingService;
-import com.blibli.future.vo.EmployeeShiftVo;
 
 @Service
 public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
-	private EmployeeShiftRepository shiftRepo;
-	
+
 	@Autowired
-	public EmployeeShiftingServiceImpl(EmployeeShiftRepository shiftRepo){
-		this.shiftRepo = shiftRepo;
-	}
+	EmployeeRepository employeeRepository;
+	@Autowired
+	ShiftRepository shiftRepository;
 	
-	public EmployeeShift processShifting(EmployeeShift employeeShift){
-		if(employeeShift!=null){
-			return shiftRepo.save(employeeShift);
+	@Override
+	public Employee processShifting(String nik, String idShift) {
+		Employee emp = employeeRepository.findOneByNik(nik);
+		Shift shift = shiftRepository.findOneById(idShift);
+		if(emp!=null && shift!=null){
+			emp.addShifts(shift);
+			Employee shiftAdded = employeeRepository.save(emp);
+			if(shiftAdded!=null)
+				return shiftAdded;
+			//Log save failed dudeh
+			return null;
 		}
+		//Log emp or shift null dudeh
 		return null;
 	}
-	
-	public boolean processUpdateShifting(String idShiftLama, String idShift, String nik){
-		if(idShift!=null && nik!=null){
-			EmployeeShift employeeShift = shiftRepo.findOneByNikAndIdShift(nik, idShiftLama);
-			employeeShift.setIdShift(idShift);
-			shiftRepo.save(employeeShift);
-			return true;
+
+	@Override
+	public Employee employeeShiftingUpdate(String nik, String newShift, String oldShift) {
+		Employee emp = employeeRepository.findOneByNik(nik);
+		Shift shiftOld = shiftRepository.findOneById(oldShift);
+		Shift shiftNew = shiftRepository.findOneById(newShift);
+		if(emp!=null&&shiftOld!=null&&shiftNew!=null){
+			emp.deleteShifts(shiftOld);
+			emp.addShifts(shiftNew);
+			Employee shiftUpdated = employeeRepository.save(emp);
+			if(shiftUpdated!=null)
+				return shiftUpdated;
+			//Log update failed dudeh
+			return null;
 		}
-		return false;
-	}
-	
-	public List<EmployeeShift> processGetShifting(String idShift){
-		List<EmployeeShift> listEmployeeShift = new ArrayList<>();
-		listEmployeeShift = shiftRepo.findByIdShift(idShift);
-		if(listEmployeeShift!=null){
-			return listEmployeeShift;
-		}
+		//Log emp newshift or oldshift null dudeh
 		return null;
 	}
+
+	@Override
+	public Set<Employee> processGetShifting(String idShift) {
+		Shift shift = shiftRepository.findOneById(idShift);
+		if(shift!=null){
+			return shift.getEmployees();
+		}
+		//Log shift not found dudeh
+		return null;
+	}
+
 }

@@ -1,6 +1,5 @@
 package com.blibli.future.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,13 +21,15 @@ import com.blibli.future.model.Leave;
 import com.blibli.future.service.api.EmployeeAbsencePermitService;
 import com.blibli.future.service.api.EmployeeLeaveService;
 import com.blibli.future.service.api.LeaveService;
+import com.blibli.future.vo.EmployeeAbsencePermitVo;
+import com.blibli.future.vo.EmployeeLeaveVo;
 
 @RestController
 public class RequestController {
-	private final String base = "/request/";
-	private final String leave = "leave/";
-	private final String leaveListing = "leave/list/";
-	private final String absencepermit = "absencepermit/";
+	public final String BASE_PATH = "/request";
+    public final String PATH_LEAVE = BASE_PATH + "/leave";
+    public final String PATH_LISTING_LEAVE = PATH_LEAVE + "/list";
+    public final String PATH_ABSENCE_PERMIT = BASE_PATH + "/absencepermit";
 	
 	private EmployeeLeaveService employeeLeaveService;
 	private EmployeeAbsencePermitService employeeAbsencePermitService;
@@ -41,127 +43,97 @@ public class RequestController {
 		this.leaveService = leaveService;
 	}
 	
-	@PostMapping(base+leave)
-	public ResponseEntity sentLeaveRequest(@RequestParam("nik") String nik,
-            @RequestParam("idLeave") String idLeave,
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("reason") String reason){
-		LocalDate startDateConvert = LocalDate.parse(startDate);
-    	LocalDate endDateConvert = LocalDate.parse(endDate);
-    	
-    	boolean Requested = employeeLeaveService.sentLeaveRequest(nik, idLeave, startDateConvert, endDateConvert, reason);
-    	if(Requested)
+	@PostMapping(PATH_LEAVE)
+	public ResponseEntity<EmployeeLeave> sentLeaveRequest(@RequestBody EmployeeLeaveVo employeeLeaveVo){
+    	EmployeeLeave requested = employeeLeaveService.sentLeaveRequest(employeeLeaveVo);
+    	if(requested!=null)
     	{
-    		return new ResponseEntity(true, HttpStatus.OK);
+    		return new ResponseEntity<EmployeeLeave>(requested, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<EmployeeLeave>(requested, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
-	@PutMapping(base+leave)
-	public ResponseEntity updateLeaveRequest(@RequestParam("id") String id ,@RequestParam("nik") String nik,
-            @RequestParam("idLeave") String idLeave,
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("reason") String reason){
-		LocalDate startDateConvert = LocalDate.parse(startDate);
-    	LocalDate endDateConvert = LocalDate.parse(endDate);
-    	
-    	boolean Requested = employeeLeaveService.updateLeaveRequest(id, nik, idLeave, startDateConvert, endDateConvert, reason);
-    	if(Requested)
+	@PutMapping(PATH_LEAVE)
+	public ResponseEntity<EmployeeLeave> updateLeaveRequest(@RequestBody EmployeeLeaveVo employeeLeaveVo){
+		EmployeeLeave requested = employeeLeaveService.updateLeaveRequest(employeeLeaveVo);
+    	if(requested!=null)
     	{
-    		return new ResponseEntity(true, HttpStatus.OK);
+    		return new ResponseEntity<EmployeeLeave>(requested, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<EmployeeLeave>(requested, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
-	@GetMapping(base+leave)
+	@GetMapping(PATH_LEAVE)
 	public ResponseEntity<List<EmployeeLeave>> getLeaveRequest(@RequestParam("nik") String nik){
-    	
 		List<EmployeeLeave> employeeLeaveGetted = employeeLeaveService.getLeaveRequest(nik);
     	if(employeeLeaveGetted!=null)
     	{
-    		return new ResponseEntity(employeeLeaveGetted, HttpStatus.OK);
+    		return new ResponseEntity<List<EmployeeLeave>>(employeeLeaveGetted, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(employeeLeaveGetted, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<List<EmployeeLeave>>(employeeLeaveGetted, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
-	@PostMapping(base+absencepermit)
-	public ResponseEntity sentAbsencePermitRequest(@RequestParam("nik") String nik,
-            @RequestParam("idAbsencePermit") String idAbsencePermit,
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("reason") String reason){
-		LocalDate startDateConvert = LocalDate.parse(startDate);
-    	LocalDate endDateConvert = LocalDate.parse(endDate);
-    	
-    	boolean Requested = employeeAbsencePermitService.sentAbsencePermitRequest(nik, idAbsencePermit, startDateConvert, endDateConvert, reason);
-    	if(Requested)
+	@PostMapping(PATH_ABSENCE_PERMIT)
+	public ResponseEntity<EmployeeAbsencePermit> sentAbsencePermitRequest(@RequestBody EmployeeAbsencePermitVo employeeAbsencePermitVo){
+    	EmployeeAbsencePermit requested = employeeAbsencePermitService.sentAbsencePermitRequest(employeeAbsencePermitVo);
+    	if(requested!=null)
     	{
-    		return new ResponseEntity(true, HttpStatus.OK);
+    		return new ResponseEntity<EmployeeAbsencePermit>(requested, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<EmployeeAbsencePermit>(requested, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
-	@GetMapping(base+absencepermit)
+	@GetMapping(PATH_ABSENCE_PERMIT)
 	public ResponseEntity<List<EmployeeAbsencePermit>> getAbsencePermitRequest(@RequestParam("nik") String nik){
-    	
-		List<EmployeeAbsencePermit> employeeAbsencePermitGetted = employeeAbsencePermitService.getAbsencePermitRequest(nik);
-    	if(employeeAbsencePermitGetted!=null)
+		List<EmployeeAbsencePermit> requested = employeeAbsencePermitService.getAbsencePermitRequest(nik);
+    	if(requested!=null)
     	{
-    		return new ResponseEntity(employeeAbsencePermitGetted, HttpStatus.OK);
+    		return new ResponseEntity<List<EmployeeAbsencePermit>>(requested, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(employeeAbsencePermitGetted, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<List<EmployeeAbsencePermit>>(requested, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
-	@PutMapping(base+absencepermit)
-	public ResponseEntity updateAbsencePermitRequest(@RequestParam("id") String id ,@RequestParam("nik") String nik,
-            @RequestParam("idAbsencePermit") String idAbsencePermit,
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("reason") String reason){
-		LocalDate startDateConvert = LocalDate.parse(startDate);
-    	LocalDate endDateConvert = LocalDate.parse(endDate);
-    	
-    	boolean Requested = employeeAbsencePermitService.updateAbsencePermitRequest(id, nik, idAbsencePermit, startDateConvert, endDateConvert, reason);
-    	if(Requested)
+	@PutMapping(PATH_ABSENCE_PERMIT)
+	public ResponseEntity<EmployeeAbsencePermit> updateAbsencePermitRequest(@RequestBody EmployeeAbsencePermitVo employeeAbsencePermitVo){
+		EmployeeAbsencePermit requested = employeeAbsencePermitService.updateAbsencePermitRequest(employeeAbsencePermitVo);
+    	if(requested!=null)
     	{
-    		return new ResponseEntity(true, HttpStatus.OK);
+    		return new ResponseEntity<EmployeeAbsencePermit>(requested, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<EmployeeAbsencePermit>(requested, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
-	@GetMapping(base+leaveListing)
+	@GetMapping(PATH_LISTING_LEAVE)
 	public ResponseEntity<List<Leave>> getLeave(@RequestParam("gender") String gender,
 			@RequestParam("maritalStatus") String maritalStatus,
 			@RequestParam("religion") String religion){
     	
-		List<Leave> leaveGetted = leaveService.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
-    	if(leaveGetted!=null)
+		List<Leave> requested = leaveService.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
+    	if(requested!=null)
     	{
-    		return new ResponseEntity(leaveGetted, HttpStatus.OK);
+    		return new ResponseEntity<List<Leave>>(requested, HttpStatus.OK);
     	}
     	else
     	{
-    		return new ResponseEntity(leaveGetted, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<List<Leave>>(requested, HttpStatus.BAD_REQUEST);
     	}
 	}
 }

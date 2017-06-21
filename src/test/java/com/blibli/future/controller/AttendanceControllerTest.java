@@ -6,12 +6,11 @@ import com.blibli.future.enums.Religion;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
-import com.blibli.future.model.EmployeeShift;
-import com.blibli.future.service.ConverterServiceImpl;
+//import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeServiceImpl;
-import com.blibli.future.service.EmployeeShiftingServiceImpl;
+//import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
-import com.blibli.future.vo.EmployeeShiftVo;
+//import com.blibli.future.vo.EmployeeShiftVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.After;
@@ -42,15 +41,13 @@ public class AttendanceControllerTest {
     private AttendanceController attendanceController;
     @Mock
     private EmployeeTappingServiceImpl employeeTappingService;
-    @Mock
-    private EmployeeShiftingServiceImpl employeeShiftingService;
+//    @Mock
+//    private EmployeeShiftingServiceImpl employeeShiftingService;
     @Mock
     private EmployeeServiceImpl employeeService;
-    @Mock
-    private ConverterServiceImpl converterService;
     
-    EmployeeShiftVo employeeShiftVoMock;
-    EmployeeShift employeeShiftMock;
+    //EmployeeShiftVo employeeShiftVoMock;
+    //EmployeeShift employeeShiftMock;
     
     private MockMvc mockMvc;
     
@@ -110,57 +107,57 @@ public class AttendanceControllerTest {
         Mockito.verify(employeeTappingService).addTapMachineFile(multipartFile);
     }
     
-    @Test
-    public void employeeShiftingTest() throws Exception {
-    	String employeeShiftVo = objectWriter.writeValueAsString(employeeShiftVoMock);
-        
-    	Mockito.when(converterService.map(employeeShiftVoMock, EmployeeShift.class)).thenReturn(employeeShiftMock);
-        Mockito.when(employeeShiftingService.processShifting(employeeShiftMock)).thenReturn(employeeShiftMock);
-        
-        mockMvc.perform(
-        		MockMvcRequestBuilders.post("/employees/shift")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(employeeShiftVo)
-        		)
-        .andExpect(MockMvcResultMatchers.status().isOk());
-
-        Mockito.verify(converterService).map(employeeShiftVoMock, EmployeeShift.class);
-        Mockito.verify(employeeShiftingService).processShifting(employeeShiftMock);
-    }
+//    @Test
+//    public void employeeShiftingTest() throws Exception {
+//    	String employeeShiftVo = objectWriter.writeValueAsString(employeeShiftVoMock);
+//        
+//    	Mockito.when(converterService.map(employeeShiftVoMock, EmployeeShift.class)).thenReturn(employeeShiftMock);
+//        Mockito.when(employeeShiftingService.processShifting(employeeShiftMock)).thenReturn(employeeShiftMock);
+//        
+//        mockMvc.perform(
+//        		MockMvcRequestBuilders.post("/employees/shift")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(employeeShiftVo)
+//        		)
+//        .andExpect(MockMvcResultMatchers.status().isOk());
+//
+//        Mockito.verify(converterService).map(employeeShiftVoMock, EmployeeShift.class);
+//        Mockito.verify(employeeShiftingService).processShifting(employeeShiftMock);
+//    }
     
-    @Test
-    public void employeeShiftingUpdateTest() throws Exception {
-    	String idShiftLama = "9989";
-    	String idShift = "9999";
-        String nik = "1234";
-
-        Mockito.when(employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik)).thenReturn(true);
-        
-        mockMvc.perform(
-                MockMvcRequestBuilders.put("/employees/shift").accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("idShiftLama", idShiftLama)
-                .param("idShift", idShift)
-                .param("nik", nik))
-        .andExpect(MockMvcResultMatchers.status().isOk());
-
-        Mockito.verify(employeeShiftingService).processUpdateShifting(idShiftLama, idShift, nik);
-    }
-    
-    @Test
-    public void employeeShiftingGetTest() throws Exception {
-    	String idShift = "9999";
-    	List employeeShiftList = new ArrayList<EmployeeShift>();
-        Mockito.when(employeeShiftingService.processGetShifting(idShift)).thenReturn(employeeShiftList);
-        
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/employees/shift").accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("idShift", idShift))
-        .andExpect(MockMvcResultMatchers.status().isOk());
-
-        Mockito.verify(employeeShiftingService).processGetShifting(idShift);
-    }
+//    @Test
+//    public void employeeShiftingUpdateTest() throws Exception {
+//    	String idShiftLama = "9989";
+//    	String idShift = "9999";
+//        String nik = "1234";
+//
+//        Mockito.when(employeeShiftingService.processUpdateShifting(idShiftLama, idShift, nik)).thenReturn(true);
+//        
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.put("/employees/shift").accept(MediaType.APPLICATION_JSON)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .param("idShiftLama", idShiftLama)
+//                .param("idShift", idShift)
+//                .param("nik", nik))
+//        .andExpect(MockMvcResultMatchers.status().isOk());
+//
+//        Mockito.verify(employeeShiftingService).processUpdateShifting(idShiftLama, idShift, nik);
+//    }
+//    
+//    @Test
+//    public void employeeShiftingGetTest() throws Exception {
+//    	String idShift = "9999";
+//    	List employeeShiftList = new ArrayList<EmployeeShift>();
+//        Mockito.when(employeeShiftingService.processGetShifting(idShift)).thenReturn(employeeShiftList);
+//        
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.get("/employees/shift").accept(MediaType.APPLICATION_JSON)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .param("idShift", idShift))
+//        .andExpect(MockMvcResultMatchers.status().isOk());
+//
+//        Mockito.verify(employeeShiftingService).processGetShifting(idShift);
+//    }
     
     @Test
     public void employeeTappingTest() throws Exception {
@@ -337,14 +334,14 @@ public class AttendanceControllerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(this.attendanceController).build();
-        employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
-        employeeShiftMock = new EmployeeShift("shift", "nik");
+        //employeeShiftVoMock = new EmployeeShiftVo("shift", "nik");
+        //employeeShiftMock = new EmployeeShift("shift", "nik");
     }
 
     @After	
     public void tearDown() throws Exception {
       verifyNoMoreInteractions(this.employeeTappingService);
-      verifyNoMoreInteractions(this.employeeShiftingService);
+      //verifyNoMoreInteractions(this.employeeShiftingService);
       verifyNoMoreInteractions(this.employeeService);
     }
 }

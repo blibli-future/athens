@@ -23,9 +23,6 @@ import com.blibli.future.model.primaryKey.AttendanceKey;
 public class AttendanceRepositoryTest {
 	private final LocalTime EARLY_TIME = LocalTime.of(9, 0);
     private final LocalTime LATE_TIME = LocalTime.of(19, 0);
-//	private static final String NIK = "nik";
-//	private static final LocalDate LOCAL_DATE =LocalDate.of(2017, 5, 14);
-//	private static final LocalTime LOCAL_TIME =	LocalTime.now();
     private Attendance attendance1;
     private Attendance attendance2;
     private Attendance attendance3;
