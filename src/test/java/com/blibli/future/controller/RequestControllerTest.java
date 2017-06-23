@@ -19,15 +19,21 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.blibli.future.enums.AbsencePermit;
 import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
+import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.model.Leave;
 import com.blibli.future.service.EmployeeAbsencePermitServiceImpl;
 import com.blibli.future.service.EmployeeLeaveServiceImpl;
 import com.blibli.future.service.LeaveServiceImpl;
+import com.blibli.future.vo.EmployeeAbsencePermitVo;
+import com.blibli.future.vo.EmployeeLeaveVo;
 
 public class RequestControllerTest {
 	@InjectMocks
@@ -40,142 +46,110 @@ public class RequestControllerTest {
 	private LeaveServiceImpl leaveServiceImpl;
 	
 	private MockMvc mockMvc;
-	private final String base = "/request/";
-	private final String leave = "leave/";
-	private final String leaveListing = "leave/list/";
-	private final String absencepermit = "absencepermit/";
+	private ObjectWriter objectWriter = new ObjectMapper().writer();
 	
-	@Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.requestController).build();
-    }
+	private EmployeeAbsencePermitVo employeeAbsencePermitVoMock;
+	private EmployeeLeaveVo employeeLeaveVoMock;
+	private EmployeeAbsencePermit employeeAbsencePermit;
+	private EmployeeLeave employeeLeave;
+	private List<EmployeeLeave> listEmployeeLeave;
+	private List<EmployeeAbsencePermit> listEmployeeAbsencePermit;
+	private Employee employee;
+	private Leave leave;
 	
 	@Test
 	public void sentLeaveRequestTest() throws Exception{
-		String nik = "123";
-		String idLeave = "321";
-		LocalDate startDate = LocalDate.now();
-		LocalDate endDate = LocalDate.now();
-		String reason = "just a reason";
 		
-		Mockito.when(employeeLeaveServiceImpl.sentLeaveRequest(nik, idLeave, startDate, endDate, reason)).thenReturn(true);
-        
+		Mockito.when(employeeLeaveServiceImpl.sentLeaveRequest(employeeLeaveVoMock)).thenReturn(employeeLeave);
+		
+		String employeeLeaveVo = objectWriter.writeValueAsString(employeeLeaveVoMock);
+        String jsonResult = objectWriter.writeValueAsString(employeeLeave);
 		mockMvc.perform(
-                MockMvcRequestBuilders.post(base+leave).accept(MediaType.APPLICATION_JSON)
+                MockMvcRequestBuilders.post(requestController.PATH_LEAVE)
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("nik", nik)
-                .param("idLeave", idLeave)
-                .param("startDate", startDate.toString())
-                .param("endDate", endDate.toString())
-                .param("reason", reason))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+                .content(employeeLeaveVo))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().json(jsonResult));
 		
-		Mockito.verify(employeeLeaveServiceImpl).sentLeaveRequest(nik, idLeave, startDate, endDate, reason);
-
+		Mockito.verify(employeeLeaveServiceImpl).sentLeaveRequest(employeeLeaveVoMock);
 	}
 	
 	@Test
 	public void updateLeaveRequestTest() throws Exception{
-		String nik = "123";
-		String idLeave = "321";
-		LocalDate startDate = LocalDate.now();
-		LocalDate endDate = LocalDate.now();
-		String reason = "just a reason";
-		String uuid = "uuid";
-
-		Mockito.when(employeeLeaveServiceImpl.updateLeaveRequest(uuid , nik, idLeave, startDate, endDate, reason)).thenReturn(true);
+		Mockito.when(employeeLeaveServiceImpl.updateLeaveRequest(employeeLeaveVoMock)).thenReturn(employeeLeave);
         
-		mockMvc.perform(
-                MockMvcRequestBuilders.put(base+leave).accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("id", uuid)
-                .param("nik", nik)
-                .param("idLeave", idLeave)
-                .param("startDate", startDate.toString())
-                .param("endDate", endDate.toString())
-                .param("reason", reason))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+		String employeeLeaveVo = objectWriter.writeValueAsString(employeeLeaveVoMock);
+        String jsonResult = objectWriter.writeValueAsString(employeeLeave);
 		
-		Mockito.verify(employeeLeaveServiceImpl).updateLeaveRequest(uuid , nik, idLeave, startDate, endDate, reason);
+		mockMvc.perform(
+                MockMvcRequestBuilders.put(requestController.PATH_LEAVE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeLeaveVo))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().json(jsonResult));
+		
+		Mockito.verify(employeeLeaveServiceImpl).updateLeaveRequest(employeeLeaveVoMock);
 	}
 	
 	@Test
 	public void getLeaveRequestTest() throws Exception{
-		String nik = "123";
-		List<EmployeeLeave> listEmployeeLeave = new ArrayList<>();
-		Mockito.when(employeeLeaveServiceImpl.getLeaveRequest(nik)).thenReturn(listEmployeeLeave);
+		Mockito.when(employeeLeaveServiceImpl.getLeaveRequest(employeeLeaveVoMock.getNik())).thenReturn(listEmployeeLeave);
 		
 		mockMvc.perform(
-                MockMvcRequestBuilders.get(base+leave).accept(MediaType.APPLICATION_JSON)
+                MockMvcRequestBuilders.get(requestController.PATH_LEAVE)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("nik", nik))
+                .param("nik", employeeLeaveVoMock.getNik()))
 		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		Mockito.verify(employeeLeaveServiceImpl).getLeaveRequest(nik);
+		Mockito.verify(employeeLeaveServiceImpl).getLeaveRequest(employeeLeaveVoMock.getNik());
 	}
 	
 	@Test
 	public void sentAbsencePermitRequestTest() throws Exception{
-		String nik = "123";
-		String idAbsencePermit = "321";
-		LocalDate startDate = LocalDate.now();
-		LocalDate endDate = LocalDate.now();
-		String reason = "just a reason";
-		
-		Mockito.when(employeeAbsencePermitServiceImpl.sentAbsencePermitRequest(nik, idAbsencePermit, startDate, endDate, reason)).thenReturn(true);
+		Mockito.when(employeeAbsencePermitServiceImpl.sentAbsencePermitRequest(employeeAbsencePermitVoMock)).thenReturn(employeeAbsencePermit);
+        
+		String employeeAbsencePermitVo = objectWriter.writeValueAsString(employeeAbsencePermitVoMock);
+        String jsonResult = objectWriter.writeValueAsString(employeeAbsencePermit);
         
 		mockMvc.perform(
-                MockMvcRequestBuilders.post(base+absencepermit).accept(MediaType.APPLICATION_JSON)
+                MockMvcRequestBuilders.post(requestController.PATH_ABSENCE_PERMIT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("nik", nik)
-                .param("idAbsencePermit", idAbsencePermit)
-                .param("startDate", startDate.toString())
-                .param("endDate", endDate.toString())
-                .param("reason", reason))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+                .content(employeeAbsencePermitVo))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().json(jsonResult));
 		
-		Mockito.verify(employeeAbsencePermitServiceImpl).sentAbsencePermitRequest(nik, idAbsencePermit, startDate, endDate, reason);
+		Mockito.verify(employeeAbsencePermitServiceImpl).sentAbsencePermitRequest(employeeAbsencePermitVoMock);
 	}
 	
 	@Test
 	public void updateAbsencePermitRequestTest() throws Exception{
-		String nik = "123";
-		String idAbsencePermit = "321";
-		LocalDate startDate = LocalDate.now();
-		LocalDate endDate = LocalDate.now();
-		String reason = "just a reason";
-		String id = "uuuu";
-		
-		Mockito.when(employeeAbsencePermitServiceImpl.updateAbsencePermitRequest(id, nik, idAbsencePermit, startDate, endDate, reason)).thenReturn(true);
+		Mockito.when(employeeAbsencePermitServiceImpl.updateAbsencePermitRequest(employeeAbsencePermitVoMock)).thenReturn(employeeAbsencePermit);
+        
+		String employeeAbsencePermitVo = objectWriter.writeValueAsString(employeeAbsencePermitVoMock);
+        String jsonResult = objectWriter.writeValueAsString(employeeAbsencePermit);
         
 		mockMvc.perform(
-                MockMvcRequestBuilders.put(base+absencepermit).accept(MediaType.APPLICATION_JSON)
+                MockMvcRequestBuilders.put(requestController.PATH_ABSENCE_PERMIT)
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("id", id)
-                .param("nik", nik)
-                .param("idAbsencePermit", idAbsencePermit)
-                .param("startDate", startDate.toString())
-                .param("endDate", endDate.toString())
-                .param("reason", reason))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+                .content(employeeAbsencePermitVo))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().json(jsonResult));;
 		
-		Mockito.verify(employeeAbsencePermitServiceImpl).updateAbsencePermitRequest(id, nik, idAbsencePermit, startDate, endDate, reason);
+		Mockito.verify(employeeAbsencePermitServiceImpl).updateAbsencePermitRequest(employeeAbsencePermitVoMock);
 	}
 	
 	@Test
 	public void getAbsenceLeaveRequestTest() throws Exception{
-		String nik = "123";
-		List<EmployeeAbsencePermit> listEmployeeAbsencePermit = new ArrayList<>();
-		Mockito.when(employeeAbsencePermitServiceImpl.getAbsencePermitRequest(nik)).thenReturn(listEmployeeAbsencePermit);
+		Mockito.when(employeeAbsencePermitServiceImpl.getAbsencePermitRequest(employeeAbsencePermitVoMock.getNik())).thenReturn(listEmployeeAbsencePermit);
 		
 		mockMvc.perform(
-                MockMvcRequestBuilders.get(base+absencepermit).accept(MediaType.APPLICATION_JSON)
+                MockMvcRequestBuilders.get(requestController.PATH_ABSENCE_PERMIT).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("nik", nik))
+                .param("nik", employeeAbsencePermitVoMock.getNik()))
 		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		Mockito.verify(employeeAbsencePermitServiceImpl).getAbsencePermitRequest(nik);
+		Mockito.verify(employeeAbsencePermitServiceImpl).getAbsencePermitRequest(employeeAbsencePermitVoMock.getNik());
 	}
 	
 	@Test
@@ -188,7 +162,7 @@ public class RequestControllerTest {
 		Mockito.when(leaveServiceImpl.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion))).thenReturn(leave);
 		
 		mockMvc.perform(
-                MockMvcRequestBuilders.get(base+leaveListing).accept(MediaType.APPLICATION_JSON)
+                MockMvcRequestBuilders.get(requestController.PATH_LISTING_LEAVE).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("gender", gender)
                 .param("maritalStatus", maritalStatus)
@@ -197,6 +171,27 @@ public class RequestControllerTest {
 
 		Mockito.verify(leaveServiceImpl).getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
 	}
+	
+	@Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(this.requestController).build();
+        
+        this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", "Ariel", "CEO", "Central", LocalDate.now(), LocalDate.now(), true);
+        this.leave = new Leave("123", "Libur Tahun Baru", Gender.MALE, MaritalStatus.LAJANG, Religion.KRISTEN);
+        
+        this.employeeAbsencePermit = new EmployeeAbsencePermit(employee, AbsencePermit.SICK, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Males");
+        this.employeeAbsencePermitVoMock = new EmployeeAbsencePermitVo("321", "11", AbsencePermit.SICK, "2017-01-06", "2017-01-09", "Males");
+        
+        this.employeeLeaveVoMock = new EmployeeLeaveVo("321", "11", "1", "2017-01-06", "2017-01-09", "Males");
+        this.employeeLeave = new EmployeeLeave(employee, leave, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Males");
+        
+        this.listEmployeeLeave  = new ArrayList<>();
+        this.listEmployeeLeave.add(employeeLeave);
+        
+        this.listEmployeeAbsencePermit = new ArrayList<>();
+        this.listEmployeeAbsencePermit.add(employeeAbsencePermit);
+    }
 	
 	@After	
     public void tearDown() throws Exception {

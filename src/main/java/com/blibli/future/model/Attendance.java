@@ -1,9 +1,12 @@
 package com.blibli.future.model;
 
-import com.blibli.future.model.primaryKey.AttendanceKey;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+
+import com.blibli.future.enums.LateCondition;
+import static java.time.temporal.ChronoUnit.MINUTES;
+import com.blibli.future.model.primaryKey.AttendanceKey;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,18 +16,40 @@ public class Attendance {
     private AttendanceKey attendanceKey;
 	private LocalTime tapIn;
 	private LocalTime tapOut;
+	private double earlyLeaveHour;
+	private LateCondition lateCondition;
 
     public Attendance() {}
 
     //TODO: IMPLEMENT TAP TIME LOGIC
     public Attendance(String nik, LocalDate date, LocalTime tap) {
-        this(nik, date, tap, null);
+    	this.attendanceKey = new AttendanceKey(nik, date);
+        this.tapIn = tap;
+        this.tapOut = null;
+        this.lateCondition = lateConditioning(tap);
     }
 
     public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
         this.attendanceKey = new AttendanceKey(nik, date);
         this.tapIn = tapIn;
         this.tapOut = tapOut;
+        this.earlyLeaveHour = measureEarlyLeave(tapIn, tapOut);
+        this.lateCondition = lateConditioning(tapIn);
+    }
+    
+    private LateCondition lateConditioning(LocalTime tapIn){
+    	if(tapIn.isAfter(LocalTime.of(10, 30)))
+    		return LateCondition.LATE;
+    	else
+    		return LateCondition.NOTLATE;
+    }
+    
+    private double measureEarlyLeave(LocalTime tapIn, LocalTime tapOut){
+    	double diff = tapIn.until(tapOut, MINUTES);
+    	if(diff>0)
+    		return diff;
+    	else
+    		return 0;
     }
 
     public void assign(LocalTime tapTime) {
@@ -68,24 +93,78 @@ public class Attendance {
         this.tapOut = tapOut;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
+    public AttendanceKey getAttendanceKey() {
+		return attendanceKey;
+	}
 
-        Attendance that = (Attendance) o;
+	public void setAttendanceKey(AttendanceKey attendanceKey) {
+		this.attendanceKey = attendanceKey;
+	}
 
-        if(attendanceKey != null ? !attendanceKey.equals(that.attendanceKey) : that.attendanceKey != null) return false;
-        if(tapIn != null ? !tapIn.equals(that.tapIn) : that.tapIn != null) return false;
-        return tapOut != null ? tapOut.equals(that.tapOut) : that.tapOut == null;
-    }
+	public double getEarlyLeaveHour() {
+		return earlyLeaveHour;
+	}
 
-    @Override
-    public String toString() {
-        return "Attendance{" +
-                "attendanceKey=" + attendanceKey +
-                ", tapIn=" + tapIn +
-                ", tapOut=" + tapOut +
-                '}';
-    }
+	public void setEarlyLeaveHour(double earlyLeaveHour) {
+		this.earlyLeaveHour = earlyLeaveHour;
+	}
+
+	public LateCondition getLateCondition() {
+		return lateCondition;
+	}
+
+	public void setLateCondition(LateCondition lateCondition) {
+		this.lateCondition = lateCondition;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((attendanceKey == null) ? 0 : attendanceKey.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(earlyLeaveHour);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((lateCondition == null) ? 0 : lateCondition.hashCode());
+		result = prime * result + ((tapIn == null) ? 0 : tapIn.hashCode());
+		result = prime * result + ((tapOut == null) ? 0 : tapOut.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Attendance other = (Attendance) obj;
+		if (attendanceKey == null) {
+			if (other.attendanceKey != null)
+				return false;
+		} else if (!attendanceKey.equals(other.attendanceKey))
+			return false;
+		if (Double.doubleToLongBits(earlyLeaveHour) != Double.doubleToLongBits(other.earlyLeaveHour))
+			return false;
+		if (lateCondition != other.lateCondition)
+			return false;
+		if (tapIn == null) {
+			if (other.tapIn != null)
+				return false;
+		} else if (!tapIn.equals(other.tapIn))
+			return false;
+		if (tapOut == null) {
+			if (other.tapOut != null)
+				return false;
+		} else if (!tapOut.equals(other.tapOut))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Attendance [attendanceKey=" + attendanceKey + ", tapIn=" + tapIn + ", tapOut=" + tapOut
+				+ ", earlyLeaveHour=" + earlyLeaveHour + ", lateCondition=" + lateCondition + "]";
+	}
 }

@@ -2,6 +2,7 @@ package com.blibli.future.repository;
 
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.primaryKey.AttendanceKey;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

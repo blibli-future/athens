@@ -1,42 +1,67 @@
 package com.blibli.future.model;
 
-import org.hibernate.annotations.GenericGenerator;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import java.io.Serializable;
+
+import com.blibli.future.enums.AbsencePermit;
 import com.blibli.future.enums.Status;
+import com.blibli.future.vo.EmployeeAbsencePermitVo;
 
 @Entity
-public class EmployeeAbsencePermit {
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
 
-	private String nik;
-	private String idAbsencePermit;
+public class EmployeeAbsencePermit implements Serializable{
+	private String id;
+	private Employee employee;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private LocalDate requestDate;
 	private String reason;
 	private Status status;
+	private AbsencePermit absencePermit;
+	private String approvedBy;
+	private LocalDate approvedDate;
 	
-	public EmployeeAbsencePermit(String nik, String idAbsencePermit, 
-			LocalDate startDate, LocalDate endDate, String reason){
-		this.nik = nik;
-		this.idAbsencePermit = idAbsencePermit;
+	public EmployeeAbsencePermit(){}
+	
+	public EmployeeAbsencePermit(Employee employee, AbsencePermit absencePermit,LocalDate startDate, LocalDate endDate, String reason){
+		this.employee = employee;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.reason = reason;
 		this.status = Status.WAITING;
 		this.requestDate = LocalDate.now();
+		this.absencePermit = absencePermit;
+		this.approvedBy = null;
+		this.approvedDate = null;
+	}
+	
+	public void updateEmployeeAbsencePermit(EmployeeAbsencePermitVo employeeAbsencePermitVo){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		this.startDate = LocalDate.parse(employeeAbsencePermitVo.getStartDate(), formatter);
+		this.endDate = LocalDate.parse(employeeAbsencePermitVo.getEndDate(), formatter);
+		this.reason = employeeAbsencePermitVo.getReason();
+		this.status = employeeAbsencePermitVo.getStatus();
+		this.absencePermit = employeeAbsencePermitVo.getAbsencePermit();
+	}
+	
+	public static EmployeeAbsencePermit convertToEmployeeAbsencePermit(EmployeeAbsencePermitVo empAbsPerVo, Employee emp){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		return new EmployeeAbsencePermit(emp, empAbsPerVo.getAbsencePermit(), LocalDate.parse(empAbsPerVo.getStartDate(), formatter), LocalDate.parse(empAbsPerVo.getEndDate(), formatter), empAbsPerVo.getReason());
 	}
 
-	public EmployeeAbsencePermit() {}
-
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name="uuid", strategy = "uuid2")
 	public String getId() {
 		return id;
 	}
@@ -45,20 +70,14 @@ public class EmployeeAbsencePermit {
 		this.id = id;
 	}
 
-	public String getNik() {
-		return nik;
+	@ManyToOne
+    @JoinColumn(name = "employee_nik")
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setNik(String nik) {
-		this.nik = nik;
-	}
-
-	public String getIdAbsencePermit() {
-		return idAbsencePermit;
-	}
-
-	public void setIdAbsencePermit(String idAbsencePermit) {
-		this.idAbsencePermit = idAbsencePermit;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public LocalDate getStartDate() {
@@ -77,6 +96,14 @@ public class EmployeeAbsencePermit {
 		this.endDate = endDate;
 	}
 
+	public LocalDate getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(LocalDate requestDate) {
+		this.requestDate = requestDate;
+	}
+
 	public String getReason() {
 		return reason;
 	}
@@ -85,4 +112,108 @@ public class EmployeeAbsencePermit {
 		this.reason = reason;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public AbsencePermit getAbsencePermit() {
+		return absencePermit;
+	}
+
+	public void setAbsencePermit(AbsencePermit absencePermit) {
+		this.absencePermit = absencePermit;
+	}
+
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+	public LocalDate getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(LocalDate approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((absencePermit == null) ? 0 : absencePermit.hashCode());
+		result = prime * result + ((approvedBy == null) ? 0 : approvedBy.hashCode());
+		result = prime * result + ((approvedDate == null) ? 0 : approvedDate.hashCode());
+		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
+		result = prime * result + ((requestDate == null) ? 0 : requestDate.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EmployeeAbsencePermit other = (EmployeeAbsencePermit) obj;
+		if (absencePermit != other.absencePermit)
+			return false;
+		if (approvedBy == null) {
+			if (other.approvedBy != null)
+				return false;
+		} else if (!approvedBy.equals(other.approvedBy))
+			return false;
+		if (approvedDate == null) {
+			if (other.approvedDate != null)
+				return false;
+		} else if (!approvedDate.equals(other.approvedDate))
+			return false;
+		if (employee == null) {
+			if (other.employee != null)
+				return false;
+		} else if (!employee.equals(other.employee))
+			return false;
+		if (endDate == null) {
+			if (other.endDate != null)
+				return false;
+		} else if (!endDate.equals(other.endDate))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (reason == null) {
+			if (other.reason != null)
+				return false;
+		} else if (!reason.equals(other.reason))
+			return false;
+		if (requestDate == null) {
+			if (other.requestDate != null)
+				return false;
+		} else if (!requestDate.equals(other.requestDate))
+			return false;
+		if (startDate == null) {
+			if (other.startDate != null)
+				return false;
+		} else if (!startDate.equals(other.startDate))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
 }

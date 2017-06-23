@@ -7,9 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
-/**
- * Created by amesa on 5/14/17.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LeaveVo implements Serializable{
 	private static final long serialVersionUID = 198674384864687614L;
@@ -67,7 +64,43 @@ public class LeaveVo implements Serializable{
         this.religion = religion;
     }
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((religion == null) ? 0 : religion.hashCode());
+		return result;
+	}
 
-
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LeaveVo other = (LeaveVo) obj;
+		if (gender != other.gender)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (maritalStatus != other.maritalStatus)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (religion != other.religion)
+			return false;
+		return true;
+	}
 }

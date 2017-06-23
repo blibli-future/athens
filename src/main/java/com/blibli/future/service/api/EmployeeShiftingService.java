@@ -1,12 +1,11 @@
 package com.blibli.future.service.api;
 
-import java.util.List;
+import java.util.Set;
 
-import com.blibli.future.model.EmployeeShift;
-import com.blibli.future.vo.EmployeeShiftVo;
+import com.blibli.future.model.Employee;
 
 public interface EmployeeShiftingService {
-	public EmployeeShift processShifting(EmployeeShift employeeShift);
-	public boolean processUpdateShifting(String idShiftLama, String idShift, String nik);
-	public List<EmployeeShift> processGetShifting(String idShift);
+	public Employee processShifting(String nik, String idShift);
+	public Employee employeeShiftingUpdate(String nik, String newShift, String oldShift);
+	public Set<Employee> processGetShifting(String idShift);
 }
