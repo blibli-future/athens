@@ -12,13 +12,13 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class EmployeeYearlyLeave implements Serializable{
+public class EmployeeSubstitutionLeaveRight implements Serializable {
 	private String id;
 	private Employee employee;
 	private LocalDate startDate;
 	private LocalDate endDate;
-
-	public EmployeeYearlyLeave(){}
+	
+	public EmployeeSubstitutionLeaveRight(){}
 
 	@Id
 	@GeneratedValue(generator = "uuid")
@@ -76,7 +76,7 @@ public class EmployeeYearlyLeave implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EmployeeYearlyLeave other = (EmployeeYearlyLeave) obj;
+		EmployeeSubstitutionLeaveRight other = (EmployeeSubstitutionLeaveRight) obj;
 		if (employee == null) {
 			if (other.employee != null)
 				return false;
