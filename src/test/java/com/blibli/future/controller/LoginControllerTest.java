@@ -36,7 +36,7 @@ public class LoginControllerTest {
 
     @Test
     public void login_Success() throws Exception {
-        Mockito.when(loginService.createNewToken(USERNAME, PASSWORD)).thenReturn(JWT_TOKEN);
+        Mockito.when(loginService.createToken(USERNAME, PASSWORD)).thenReturn(JWT_TOKEN);
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new AuthenticationResponse(JWT_TOKEN));
@@ -49,12 +49,12 @@ public class LoginControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
 
-        Mockito.verify(loginService).createNewToken(USERNAME, PASSWORD);
+        Mockito.verify(loginService).createToken(USERNAME, PASSWORD);
     }
 
     @Test
     public void login_Fail() throws Exception {
-        Mockito.when(loginService.createNewToken(USERNAME, PASSWORD)).thenThrow(new BadCredentialsException(MESSAGE));
+        Mockito.when(loginService.createToken(USERNAME, PASSWORD)).thenThrow(new BadCredentialsException(MESSAGE));
 
         String authenticationRequestJson = JsonWriter.writeValueAsString(new AuthenticationRequest(USERNAME, PASSWORD));
         String expectedResponse = JsonWriter.writeValueAsString(new ErrorResponse(MESSAGE));
@@ -67,7 +67,7 @@ public class LoginControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json(expectedResponse));
 
-        Mockito.verify(loginService).createNewToken(USERNAME, PASSWORD);
+        Mockito.verify(loginService).createToken(USERNAME, PASSWORD);
     }
 
     @Before

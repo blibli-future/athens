@@ -31,17 +31,11 @@ public class LoginController {
     public ResponseEntity<AthensResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
         String jwtToken;
         try {
-            jwtToken = loginService.createNewToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
+            jwtToken = loginService.createToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
         } catch (AuthenticationException e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(new AuthenticationResponse(jwtToken), HttpStatus.OK);
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<AthensResponse> signupDummy(@RequestBody AuthenticationRequest request) {
-        String signUpToken = loginService.createNewUser(request.getNik(), request.getPassword());
-        return new ResponseEntity<>(new AuthenticationResponse(signUpToken), HttpStatus.OK);
     }
 }

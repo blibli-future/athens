@@ -32,28 +32,28 @@ public class LoginServiceTest {
 
     @Test
     public void authenticateTest() throws Exception {
-        Mockito.when(credentialsRepository.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(CREDENTIAL);
+        Mockito.when(credentialsRepository.findByNikAndPassword(USERNAME, PASSWORD)).thenReturn(CREDENTIAL);
 
-        String result = authenticationService.createNewToken(USERNAME, PASSWORD);
+        String result = authenticationService.createToken(USERNAME, PASSWORD);
 
         String expected = JwtUtil.createTokenFor(CREDENTIAL);
 
-        Mockito.verify(credentialsRepository).findByUsernameAndPassword(USERNAME, PASSWORD);
+        Mockito.verify(credentialsRepository).findByNikAndPassword(USERNAME, PASSWORD);
 
         Assert.assertEquals(expected, result);
     }
 
     @Test
     public void authenticateTest_Fail() throws Exception {
-        Mockito.when(credentialsRepository.findByUsernameAndPassword(USERNAME, PASSWORD)).thenReturn(null);
+        Mockito.when(credentialsRepository.findByNikAndPassword(USERNAME, PASSWORD)).thenReturn(null);
 
         try {
-            authenticationService.createNewToken(USERNAME, PASSWORD);
+            authenticationService.createToken(USERNAME, PASSWORD);
         } catch (Exception e) {
             Assert.assertThat(e, Matchers.instanceOf(BadCredentialsException.class));
         }
 
-        Mockito.verify(credentialsRepository).findByUsernameAndPassword(USERNAME, PASSWORD);
+        Mockito.verify(credentialsRepository).findByNikAndPassword(USERNAME, PASSWORD);
     }
 
     @Before

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AthensCredentialsRepository extends JpaRepository<AthensCredential, String>{
-    AthensCredential findByUsernameAndPassword(String email, String nik);
+    AthensCredential findByNikAndPassword(String nik, String password);
 }
