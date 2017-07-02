@@ -15,18 +15,18 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Attendan
 	public Attendance findByAttendanceKey(AttendanceKey attendanceKey);
 	public List<Attendance> findByAttendanceKeyDateBetween(LocalDate dateStart, LocalDate dateEnd);
 	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte) from attendance atte JOIN Employee e ON atte.nik = e.nik WHERE e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) group by e.nik", nativeQuery = true)
-	public List<?> countEmployeeAttendance(String department, LocalDate startdate, LocalDate endDate);
+	public List<Object[]> countEmployeeAttendance(String department, LocalDate startDate, LocalDate endDate);
 	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte) from attendance atte JOIN Employee e ON atte.nik = e.nik WHERE atte.tap_out is null and e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) group by e.nik", nativeQuery = true)
-	public List<?> countEmployeeNoTapOut(String department, LocalDate startdate, LocalDate endDate);
+	public List<Object[]> countEmployeeNoTapOut(String department, LocalDate startDate, LocalDate endDate);
 	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte) from attendance atte JOIN Employee e ON atte.nik = e.nik WHERE atte.early_leave_hour > 0 and e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) group by e.nik", nativeQuery = true)
-	public List<?> countEmployeeEarlyLeaveHour(String department, LocalDate startdate, LocalDate endDate);
+	public List<Object[]> countEmployeeEarlyLeaveHour(String department, LocalDate startDate, LocalDate endDate);
 	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte) from attendance atte JOIN Employee e ON atte.nik = e.nik WHERE atte.late_condition = (?4) and e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) group by e.nik", nativeQuery = true)
-	public List<?> countEmployeeLateCondition(String department, LocalDate startdate, LocalDate endDate, int late);
-	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, ((select count(*) from generate_series('2017-06-19'::date, '2017-06-26'::date, '1 day') "
+	public List<Object[]> countEmployeeLateCondition(String department, LocalDate startDate, LocalDate endDate, int late);
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, ((select count(*) from generate_series((?2)\\:\\:date, (?3)\\:\\:date, '1 day') "
 			+ "as cale "
 			+ "WHERE  extract('ISODOW' FROM cale) < 6) - count(atte)) as notAttend "
 			+ "from attendance atte JOIN Employee e ON atte.nik = e.nik "
 			+ "WHERE e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) "
 			+ "and extract('ISODOW' FROM atte.date) < 6 group by e.nik", nativeQuery = true)
-	public List<?> countNotAttendance(String department, LocalDate startdate, LocalDate endDate);
+	public List<Object[]> countNotAttendance(String department, LocalDate startdate, LocalDate endDate);
 }

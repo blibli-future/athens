@@ -23,5 +23,5 @@ public interface EmployeeYearlyLeaveRepository extends JpaRepository<EmployeeYea
 			+ "where e.name_Of_Dept = (?1) AND  "
 			+ "(((?2) BETWEEN start_Date and end_Date) OR ((?3) BETWEEN start_Date AND end_Date))) AS eyl "
 			+ "GROUP BY eyl.nik, eyl.fullname, eyl.nameOfDept", nativeQuery = true)
-	public List<?> sumEmployeeYearlyLeave(String department, LocalDate startdate, LocalDate endDate);
+	public List<Object[]> sumEmployeeYearlyLeave(String department, LocalDate startdate, LocalDate endDate);
 }

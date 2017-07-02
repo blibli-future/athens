@@ -1,16 +1,25 @@
 package com.blibli.future.vo;
 
-public class SickEmployeeVo {
+public class SingleReportVo {
 	private String nik;
 	private String fullName;
 	private String department;
-	private Long numberOfSick;
+	private Long numberResult;
 	
-	public SickEmployeeVo(String nik, String fullName, String department, Long numberOfSick){
+	public SingleReportVo(){}
+	
+	public SingleReportVo(Object[] object){
+		this.nik = object[0].toString();
+		this.fullName = object[1].toString();
+		this.department = object[2].toString();
+		this.numberResult = Long.parseLong(object[3].toString());
+	}
+	
+	public SingleReportVo(String nik, String fullName, String department, Long numberResult){
 		this.nik = nik;
 		this.fullName = fullName;
 		this.department = department;
-		this.numberOfSick = numberOfSick;
+		this.numberResult = numberResult;
 	}
 
 	public String getNik() {
@@ -37,12 +46,12 @@ public class SickEmployeeVo {
 		this.department = department;
 	}
 
-	public Long getNumberOfSick() {
-		return numberOfSick;
+	public Long getNumberResult() {
+		return numberResult;
 	}
 
-	public void setNumberOfSick(Long numberOfSick) {
-		this.numberOfSick = numberOfSick;
+	public void setNumberResult(Long numberResult) {
+		this.numberResult = numberResult;
 	}
 
 	@Override
@@ -52,7 +61,7 @@ public class SickEmployeeVo {
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
-		result = prime * result + ((numberOfSick == null) ? 0 : numberOfSick.hashCode());
+		result = prime * result + ((numberResult == null) ? 0 : numberResult.hashCode());
 		return result;
 	}
 
@@ -64,7 +73,7 @@ public class SickEmployeeVo {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SickEmployeeVo other = (SickEmployeeVo) obj;
+		SingleReportVo other = (SingleReportVo) obj;
 		if (department == null) {
 			if (other.department != null)
 				return false;
@@ -80,13 +89,13 @@ public class SickEmployeeVo {
 				return false;
 		} else if (!nik.equals(other.nik))
 			return false;
-		if (numberOfSick == null) {
-			if (other.numberOfSick != null)
+		if (numberResult == null) {
+			if (other.numberResult != null)
 				return false;
-		} else if (!numberOfSick.equals(other.numberOfSick))
+		} else if (!numberResult.equals(other.numberResult))
 			return false;
 		return true;
 	}
-	
+
 	
 }
