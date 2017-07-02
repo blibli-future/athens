@@ -53,6 +53,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/login");
+        web.ignoring().antMatchers("/login", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**");
     }
 }
