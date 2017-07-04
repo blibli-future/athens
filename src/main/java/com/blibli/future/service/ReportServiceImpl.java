@@ -53,7 +53,7 @@ public class ReportServiceImpl implements ReportService{
 
 	@Override
 	public List<ReportVo> SummaryReport(String dept, LocalDate startDate, LocalDate endDate) {
-		List<ReportVo> reports = employeeRepository.initReport("IT");
+		List<ReportVo> reports = employeeRepository.initReport(dept);
 		List<Object[]> daysComingObject = attendanceRepository.countEmployeeAttendance(dept, startDate, endDate);
 		List<Object[]> daysAbsenceObject = attendanceRepository.countNotAttendance(dept, startDate, endDate);
 		List<Object[]> daysSickObject = employeeAbsencePermitRepository.countAbsencePermitEmployee(dept, startDate, endDate, AbsencePermit.SICK.ordinal());

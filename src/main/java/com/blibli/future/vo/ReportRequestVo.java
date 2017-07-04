@@ -1,20 +1,18 @@
 package com.blibli.future.vo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReportRequestVo implements Serializable{
-
-	private static final long serialVersionUID = -96597068450926962L;
+	private static final long serialVersionUID = -4612202255079133511L;
 	private String dept;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private String startDate;
+	private String endDate;
 
 	public ReportRequestVo(){}
-	public ReportRequestVo(String dept, LocalDate startDate, LocalDate endDate){
+	public ReportRequestVo(String dept, String startDate, String endDate){
 		this.dept = dept;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -25,16 +23,16 @@ public class ReportRequestVo implements Serializable{
 	public void setDept(String dept) {
 		this.dept = dept;
 	}
-	public LocalDate getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDate getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	public static long getSerialversionuid() {
