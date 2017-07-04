@@ -2,7 +2,7 @@
 package com.blibli.future.repository;
 
 import com.blibli.future.model.Employee;
-import com.blibli.future.vo.ReportVo;
+import com.blibli.future.vo.ReportResponseVo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +17,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     public Employee findOneByFullName (String fullName);
     public List <Employee> findByNameOfDept(String nameOfDept);
     @Query(value = "select new com.blibli.future.vo.ReportVo(nik, fullName, nameOfDept, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) from Employee where nameOfDept = (?1)")
-    public List<ReportVo> initReport(String dept);
+    public List<ReportResponseVo> initReport(String dept);
 }

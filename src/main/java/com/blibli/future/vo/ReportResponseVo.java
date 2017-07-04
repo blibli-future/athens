@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReportVo implements Serializable{
+public class ReportResponseVo implements Serializable{
 	private static final long serialVersionUID = 2006346112358122493L;
 	private String nik;
 	private String fullName;
@@ -22,9 +22,9 @@ public class ReportVo implements Serializable{
 	private double replacementLeave;
 	private double noTapOutDay;
 	
-	public ReportVo(){}
+	public ReportResponseVo(){}
 	
-	public ReportVo(String nik, String fullName, String department, double daysComing, double daysAbsence, double sick,
+	public ReportResponseVo(String nik, String fullName, String department, double daysComing, double daysAbsence, double sick,
 			double unpaidLeave, double yearlyLeave, double leaveEarly, double lateWithoutPermission,
 			double lateWithPermission, double hourlyLeave, double replacementLeave, double noTapOutDay) {
 		this.nik = nik;
@@ -200,7 +200,7 @@ public class ReportVo implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReportVo other = (ReportVo) obj;
+		ReportResponseVo other = (ReportResponseVo) obj;
 		if (Double.doubleToLongBits(daysAbsence) != Double.doubleToLongBits(other.daysAbsence))
 			return false;
 		if (Double.doubleToLongBits(daysComing) != Double.doubleToLongBits(other.daysComing))

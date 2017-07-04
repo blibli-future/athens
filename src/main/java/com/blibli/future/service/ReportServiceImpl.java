@@ -16,7 +16,7 @@ import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.repository.EmployeeSubstitutionLeaveRightRepository;
 import com.blibli.future.repository.EmployeeYearlyLeaveRepository;
 import com.blibli.future.service.api.ReportService;
-import com.blibli.future.vo.ReportVo;
+import com.blibli.future.vo.ReportResponseVo;
 import com.blibli.future.vo.SingleReportVo;
 
 @Service
@@ -38,7 +38,7 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public List<SingleReportVo> ReportParse(List<Object[]> objects) {
+	public List<SingleReportVo> reportParse(List<Object[]> objects) {
 		if(objects!=null)
 		{
 			List<SingleReportVo> singleReportVos = new ArrayList<>();
@@ -52,8 +52,8 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public List<ReportVo> SummaryReport(String dept, LocalDate startDate, LocalDate endDate) {
-		List<ReportVo> reports = employeeRepository.initReport(dept);
+	public List<ReportResponseVo> fullReport(String dept, LocalDate startDate, LocalDate endDate) {
+		List<ReportResponseVo> reports = employeeRepository.initReport(dept);
 		List<Object[]> daysComingObject = attendanceRepository.countEmployeeAttendance(dept, startDate, endDate);
 		List<Object[]> daysAbsenceObject = attendanceRepository.countNotAttendance(dept, startDate, endDate);
 		List<Object[]> daysSickObject = employeeAbsencePermitRepository.countAbsencePermitEmployee(dept, startDate, endDate, AbsencePermit.SICK.ordinal());
@@ -66,19 +66,19 @@ public class ReportServiceImpl implements ReportService{
 		List<Object[]> daysReplacementLeaveObject = employeeSubstitutionLeaveRightRepository.sumEmployeeSubtitutionLeaveRight(dept, startDate, endDate);
 		List<Object[]> daysNoTapOutObject = attendanceRepository.countEmployeeNoTapOut(dept, startDate, endDate);
 		
-		List<SingleReportVo> daysComing = ReportParse(daysComingObject);
-		List<SingleReportVo> daysAbsence = ReportParse(daysAbsenceObject);
-		List<SingleReportVo> daysSick = ReportParse(daysSickObject);
-		List<SingleReportVo> daysUnpaidLeave = ReportParse(daysUnpaidLeaveObject);
-		List<SingleReportVo> daysYearlyLeave = ReportParse(daysYearlyLeaveObject);
-		List<SingleReportVo> daysLeaveEarly = ReportParse(daysLeaveEarlyObject);
-		List<SingleReportVo> daysLateWithoutPermission = ReportParse(daysLateWithoutPermissionObject);
-		List<SingleReportVo> daysLateWithPermission = ReportParse(daysLateWithPermissionObject);
-		List<SingleReportVo> daysHourlyLeave = ReportParse(daysHourlyLeaveObject);
-		List<SingleReportVo> daysReplacementLeave = ReportParse(daysReplacementLeaveObject);
-		List<SingleReportVo> daysNoTapOut = ReportParse(daysNoTapOutObject);
+		List<SingleReportVo> daysComing = reportParse(daysComingObject);
+		List<SingleReportVo> daysAbsence = reportParse(daysAbsenceObject);
+		List<SingleReportVo> daysSick = reportParse(daysSickObject);
+		List<SingleReportVo> daysUnpaidLeave = reportParse(daysUnpaidLeaveObject);
+		List<SingleReportVo> daysYearlyLeave = reportParse(daysYearlyLeaveObject);
+		List<SingleReportVo> daysLeaveEarly = reportParse(daysLeaveEarlyObject);
+		List<SingleReportVo> daysLateWithoutPermission = reportParse(daysLateWithoutPermissionObject);
+		List<SingleReportVo> daysLateWithPermission = reportParse(daysLateWithPermissionObject);
+		List<SingleReportVo> daysHourlyLeave = reportParse(daysHourlyLeaveObject);
+		List<SingleReportVo> daysReplacementLeave = reportParse(daysReplacementLeaveObject);
+		List<SingleReportVo> daysNoTapOut = reportParse(daysNoTapOutObject);
 		
-		for(ReportVo report : reports){
+		for(ReportResponseVo report : reports){
 			for(SingleReportVo x : daysComing){
 				if(report.getNik().equals(x.getNik())){
 					report.setDaysComing(x.getNumberResult());
@@ -138,6 +138,13 @@ public class ReportServiceImpl implements ReportService{
 			for(SingleReportVo x : daysHourlyLeave){
 				if(report.getNik().equals(x.getNik())){
 					report.setHourlyLeave(x.getNumberResult());
+					break;
+				}
+			}
+			
+			for(SingleReportVo x : daysReplacementLeave){
+				if(report.getNik().equals(x.getNik())){
+					report.setReplacementLeave(x.getNumberResult());
 					break;
 				}
 			}
