@@ -16,6 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     public Employee findOneByNik (String nik);
     public Employee findOneByFullName (String fullName);
     public List <Employee> findByNameOfDept(String nameOfDept);
-    @Query(value = "select new com.blibli.future.vo.ReportVo(nik, fullName, nameOfDept, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) from Employee where nameOfDept = (?1)")
+    @Query(value = "select new com.blibli.future.vo.ReportResponseVo(nik, fullName, nameOfDept, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) from Employee where nameOfDept = (?1)")
     public List<ReportResponseVo> initReport(String dept);
 }
