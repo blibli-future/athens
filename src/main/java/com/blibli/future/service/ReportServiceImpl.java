@@ -15,11 +15,11 @@ import java.util.List;
 
 @Service
 public class ReportServiceImpl implements ReportService{
-	EmployeeRepository employeeRepository;
-	AttendanceRepository attendanceRepository;
-	EmployeeAbsencePermitRepository employeeAbsencePermitRepository;
-	EmployeeYearlyLeaveRepository employeeYearlyLeaveRepository;
-	EmployeeSubstitutionLeaveRightRepository employeeSubstitutionLeaveRightRepository;
+	private EmployeeRepository employeeRepository;
+	private AttendanceRepository attendanceRepository;
+	private EmployeeAbsencePermitRepository employeeAbsencePermitRepository;
+	private EmployeeYearlyLeaveRepository employeeYearlyLeaveRepository;
+	private EmployeeSubstitutionLeaveRightRepository employeeSubstitutionLeaveRightRepository;
 	
 	@Autowired 
 	public ReportServiceImpl(EmployeeRepository employeeRepository, AttendanceRepository attendanceRepository, EmployeeAbsencePermitRepository employeeAbsencePermitRepository, 
