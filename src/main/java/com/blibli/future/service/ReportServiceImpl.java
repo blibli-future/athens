@@ -48,16 +48,10 @@ public class ReportServiceImpl implements ReportService{
 	@Override
 	public List<ReportResponseVo> fullReport(String dept, LocalDate startDate, LocalDate endDate) {
 		List<ReportResponseVo> reports = employeeRepository.initReport(dept);
-		List<Object[]> daysSickObject = employeeAbsencePermitRepository.countAbsencePermitEmployee(dept, startDate, endDate, AbsencePermit.SICK.ordinal());
-		List<Object[]> daysUnpaidLeaveObject = employeeAbsencePermitRepository.countAbsencePermitEmployee(dept, startDate, endDate, AbsencePermit.UNPAID_LEAVE.ordinal());
 		List<Object[]> daysYearlyLeaveObject = employeeYearlyLeaveRepository.sumEmployeeYearlyLeave(dept, startDate, endDate);
-		List<Object[]> daysHourlyLeaveObject = employeeAbsencePermitRepository.countAbsencePermitEmployee(dept, startDate, endDate, AbsencePermit.HOURLY.ordinal());
 		List<Object[]> daysReplacementLeaveObject = employeeSubstitutionLeaveRightRepository.sumEmployeeSubtitutionLeaveRight(dept, startDate, endDate);
 
-		List<SingleReportVo> daysSick = reportParse(daysSickObject);
-		List<SingleReportVo> daysUnpaidLeave = reportParse(daysUnpaidLeaveObject);
 		List<SingleReportVo> daysYearlyLeave = reportParse(daysYearlyLeaveObject);
-		List<SingleReportVo> daysHourlyLeave = reportParse(daysHourlyLeaveObject);
 		List<SingleReportVo> daysReplacementLeave = reportParse(daysReplacementLeaveObject);
 
 		List<SingleReportVo> daysComing = attendanceRepository.countEachEmployeeAttendanceByDepartmentDateBetween(dept, startDate, endDate);
@@ -66,7 +60,10 @@ public class ReportServiceImpl implements ReportService{
 		List<SingleReportVo> daysLateWithoutPermission = attendanceRepository.countEachEmployeeLateConditionByDepartmentDateBetween(LateCondition.LATE.ordinal(), dept, startDate, endDate);
 		List<SingleReportVo> daysLateWithPermission = attendanceRepository.countEachEmployeeLateConditionByDepartmentDateBetween(LateCondition.LATEWITHPERMISSION.ordinal(), dept, startDate, endDate);
 		List<SingleReportVo> daysNoTapOut = attendanceRepository.countEachEmployeeNoTapOutDateByDepartmentDateBetween(dept, startDate, endDate);
-		
+		List<SingleReportVo> daysSick = employeeAbsencePermitRepository.countEachEmployeeAbsencePermitByDepartmentDateBetween(AbsencePermit.SICK.ordinal(), dept, startDate, endDate);
+		List<SingleReportVo> daysUnpaidLeave = employeeAbsencePermitRepository.countEachEmployeeAbsencePermitByDepartmentDateBetween(AbsencePermit.UNPAID_LEAVE.ordinal(), dept, startDate, endDate);
+		List<SingleReportVo> daysHourlyLeave = employeeAbsencePermitRepository.countEachEmployeeAbsencePermitByDepartmentDateBetween(AbsencePermit.HOURLY.ordinal(), dept, startDate, endDate);
+
 		for(ReportResponseVo report : reports){
 			for(SingleReportVo x : daysComing){
 				if(report.getNik().equals(x.getNik())){
