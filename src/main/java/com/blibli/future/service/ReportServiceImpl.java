@@ -48,11 +48,6 @@ public class ReportServiceImpl implements ReportService{
 	@Override
 	public List<ReportResponseVo> fullReport(String dept, LocalDate startDate, LocalDate endDate) {
 		List<ReportResponseVo> reports = employeeRepository.initReport(dept);
-//		List<Object[]> daysYearlyLeaveObject = employeeYearlyLeaveRepository.sumEachEmployeeYearlyLeaveByDepartmentDateBetween(dept, startDate, endDate);
-		List<Object[]> daysReplacementLeaveObject = employeeSubstitutionLeaveRightRepository.sumEmployeeSubtitutionLeaveRight(dept, startDate, endDate);
-
-//		List<SingleReportVo> daysYearlyLeave = reportParse(daysYearlyLeaveObject);
-		List<SingleReportVo> daysReplacementLeave = reportParse(daysReplacementLeaveObject);
 
 		List<SingleReportVo> daysComing = attendanceRepository.countEachEmployeeAttendanceByDepartmentDateBetween(dept, startDate, endDate);
 		List<SingleReportVo> daysAbsence = attendanceRepository.countEachEmployeeAbsenceByDepartmentDateBetween(dept, startDate, endDate);
@@ -64,6 +59,7 @@ public class ReportServiceImpl implements ReportService{
 		List<SingleReportVo> daysUnpaidLeave = employeeAbsencePermitRepository.countEachEmployeeAbsencePermitByDepartmentDateBetween(AbsencePermit.UNPAID_LEAVE.ordinal(), dept, startDate, endDate);
 		List<SingleReportVo> daysHourlyLeave = employeeAbsencePermitRepository.countEachEmployeeAbsencePermitByDepartmentDateBetween(AbsencePermit.HOURLY.ordinal(), dept, startDate, endDate);
 		List<SingleReportVo> daysYearlyLeave = employeeYearlyLeaveRepository.sumEachEmployeeYearlyLeaveByDepartmentDateBetween(dept, startDate, endDate);
+		List<SingleReportVo> daysReplacementLeave = employeeSubstitutionLeaveRightRepository.sumEachEmployeeSubstitutionLeaveRightByDepartmentDateBetween(dept, startDate, endDate);
 
 		for(ReportResponseVo report : reports){
 			for(SingleReportVo x : daysComing){
