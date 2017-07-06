@@ -1,8 +1,8 @@
 package com.blibli.future.vo;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReportResponseVo implements Serializable{
@@ -23,24 +23,22 @@ public class ReportResponseVo implements Serializable{
 	private double noTapOutDay;
 	
 	public ReportResponseVo(){}
-	
-	public ReportResponseVo(String nik, String fullName, String department, double daysComing, double daysAbsence, double sick,
-			double unpaidLeave, double yearlyLeave, double leaveEarly, double lateWithoutPermission,
-			double lateWithPermission, double hourlyLeave, double replacementLeave, double noTapOutDay) {
+
+	public ReportResponseVo(String nik, String fullName, String department) {
 		this.nik = nik;
 		this.fullName = fullName;
 		this.department = department;
-		this.daysComing = daysComing;
-		this.daysAbsence = daysAbsence;
-		this.sick = sick;
-		this.unpaidLeave = unpaidLeave;
-		this.yearlyLeave = yearlyLeave;
-		this.leaveEarly = leaveEarly;
-		this.lateWithoutPermission = lateWithoutPermission;
-		this.lateWithPermission = lateWithPermission;
-		this.hourlyLeave = hourlyLeave;
-		this.replacementLeave = replacementLeave;
-		this.noTapOutDay = noTapOutDay;
+		this.daysComing = 0;
+		this.daysAbsence = 0;
+		this.sick = 0;
+		this.unpaidLeave = 0;
+		this.yearlyLeave = 0;
+		this.leaveEarly = 0;
+		this.lateWithoutPermission = 0;
+		this.lateWithPermission = 0;
+		this.hourlyLeave = 0;
+		this.replacementLeave = 0;
+		this.noTapOutDay = 0;
 	}
 
 	public String getNik() {
