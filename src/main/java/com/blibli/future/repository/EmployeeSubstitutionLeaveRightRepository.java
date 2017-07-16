@@ -12,7 +12,7 @@ import com.blibli.future.model.EmployeeSubstitutionLeaveRight;
 
 @Repository
 public interface EmployeeSubstitutionLeaveRightRepository extends JpaRepository<EmployeeSubstitutionLeaveRight,String>{
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(esl.nik, esl.fullname, esl.nameOfDept, sum(esl.sumDay)) " +
+	@Query(value = "select esl.nik, esl.fullname, esl.nameOfDept, sum(esl.sumDay) " +
 			"from (" +
 			"  select e.nik as nik, e.full_Name as fullname, e.name_Of_Dept as nameOfDept, " +
 			"  case " +
@@ -26,5 +26,5 @@ public interface EmployeeSubstitutionLeaveRightRepository extends JpaRepository<
 			"    ((?2) BETWEEN start_Date and end_Date) OR ((?3) BETWEEN start_Date AND end_Date))" +
 			") AS esl GROUP BY esl.nik, esl.fullname, esl.nameOfDept"
 			, nativeQuery = true)
-	List<SingleReportVo> sumEachEmployeeSubstitutionLeaveRightByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
+	List<Object[]> sumEachEmployeeSubstitutionLeaveRightByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
 }

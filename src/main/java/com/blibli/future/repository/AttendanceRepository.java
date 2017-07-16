@@ -16,39 +16,39 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Attendan
 	Attendance findByAttendanceKey(AttendanceKey attendanceKey);
 	List<Attendance> findByAttendanceKeyDateBetween(LocalDate dateStart, LocalDate dateEnd);
 
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(e.nik, e.full_Name, e.name_Of_Dept, count(atte)) " +
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte) " +
 			"from attendance atte JOIN Employee e ON atte.nik = e.nik " +
 			"WHERE e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) " +
 			"group by e.nik"
 			, nativeQuery = true)
-	List<SingleReportVo> countEachEmployeeAttendanceByDepartmentDateBetween(String department, LocalDate startDate, LocalDate endDate);
+	List<Object[]> countEachEmployeeAttendanceByDepartmentDateBetween(String department, LocalDate startDate, LocalDate endDate);
 
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(e.nik, e.full_Name, e.name_Of_Dept, count(atte)) " +
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte)" +
 			"from attendance atte JOIN Employee e ON atte.nik = e.nik " +
 			"WHERE atte.tap_out is null and e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) " +
 			"group by e.nik"
 			, nativeQuery = true)
-	List<SingleReportVo> countEachEmployeeNoTapOutDateByDepartmentDateBetween(String department, LocalDate startDate, LocalDate endDate);
+	List<Object[]> countEachEmployeeNoTapOutDateByDepartmentDateBetween(String department, LocalDate startDate, LocalDate endDate);
 
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(e.nik, e.full_Name, e.name_Of_Dept, count(atte)) " +
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte)" +
 			"from attendance atte JOIN Employee e ON atte.nik = e.nik " +
 			"WHERE atte.early_leave_hour > 0 and e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) " +
 			"group by e.nik"
 			, nativeQuery = true)
-	List<SingleReportVo> countEachEmployeeEarlyLeaveByDepartmentDateBetween(String department, LocalDate startDate, LocalDate endDate);
+	List<Object[]> countEachEmployeeEarlyLeaveByDepartmentDateBetween(String department, LocalDate startDate, LocalDate endDate);
 
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(e.nik, e.full_Name, e.name_Of_Dept, count(atte)) " +
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte)" +
 			"from attendance atte JOIN Employee e ON atte.nik = e.nik " +
 			"WHERE atte.late_condition = (?1) and e.name_Of_Dept = (?2) and (atte.date between (?3) and (?4)) " +
 			"group by e.nik"
 			, nativeQuery = true)
-	List<SingleReportVo> countEachEmployeeLateConditionByDepartmentDateBetween(int lateConditionOrdinal, String department, LocalDate startDate, LocalDate endDate);
+	List<Object[]> countEachEmployeeLateConditionByDepartmentDateBetween(int lateConditionOrdinal, String department, LocalDate startDate, LocalDate endDate);
 
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(e.nik, e.full_Name, e.name_Of_Dept, " +
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, " +
 			" ((select count(*) from generate_series((?2)\\:\\:date, (?3)\\:\\:date, '1 day')) as cale "
-			+ "WHERE  extract('ISODOW' FROM cale) < 6) - count(atte)) as notAttend "
+			+ "WHERE  extract('ISODOW' FROM cale) < 6) - count(atte) as notAttend "
 			+ "from attendance atte JOIN Employee e ON atte.nik = e.nik "
 			+ "WHERE e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) "
 			+ "and extract('ISODOW' FROM atte.date) < 6 group by e.nik", nativeQuery = true)
-	List<SingleReportVo> countEachEmployeeAbsenceByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
+	List<Object[]> countEachEmployeeAbsenceByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
 }

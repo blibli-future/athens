@@ -12,7 +12,7 @@ import com.blibli.future.model.EmployeeYearlyLeave;
 
 @Repository
 public interface EmployeeYearlyLeaveRepository extends JpaRepository<EmployeeYearlyLeave, String>{
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(eyl.nik, eyl.fullname, eyl.nameOfDept, sum(eyl.sumDay)) " +
+	@Query(value = "select eyl.nik, eyl.fullname, eyl.nameOfDept, sum(eyl.sumDay)" +
             "from (" +
             "  select e.nik as nik, e.full_Name as fullname, e.name_Of_Dept as nameOfDept, " +
             "    case when (start_Date<=(?2)) and (end_Date>=(?3)) then (?3\\:\\:date - ?2\\:\\:date)+1 " +
@@ -25,5 +25,5 @@ public interface EmployeeYearlyLeaveRepository extends JpaRepository<EmployeeYea
             "    ((?2) BETWEEN start_Date and end_Date) OR ((?3) BETWEEN start_Date AND end_Date))" +
             ") AS eyl GROUP BY eyl.nik, eyl.fullname, eyl.nameOfDept"
             , nativeQuery = true)
-	List<SingleReportVo> sumEachEmployeeYearlyLeaveByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
+	List<Object[]> sumEachEmployeeYearlyLeaveByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
 }

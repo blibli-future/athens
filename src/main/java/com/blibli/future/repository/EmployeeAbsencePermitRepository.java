@@ -16,7 +16,7 @@ public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeA
 	List<EmployeeAbsencePermit> findByEmployeeAndRequestDateBetween(Employee employee, LocalDate dateStart,LocalDate dateEnd);
 	EmployeeAbsencePermit findOneById(String id);
 	
-	@Query(value = "select new com.blibli.future.vo.SingleReportVo(eeap.nik, eeap.fullname, eeap.nameOfDept, sum(eeap.sumDay)) from (" +
+	@Query(value = "select eeap.nik, eeap.fullname, eeap.nameOfDept, sum(eeap.sumDay) from (" +
 			"  select e.nik as nik, e.full_Name as fullname, e.name_Of_Dept as nameOfDept" +
 			"  , case " +
 			"      when (start_Date<=(?3)) and (end_Date>=(?4)) then (?4\\:\\:date - ?3\\:\\:date)+1 " +
@@ -29,5 +29,5 @@ public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeA
 			"   ((?3) BETWEEN start_Date and end_Date) OR ((?4) BETWEEN start_Date AND end_Date))" +
 			") AS eeap GROUP BY eeap.nik, eeap.fullname, eeap.nameOfDept"
 			, nativeQuery = true)
-	List<SingleReportVo> countEachEmployeeAbsencePermitByDepartmentDateBetween(int absencePermit, String department, LocalDate startDate, LocalDate endDate);
+	List<Object[]> countEachEmployeeAbsencePermitByDepartmentDateBetween(int absencePermit, String department, LocalDate startDate, LocalDate endDate);
 }
