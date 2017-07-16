@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReportServiceImpl implements ReportService{
@@ -32,17 +33,19 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public List<SingleReportVo> reportParse(List<Object[]> objects) {
-		if(objects!=null)
-		{
-			List<SingleReportVo> singleReportVos = new ArrayList<>();
-			for(Object[] object : objects){
-				SingleReportVo singleReportVo = new SingleReportVo(object);
-				singleReportVos.add(singleReportVo);
-			}
-			return singleReportVos;
+	public Map<String, SingleReportVo> parseSingleReportObject(List<Object[]> objects) {
+		if(objects == null) {
+			return null;
 		}
-		return null;
+
+		Map<String, SingleReportVo> singleReportVos = new HashMap<>();
+
+		for(Object[] object : objects) {
+			SingleReportVo singleReportVo = new SingleReportVo(object);
+			singleReportVos.put(singleReportVo.getNik(), singleReportVo);
+		}
+
+		return singleReportVos;
 	}
 
 	@Override
@@ -61,96 +64,32 @@ public class ReportServiceImpl implements ReportService{
 		List<Object[]> daysYearlyLeaveObj = employeeYearlyLeaveRepository.sumEachEmployeeYearlyLeaveByDepartmentDateBetween(dept, startDate, endDate);
 		List<Object[]> daysReplacementLeaveObj = employeeSubstitutionLeaveRightRepository.sumEachEmployeeSubstitutionLeaveRightByDepartmentDateBetween(dept, startDate, endDate);
 
-		List<SingleReportVo> daysComing = reportParse(daysComingObj);
-		List<SingleReportVo> daysAbsence = reportParse(daysAbsenceObj);
-		List<SingleReportVo> daysLeaveEarly = reportParse(daysLeaveEarlyObj);
-		List<SingleReportVo> daysLateWithoutPermission = reportParse(daysLateWithoutPermissionObj);
-		List<SingleReportVo> daysLateWithPermission = reportParse(daysLateWithPermissionObj);
-		List<SingleReportVo> daysNoTapOut = reportParse(daysNoTapOutObj);
-		List<SingleReportVo> daysSick = reportParse(daysSickObj);
-		List<SingleReportVo> daysUnpaidLeave = reportParse(daysUnpaidLeaveObj);
-		List<SingleReportVo> daysHourlyLeave = reportParse(daysHourlyLeaveObj);
-		List<SingleReportVo> daysYearlyLeave = reportParse(daysYearlyLeaveObj);
-		List<SingleReportVo> daysReplacementLeave = reportParse(daysReplacementLeaveObj);
+		Map<String, SingleReportVo> daysComing = parseSingleReportObject(daysComingObj);
+		Map<String, SingleReportVo>  daysAbsence = parseSingleReportObject(daysAbsenceObj);
+		Map<String, SingleReportVo>  daysLeaveEarly = parseSingleReportObject(daysLeaveEarlyObj);
+		Map<String, SingleReportVo>  daysLateWithoutPermission = parseSingleReportObject(daysLateWithoutPermissionObj);
+		Map<String, SingleReportVo>  daysLateWithPermission = parseSingleReportObject(daysLateWithPermissionObj);
+		Map<String, SingleReportVo>  daysNoTapOut = parseSingleReportObject(daysNoTapOutObj);
+		Map<String, SingleReportVo>  daysSick = parseSingleReportObject(daysSickObj);
+		Map<String, SingleReportVo>  daysUnpaidLeave = parseSingleReportObject(daysUnpaidLeaveObj);
+		Map<String, SingleReportVo>  daysHourlyLeave = parseSingleReportObject(daysHourlyLeaveObj);
+		Map<String, SingleReportVo>  daysYearlyLeave = parseSingleReportObject(daysYearlyLeaveObj);
+		Map<String, SingleReportVo>  daysReplacementLeave = parseSingleReportObject(daysReplacementLeaveObj);
 
 
 		for(ReportResponseVo report : reports){
-			for(SingleReportVo x : daysComing){
-				if(report.getNik().equals(x.getNik())){
-					report.setDaysComing(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysAbsence){
-				if(report.getNik().equals(x.getNik())){
-					report.setDaysAbsence(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysSick){
-				if(report.getNik().equals(x.getNik())){
-					report.setSick(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysUnpaidLeave){
-				if(report.getNik().equals(x.getNik())){
-					report.setUnpaidLeave(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysYearlyLeave){
-				if(report.getNik().equals(x.getNik())){
-					report.setYearlyLeave(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysLeaveEarly){
-				if(report.getNik().equals(x.getNik())){
-					report.setLeaveEarly(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysLateWithoutPermission){
-				if(report.getNik().equals(x.getNik())){
-					report.setLateWithoutPermission(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysLateWithPermission){
-				if(report.getNik().equals(x.getNik())){
-					report.setLateWithPermission(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysHourlyLeave){
-				if(report.getNik().equals(x.getNik())){
-					report.setHourlyLeave(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysReplacementLeave){
-				if(report.getNik().equals(x.getNik())){
-					report.setReplacementLeave(x.getNumberResult());
-					break;
-				}
-			}
-			
-			for(SingleReportVo x : daysNoTapOut){
-				if(report.getNik().equals(x.getNik())){
-					report.setNoTapOutDay(x.getNumberResult());
-					break;
-				}
-			}
+			String nik = report.getNik();
+			report.setDaysComing(daysComing.get(nik).getNumberResult());
+			report.setDaysAbsence(daysAbsence.get(nik).getNumberResult());
+			report.setSick(daysSick.get(nik).getNumberResult());
+			report.setUnpaidLeave(daysUnpaidLeave.get(nik).getNumberResult());
+			report.setYearlyLeave(daysYearlyLeave.get(nik).getNumberResult());
+			report.setLeaveEarly(daysLeaveEarly.get(nik).getNumberResult());
+			report.setLateWithoutPermission(daysLateWithoutPermission.get(nik).getNumberResult());
+			report.setLateWithPermission(daysLateWithPermission.get(nik).getNumberResult());
+			report.setHourlyLeave(daysHourlyLeave.get(nik).getNumberResult());
+			report.setReplacementLeave(daysReplacementLeave.get(nik).getNumberResult());
+			report.setNoTapOutDay(daysNoTapOut.get(nik).getNumberResult());
 		}
 		
 		return reports;

@@ -1,10 +1,11 @@
 package com.blibli.future.service.api;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import com.blibli.future.vo.ReportResponseVo;
 import com.blibli.future.vo.SingleReportVo;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public interface ReportService {
 //	public void Top10LateEmployee();
@@ -14,5 +15,5 @@ public interface ReportService {
 //	public void Top10YearlyLeave();
 //	public void Top10SpecialLeave();
 	public List<ReportResponseVo> fullReport(String dept, LocalDate startDate, LocalDate endDate);
-	public List<SingleReportVo> reportParse(List<Object[]> objects);
+	public Map<String, SingleReportVo> parseSingleReportObject(List<Object[]> objects);
 }
