@@ -3,7 +3,6 @@ package com.blibli.future.repository;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.primaryKey.AttendanceKey;
 
-import com.blibli.future.vo.SingleReportVo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

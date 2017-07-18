@@ -5,7 +5,7 @@ import com.blibli.future.enums.LateCondition;
 import com.blibli.future.repository.*;
 import com.blibli.future.service.api.ReportService;
 import com.blibli.future.vo.ReportResponseVo;
-import com.blibli.future.vo.SingleReportVo;
+import com.blibli.future.vo.SubReportVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +33,16 @@ public class ReportServiceImpl implements ReportService{
 	}
 
 	@Override
-	public Map<String, SingleReportVo> parseSingleReportObject(List<Object[]> objects) {
+	public Map<String, SubReportVo> parseSingleReportObject(List<Object[]> objects) {
 		if(objects == null) {
 			return null;
 		}
 
-		Map<String, SingleReportVo> singleReportVos = new HashMap<>();
+		Map<String, SubReportVo> singleReportVos = new HashMap<>();
 
 		for(Object[] object : objects) {
-			SingleReportVo singleReportVo = new SingleReportVo(object);
-			singleReportVos.put(singleReportVo.getNik(), singleReportVo);
+			SubReportVo subReportVo = new SubReportVo(object);
+			singleReportVos.put(subReportVo.getNik(), subReportVo);
 		}
 
 		return singleReportVos;
@@ -64,17 +64,17 @@ public class ReportServiceImpl implements ReportService{
 		List<Object[]> daysYearlyLeaveObj = employeeYearlyLeaveRepository.sumEachEmployeeYearlyLeaveByDepartmentDateBetween(dept, startDate, endDate);
 		List<Object[]> daysReplacementLeaveObj = employeeSubstitutionLeaveRightRepository.sumEachEmployeeSubstitutionLeaveRightByDepartmentDateBetween(dept, startDate, endDate);
 
-		Map<String, SingleReportVo> daysComing = parseSingleReportObject(daysComingObj);
-		Map<String, SingleReportVo>  daysAbsence = parseSingleReportObject(daysAbsenceObj);
-		Map<String, SingleReportVo>  daysLeaveEarly = parseSingleReportObject(daysLeaveEarlyObj);
-		Map<String, SingleReportVo>  daysLateWithoutPermission = parseSingleReportObject(daysLateWithoutPermissionObj);
-		Map<String, SingleReportVo>  daysLateWithPermission = parseSingleReportObject(daysLateWithPermissionObj);
-		Map<String, SingleReportVo>  daysNoTapOut = parseSingleReportObject(daysNoTapOutObj);
-		Map<String, SingleReportVo>  daysSick = parseSingleReportObject(daysSickObj);
-		Map<String, SingleReportVo>  daysUnpaidLeave = parseSingleReportObject(daysUnpaidLeaveObj);
-		Map<String, SingleReportVo>  daysHourlyLeave = parseSingleReportObject(daysHourlyLeaveObj);
-		Map<String, SingleReportVo>  daysYearlyLeave = parseSingleReportObject(daysYearlyLeaveObj);
-		Map<String, SingleReportVo>  daysReplacementLeave = parseSingleReportObject(daysReplacementLeaveObj);
+		Map<String, SubReportVo> daysComing = parseSingleReportObject(daysComingObj);
+		Map<String, SubReportVo>  daysAbsence = parseSingleReportObject(daysAbsenceObj);
+		Map<String, SubReportVo>  daysLeaveEarly = parseSingleReportObject(daysLeaveEarlyObj);
+		Map<String, SubReportVo>  daysLateWithoutPermission = parseSingleReportObject(daysLateWithoutPermissionObj);
+		Map<String, SubReportVo>  daysLateWithPermission = parseSingleReportObject(daysLateWithPermissionObj);
+		Map<String, SubReportVo>  daysNoTapOut = parseSingleReportObject(daysNoTapOutObj);
+		Map<String, SubReportVo>  daysSick = parseSingleReportObject(daysSickObj);
+		Map<String, SubReportVo>  daysUnpaidLeave = parseSingleReportObject(daysUnpaidLeaveObj);
+		Map<String, SubReportVo>  daysHourlyLeave = parseSingleReportObject(daysHourlyLeaveObj);
+		Map<String, SubReportVo>  daysYearlyLeave = parseSingleReportObject(daysYearlyLeaveObj);
+		Map<String, SubReportVo>  daysReplacementLeave = parseSingleReportObject(daysReplacementLeaveObj);
 
 
 		for(ReportResponseVo report : reports){
