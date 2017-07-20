@@ -14,6 +14,6 @@ public interface ReportService {
 //	public void Top10SubtitutionalLeave();
 //	public void Top10YearlyLeave();
 //	public void Top10SpecialLeave();
-	List<ReportResponseVo> fullReport(String dept, LocalDate startDate, LocalDate endDate);
-	Map<String, SubReportVo> parseSingleReportObject(List<Object[]> objects);
+	List<ReportResponseVo> generateFullReport(String dept, LocalDate startDate, LocalDate endDate);
+	Map<String, SubReportVo> mapSubReportQueryResult(List<Object[]> objects);
 }
