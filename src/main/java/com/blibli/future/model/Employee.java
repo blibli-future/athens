@@ -45,7 +45,7 @@ public class Employee {
     private Set<EmployeeYearlyLeave> employeeYearlyLeave;
     
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private Set<SubstitutionLeaveRight> substitutionLeaveRight;
+    private Set<EmployeeSubstitutionLeaveRight> employeeSubstitutionLeaveRight;
     
     public Employee() {}
 
@@ -72,7 +72,7 @@ public class Employee {
         this.shifts = new HashSet<>();
         this.employeeLeaves = new HashSet<>();
         this.employeeYearlyLeave = new HashSet<>();
-        this.substitutionLeaveRight = new HashSet<>();
+        this.employeeSubstitutionLeaveRight = new HashSet<>();
     }
 
     public Boolean getStatus() {
@@ -255,16 +255,16 @@ public class Employee {
 		this.employeeYearlyLeave.add(employeeYearlyLeave);
 	}
 
-	public Set<SubstitutionLeaveRight> getSubstitutionLeaveRight() {
-		return substitutionLeaveRight;
+	public Set<EmployeeSubstitutionLeaveRight> getSubstitutionLeaveRight() {
+		return employeeSubstitutionLeaveRight;
 	}
 
-	public void setSubstitutionLeaveRight(Set<SubstitutionLeaveRight> substitutionLeaveRight) {
-		this.substitutionLeaveRight = substitutionLeaveRight;
+	public void setEmployeeSubstitutionLeaveRight(Set<EmployeeSubstitutionLeaveRight> employeeSubstitutionLeaveRight) {
+		this.employeeSubstitutionLeaveRight = employeeSubstitutionLeaveRight;
 	}
 	
-	public void addSubstitutionLeaveRight(SubstitutionLeaveRight substitutionLeaveRight) {
-		this.substitutionLeaveRight.add(substitutionLeaveRight);
+	public void addEmployeeSubstitutionLeaveRight(EmployeeSubstitutionLeaveRight employeeSubstitutionLeaveRight) {
+		this.employeeSubstitutionLeaveRight.add(employeeSubstitutionLeaveRight);
 	}
 
 	@Override
@@ -277,6 +277,8 @@ public class Employee {
 		result = prime * result + ((chiefPositionText == null) ? 0 : chiefPositionText.hashCode());
 		result = prime * result + ((employeeAbsencePermits == null) ? 0 : employeeAbsencePermits.hashCode());
 		result = prime * result + ((employeeLeaves == null) ? 0 : employeeLeaves.hashCode());
+		result = prime * result
+				+ ((employeeSubstitutionLeaveRight == null) ? 0 : employeeSubstitutionLeaveRight.hashCode());
 		result = prime * result + ((employeeYearlyLeave == null) ? 0 : employeeYearlyLeave.hashCode());
 		result = prime * result + ((endWorkingDate == null) ? 0 : endWorkingDate.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
@@ -291,7 +293,6 @@ public class Employee {
 		result = prime * result + ((shifts == null) ? 0 : shifts.hashCode());
 		result = prime * result + ((startWorkingDate == null) ? 0 : startWorkingDate.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((substitutionLeaveRight == null) ? 0 : substitutionLeaveRight.hashCode());
 		return result;
 	}
 
@@ -333,6 +334,11 @@ public class Employee {
 			if (other.employeeLeaves != null)
 				return false;
 		} else if (!employeeLeaves.equals(other.employeeLeaves))
+			return false;
+		if (employeeSubstitutionLeaveRight == null) {
+			if (other.employeeSubstitutionLeaveRight != null)
+				return false;
+		} else if (!employeeSubstitutionLeaveRight.equals(other.employeeSubstitutionLeaveRight))
 			return false;
 		if (employeeYearlyLeave == null) {
 			if (other.employeeYearlyLeave != null)
@@ -394,11 +400,6 @@ public class Employee {
 			if (other.status != null)
 				return false;
 		} else if (!status.equals(other.status))
-			return false;
-		if (substitutionLeaveRight == null) {
-			if (other.substitutionLeaveRight != null)
-				return false;
-		} else if (!substitutionLeaveRight.equals(other.substitutionLeaveRight))
 			return false;
 		return true;
 	}
