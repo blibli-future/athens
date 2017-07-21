@@ -1,21 +1,21 @@
 package com.blibli.future.vo;
 
-public class SingleReportVo {
+public class SubReportVo {
 	private String nik;
 	private String fullName;
 	private String department;
 	private Long numberResult;
 	
-	public SingleReportVo(){}
+	public SubReportVo(){}
 	
-	public SingleReportVo(Object[] object){
+	public SubReportVo(Object[] object){
 		this.nik = object[0].toString();
 		this.fullName = object[1].toString();
 		this.department = object[2].toString();
 		this.numberResult = Long.parseLong(object[3].toString());
 	}
 	
-	public SingleReportVo(String nik, String fullName, String department, Long numberResult){
+	public SubReportVo(String nik, String fullName, String department, Long numberResult){
 		this.nik = nik;
 		this.fullName = fullName;
 		this.department = department;
@@ -73,7 +73,7 @@ public class SingleReportVo {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SingleReportVo other = (SingleReportVo) obj;
+		SubReportVo other = (SubReportVo) obj;
 		if (department == null) {
 			if (other.department != null)
 				return false;
