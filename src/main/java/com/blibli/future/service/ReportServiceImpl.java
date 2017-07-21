@@ -79,17 +79,28 @@ public class ReportServiceImpl implements ReportService{
 
 		for(ReportResponseVo report : reports){
 			String nik = report.getNik();
-			report.setDaysComing(daysComing.get(nik).getNumberResult());
-			report.setDaysAbsence(daysAbsence.get(nik).getNumberResult());
-			report.setSick(daysSick.get(nik).getNumberResult());
-			report.setUnpaidLeave(daysUnpaidLeave.get(nik).getNumberResult());
-			report.setYearlyLeave(daysYearlyLeave.get(nik).getNumberResult());
-			report.setLeaveEarly(daysLeaveEarly.get(nik).getNumberResult());
-			report.setLateWithoutPermission(daysLateWithoutPermission.get(nik).getNumberResult());
-			report.setLateWithPermission(daysLateWithPermission.get(nik).getNumberResult());
-			report.setHourlyLeave(daysHourlyLeave.get(nik).getNumberResult());
-			report.setReplacementLeave(daysReplacementLeave.get(nik).getNumberResult());
-			report.setNoTapOutDay(daysNoTapOut.get(nik).getNumberResult());
+			if(daysComing.get(nik)!=null)
+				report.setDaysComing(daysComing.get(nik).getNumberResult());
+			if(daysAbsence.get(nik)!=null)
+				report.setDaysAbsence(daysAbsence.get(nik).getNumberResult());
+			if(daysSick.get(nik)!=null)
+				report.setdaysSick(daysSick.get(nik).getNumberResult());
+			if(daysUnpaidLeave.get(nik)!=null)
+				report.setUnpaidLeave(daysUnpaidLeave.get(nik).getNumberResult());
+			if(daysYearlyLeave.get(nik)!=null)
+				report.setYearlyLeave(daysYearlyLeave.get(nik).getNumberResult());
+			if(daysLeaveEarly.get(nik)!=null)
+				report.setLeaveEarly(daysLeaveEarly.get(nik).getNumberResult());
+			if(daysLateWithoutPermission.get(nik)!=null)
+				report.setLateWithoutPermission(daysLateWithoutPermission.get(nik).getNumberResult());
+			if(daysLateWithPermission.get(nik)!=null)
+				report.setLateWithPermission(daysLateWithPermission.get(nik).getNumberResult());
+			if(daysHourlyLeave.get(nik)!=null)
+				report.setHourlyLeave(daysHourlyLeave.get(nik).getNumberResult());
+			if(daysReplacementLeave.get(nik)!=null)
+				report.setReplacementLeave(daysReplacementLeave.get(nik).getNumberResult());
+			if(daysNoTapOut.get(nik)!=null)
+				report.setNoTapOutDay(daysNoTapOut.get(nik).getNumberResult());
 		}
 		
 		return reports;
