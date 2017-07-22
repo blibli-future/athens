@@ -13,22 +13,22 @@ public class EmployeeVo implements Serializable{
 	private static final long serialVersionUID = -5803908690580045466L;
 	private String nik;
     private String fullName;
-    private Gender gender;
+    private String gender;
     private String position;
     private String level;
     private String organizationalUnitText;
-    private MaritalStatus maritalStatus;
-    private Religion religion;
+    private String maritalStatus;
+    private String religion;
     private String nameOfDept;
     private String chiefNik;
     private String chiefName;
     private String chiefPosition;
     private String chiefPositionText;
-    private LocalDate startWorkingDate;
-    private LocalDate endWorkingDate;
+    private String startWorkingDate;
+    private String endWorkingDate;
     private Boolean status;
 
-    public EmployeeVo(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText, MaritalStatus maritalStatus, Religion religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status) {
+    public EmployeeVo(String nik, String fullName, String gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, String startWorkingDate, String endWorkingDate, Boolean status) {
         this.nik = nik;
         this.fullName = fullName;
         this.gender = gender;
@@ -63,11 +63,11 @@ public class EmployeeVo implements Serializable{
 		this.fullName = fullName;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -95,19 +95,19 @@ public class EmployeeVo implements Serializable{
 		this.organizationalUnitText = organizationalUnitText;
 	}
 
-	public MaritalStatus getMaritalStatus() {
+	public String getMaritalStatus() {
 		return maritalStatus;
 	}
 
-	public void setMaritalStatus(MaritalStatus maritalStatus) {
+	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
 
-	public Religion getReligion() {
+	public String getReligion() {
 		return religion;
 	}
 
-	public void setReligion(Religion religion) {
+	public void setReligion(String religion) {
 		this.religion = religion;
 	}
 
@@ -151,19 +151,19 @@ public class EmployeeVo implements Serializable{
 		this.chiefPositionText = chiefPositionText;
 	}
 
-	public LocalDate getStartWorkingDate() {
+	public String getStartWorkingDate() {
 		return startWorkingDate;
 	}
 
-	public void setStartWorkingDate(LocalDate startWorkingDate) {
+	public void setStartWorkingDate(String startWorkingDate) {
 		this.startWorkingDate = startWorkingDate;
 	}
 
-	public LocalDate getEndWorkingDate() {
+	public String getEndWorkingDate() {
 		return endWorkingDate;
 	}
 
-	public void setEndWorkingDate(LocalDate endWorkingDate) {
+	public void setEndWorkingDate(String endWorkingDate) {
 		this.endWorkingDate = endWorkingDate;
 	}
 
@@ -241,14 +241,20 @@ public class EmployeeVo implements Serializable{
 				return false;
 		} else if (!fullName.equals(other.fullName))
 			return false;
-		if (gender != other.gender)
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
 			return false;
 		if (level == null) {
 			if (other.level != null)
 				return false;
 		} else if (!level.equals(other.level))
 			return false;
-		if (maritalStatus != other.maritalStatus)
+		if (maritalStatus == null) {
+			if (other.maritalStatus != null)
+				return false;
+		} else if (!maritalStatus.equals(other.maritalStatus))
 			return false;
 		if (nameOfDept == null) {
 			if (other.nameOfDept != null)
@@ -270,7 +276,10 @@ public class EmployeeVo implements Serializable{
 				return false;
 		} else if (!position.equals(other.position))
 			return false;
-		if (religion != other.religion)
+		if (religion == null) {
+			if (other.religion != null)
+				return false;
+		} else if (!religion.equals(other.religion))
 			return false;
 		if (startWorkingDate == null) {
 			if (other.startWorkingDate != null)
