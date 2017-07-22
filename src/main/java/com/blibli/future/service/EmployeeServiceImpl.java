@@ -6,21 +6,27 @@ import com.blibli.future.enums.Religion;
 import com.blibli.future.model.Employee;
 import com.blibli.future.repository.*;
 import com.blibli.future.service.api.EmployeeService;
+<<<<<<< HEAD
 import com.blibli.future.vo.EmployeeVo;
+=======
+>>>>>>> 30d2958f0c2e2a1f52a72bac5630a4b753cf7e01
 import com.blibli.future.vo.SubReportVo;
 import com.blibli.future.vo.SummariesVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+<<<<<<< HEAD
 import java.time.format.DateTimeFormatter;
+=======
+>>>>>>> 30d2958f0c2e2a1f52a72bac5630a4b753cf7e01
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
     private final EmployeeYearlyLeaveRepository employeeYearlyLeaveRepository;
     private final EmployeeSubstitutionLeaveRightRepository employeeSubstitutionLeaveRightRepository;
     private final AttendanceRepository attendanceRepository;
@@ -130,6 +136,37 @@ public class EmployeeServiceImpl implements EmployeeService {
         //TODO Ariel: employeeLeaveCount already done see AttendanceRepo countEmployeeLateConditionByNikDateBetween, 
         //TODO Ariel: "max substitutionLeaveRight" START with EmployeeSubstitutionLeaveRightRepository sumEmployeeYearlyLeaveByNikDateBetween END with SubstitutionLeaveRightRepository countSubstitutionLeaveRightAvaiableByNik
         //TODO Ariel: max yearlyLeave START with EmpYearlyLeaveRepo sumEmployeeYearlyLeaveByNikDateBetween END with static or u need to get the level (?)
+        return new SummariesVo();
+    }
+
+    @Override
+    public SummariesVo generateSummaries(String nik) { //Todo: apply error handling by throwing exception where nik is not found
+        Object[] yearlyLeaveCountObject = this.employeeYearlyLeaveRepository.sumEmployeeYearlyLeaveByNikDateBetween(
+                nik,
+                LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
+                LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31)
+        );
+
+        Object[] substitutionLeaveRightCountObject = this.employeeSubstitutionLeaveRightRepository.sumEmployeeSubstitutionLeaveRightByNikDateBetween(
+                nik,
+                LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
+                LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31)
+        );
+
+        Object[] employeeLeaveCountObject = this.attendanceRepository.countEmployeeLateConditionByNikDateBetween(
+                LateCondition.LATE.ordinal(),
+                nik,
+                LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
+                LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31)
+        );
+
+        SubReportVo yearlyLeaveCount = new SubReportVo(yearlyLeaveCountObject);
+        SubReportVo substitutionLeaveRightCount = new SubReportVo(substitutionLeaveRightCountObject);
+        SubReportVo employeeLeaveCount = new SubReportVo(employeeLeaveCountObject);
+
+
+        //TODO Ariel: create and fully populate SummariesVo data
+        //TODO Bastian: create query for calculating max yearlyLeave, max substitutionLeaveRight and employeeLeaveCount
         return new SummariesVo();
     }
 
