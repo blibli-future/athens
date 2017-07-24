@@ -8,8 +8,11 @@ import com.blibli.future.model.SubstitutionLeaveRight;
 
 @Repository
 public interface SubstitutionLeaveRightRepository extends JpaRepository<SubstitutionLeaveRight,String>{
-	@Query(value = "select count(*) from substitution_leave_right where expired_date <= CURRENT_DATE and nik = (?1)"
-			, nativeQuery = true)
-	Object[] countSubstitutionLeaveRightAvaiableByNik(String nik);
+	@Query(value =
+            "select count(*) " +
+            "from substitution_leave_right " +
+            "where expired_date <= CURRENT_DATE and nik = (?1)",
+            nativeQuery = true)
+	Object[] countSubstitutionLeaveRightAvailableByNik(String nik);
 	
 }
