@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
+import com.blibli.future.vo.EmployeeResponseVo;
 import com.blibli.future.vo.EmployeeVo;
 
 @RestController
@@ -37,13 +38,13 @@ public class EmployeesController {
     }
 	
     @GetMapping(BASE_PATH)
-    public ResponseEntity<List<Employee>> employeeGetAll(){
-        List<Employee> getEmployees =
+    public ResponseEntity<List<EmployeeResponseVo>> employeeGetAll(){
+        List<EmployeeResponseVo> getEmployees =
                 employeeService.getAllEmployees();
         if(getEmployees!= null){
-            return new ResponseEntity<List<Employee>>(getEmployees, HttpStatus.OK);
+            return new ResponseEntity<List<EmployeeResponseVo>>(getEmployees, HttpStatus.OK);
         }
-        return new ResponseEntity<List<Employee>>(getEmployees, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<List<EmployeeResponseVo>>(getEmployees, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(BASE_PATH)

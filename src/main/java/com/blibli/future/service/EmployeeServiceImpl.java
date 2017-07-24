@@ -5,6 +5,7 @@ import com.blibli.future.enums.Religion;
 import com.blibli.future.model.Employee;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
+import com.blibli.future.vo.EmployeeResponseVo;
 import com.blibli.future.vo.EmployeeVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +82,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
     
 	@Override
-	public List<Employee> getAllEmployees() {
-		List<Employee> listEmployee = new ArrayList<>();
-        listEmployee = employeeRepository.findAll();
+	public List<EmployeeResponseVo> getAllEmployees() {
+		List<EmployeeResponseVo> listEmployee = new ArrayList<>();
+        listEmployee = employeeRepository.findAllEmployee();
         if(listEmployee!=null){
             return listEmployee;
         }

@@ -1,192 +1,123 @@
 package com.blibli.future.vo;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import com.blibli.future.enums.Gender;
+import com.blibli.future.enums.MaritalStatus;
+import com.blibli.future.enums.Religion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.io.Serializable;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EmployeeVo implements Serializable{
-	private static final long serialVersionUID = -5803908690580045466L;
+public class EmployeeResponseVo implements Serializable{
+	private static final long serialVersionUID = 4151908791287248949L;
 	private String nik;
     private String fullName;
-    private String gender;
+    private Gender gender;
     private String position;
-    private String level;
     private String organizationalUnitText;
-    private String maritalStatus;
-    private String religion;
+    private MaritalStatus maritalStatus;
+    private Religion religion;
     private String nameOfDept;
     private String chiefNik;
     private String chiefName;
-    private String chiefPosition;
-    private String chiefPositionText;
     private String startWorkingDate;
-    private String endWorkingDate;
-    private Boolean status;
-
-    public EmployeeVo(String nik, String fullName, String gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, String startWorkingDate, String endWorkingDate, Boolean status) {
-        this.nik = nik;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.position = position;
-        this.level = level;
-        this.organizationalUnitText = organizationalUnitText;
-        this.maritalStatus = maritalStatus;
-        this.religion = religion;
-        this.nameOfDept = nameOfDept;
-        this.chiefNik = chiefNik;
-        this.chiefName = chiefName;
-        this.chiefPosition = chiefPosition;
-        this.chiefPositionText = chiefPositionText;
-        this.startWorkingDate = startWorkingDate;
-        this.endWorkingDate = endWorkingDate;
-        this.status = status;
+    
+    public EmployeeResponseVo(){}
+    public EmployeeResponseVo(String nik, String fullName, Gender gender, String position, 
+    		String organizationalUnitText, MaritalStatus maritalStatus, Religion religion, 
+    		String nameOfDept, String chiefNik, String chiefName, LocalDate startWorkingDate){
+    	this.nik = nik;
+    	this.fullName = fullName;
+    	this.gender = gender;
+    	this.position = position;
+    	this.organizationalUnitText = organizationalUnitText;
+    	this.maritalStatus = maritalStatus;
+    	this.religion = religion;
+    	this.nameOfDept = nameOfDept;
+    	this.chiefNik = chiefNik;
+    	this.chiefName = chiefName;
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
+    	this.startWorkingDate = startWorkingDate.format(formatter);
     }
-
 	public String getNik() {
 		return nik;
 	}
-
 	public void setNik(String nik) {
 		this.nik = nik;
 	}
-
 	public String getFullName() {
 		return fullName;
 	}
-
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
-
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-
 	public String getPosition() {
 		return position;
 	}
-
 	public void setPosition(String position) {
 		this.position = position;
 	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
-
 	public String getOrganizationalUnitText() {
 		return organizationalUnitText;
 	}
-
 	public void setOrganizationalUnitText(String organizationalUnitText) {
 		this.organizationalUnitText = organizationalUnitText;
 	}
-
-	public String getMaritalStatus() {
+	public MaritalStatus getMaritalStatus() {
 		return maritalStatus;
 	}
-
-	public void setMaritalStatus(String maritalStatus) {
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-
-	public String getReligion() {
+	public Religion getReligion() {
 		return religion;
 	}
-
-	public void setReligion(String religion) {
+	public void setReligion(Religion religion) {
 		this.religion = religion;
 	}
-
 	public String getNameOfDept() {
 		return nameOfDept;
 	}
-
 	public void setNameOfDept(String nameOfDept) {
 		this.nameOfDept = nameOfDept;
 	}
-
 	public String getChiefNik() {
 		return chiefNik;
 	}
-
 	public void setChiefNik(String chiefNik) {
 		this.chiefNik = chiefNik;
 	}
-
 	public String getChiefName() {
 		return chiefName;
 	}
-
 	public void setChiefName(String chiefName) {
 		this.chiefName = chiefName;
 	}
-
-	public String getChiefPosition() {
-		return chiefPosition;
-	}
-
-	public void setChiefPosition(String chiefPosition) {
-		this.chiefPosition = chiefPosition;
-	}
-
-	public String getChiefPositionText() {
-		return chiefPositionText;
-	}
-
-	public void setChiefPositionText(String chiefPositionText) {
-		this.chiefPositionText = chiefPositionText;
-	}
-
 	public String getStartWorkingDate() {
 		return startWorkingDate;
 	}
-
 	public void setStartWorkingDate(String startWorkingDate) {
 		this.startWorkingDate = startWorkingDate;
 	}
-
-	public String getEndWorkingDate() {
-		return endWorkingDate;
-	}
-
-	public void setEndWorkingDate(String endWorkingDate) {
-		this.endWorkingDate = endWorkingDate;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((chiefName == null) ? 0 : chiefName.hashCode());
 		result = prime * result + ((chiefNik == null) ? 0 : chiefNik.hashCode());
-		result = prime * result + ((chiefPosition == null) ? 0 : chiefPosition.hashCode());
-		result = prime * result + ((chiefPositionText == null) ? 0 : chiefPositionText.hashCode());
-		result = prime * result + ((endWorkingDate == null) ? 0 : endWorkingDate.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((level == null) ? 0 : level.hashCode());
 		result = prime * result + ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
 		result = prime * result + ((nameOfDept == null) ? 0 : nameOfDept.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
@@ -194,10 +125,8 @@ public class EmployeeVo implements Serializable{
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		result = prime * result + ((religion == null) ? 0 : religion.hashCode());
 		result = prime * result + ((startWorkingDate == null) ? 0 : startWorkingDate.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -206,7 +135,7 @@ public class EmployeeVo implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EmployeeVo other = (EmployeeVo) obj;
+		EmployeeResponseVo other = (EmployeeResponseVo) obj;
 		if (chiefName == null) {
 			if (other.chiefName != null)
 				return false;
@@ -217,40 +146,14 @@ public class EmployeeVo implements Serializable{
 				return false;
 		} else if (!chiefNik.equals(other.chiefNik))
 			return false;
-		if (chiefPosition == null) {
-			if (other.chiefPosition != null)
-				return false;
-		} else if (!chiefPosition.equals(other.chiefPosition))
-			return false;
-		if (chiefPositionText == null) {
-			if (other.chiefPositionText != null)
-				return false;
-		} else if (!chiefPositionText.equals(other.chiefPositionText))
-			return false;
-		if (endWorkingDate == null) {
-			if (other.endWorkingDate != null)
-				return false;
-		} else if (!endWorkingDate.equals(other.endWorkingDate))
-			return false;
 		if (fullName == null) {
 			if (other.fullName != null)
 				return false;
 		} else if (!fullName.equals(other.fullName))
 			return false;
-		if (gender == null) {
-			if (other.gender != null)
-				return false;
-		} else if (!gender.equals(other.gender))
+		if (gender != other.gender)
 			return false;
-		if (level == null) {
-			if (other.level != null)
-				return false;
-		} else if (!level.equals(other.level))
-			return false;
-		if (maritalStatus == null) {
-			if (other.maritalStatus != null)
-				return false;
-		} else if (!maritalStatus.equals(other.maritalStatus))
+		if (maritalStatus != other.maritalStatus)
 			return false;
 		if (nameOfDept == null) {
 			if (other.nameOfDept != null)
@@ -272,20 +175,12 @@ public class EmployeeVo implements Serializable{
 				return false;
 		} else if (!position.equals(other.position))
 			return false;
-		if (religion == null) {
-			if (other.religion != null)
-				return false;
-		} else if (!religion.equals(other.religion))
+		if (religion != other.religion)
 			return false;
 		if (startWorkingDate == null) {
 			if (other.startWorkingDate != null)
 				return false;
 		} else if (!startWorkingDate.equals(other.startWorkingDate))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
 			return false;
 		return true;
 	}
