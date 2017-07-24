@@ -6,20 +6,13 @@ import com.blibli.future.enums.Religion;
 import com.blibli.future.model.Employee;
 import com.blibli.future.repository.*;
 import com.blibli.future.service.api.EmployeeService;
-<<<<<<< HEAD
 import com.blibli.future.vo.EmployeeVo;
-=======
->>>>>>> 30d2958f0c2e2a1f52a72bac5630a4b753cf7e01
 import com.blibli.future.vo.SubReportVo;
-import com.blibli.future.vo.SummariesVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-<<<<<<< HEAD
 import java.time.format.DateTimeFormatter;
-=======
->>>>>>> 30d2958f0c2e2a1f52a72bac5630a4b753cf7e01
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
