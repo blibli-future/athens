@@ -3,7 +3,6 @@ package com.blibli.future.controller;
 import com.blibli.future.dto.AuthenticationRequest;
 import com.blibli.future.dto.response.AthensResponse;
 import com.blibli.future.dto.response.AuthenticationResponse;
-import com.blibli.future.dto.response.ErrorResponse;
 import com.blibli.future.service.api.LoginService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class LoginController {
 
     private final Logger LOGGER = Logger.getLogger(LoginController.class);
 
-    public final String LOGIN_URL = "/login";
+    final String LOGIN_URL = "/login";
 
     @Autowired
     public LoginController(LoginService loginService) {
@@ -28,13 +27,8 @@ public class LoginController {
     }
 
     @PostMapping(value = LOGIN_URL)
-    public ResponseEntity<AthensResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
-        String jwtToken;
-        try {
-            jwtToken = loginService.createToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
-        } catch (AuthenticationException e) {
-            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<AthensResponse> login(@RequestBody AuthenticationRequest authenticationRequest) throws AuthenticationException {
+        String jwtToken = loginService.createToken(authenticationRequest.getNik(), authenticationRequest.getPassword());
 
         return new ResponseEntity<>(new AuthenticationResponse(jwtToken), HttpStatus.OK);
     }
