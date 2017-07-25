@@ -15,7 +15,7 @@ import java.util.List;
 public class ShiftController {
 
     public final String BASE_PATH = "/shift";
-    public final String PATH_WITH_ID = BASE_PATH + "/{id}";
+    final String PATH_WITH_ID = BASE_PATH + "/{id}";
 
     private ShiftService shiftService;
 
@@ -26,45 +26,27 @@ public class ShiftController {
 
     @GetMapping(value = BASE_PATH)
     public ResponseEntity<List<Shift>> getAllShift() {
-        return new ResponseEntity<List<Shift>>(shiftService.getAllShift(), HttpStatus.OK);
+        return new ResponseEntity<>(shiftService.getAllShift(), HttpStatus.OK);
     }
 
     @PostMapping(value = BASE_PATH)
     public ResponseEntity<Shift> createNewShift(@RequestBody ShiftVo shiftVO) {
-        return new ResponseEntity<Shift>(this.shiftService.createShift(shiftVO), HttpStatus.OK);
+        return new ResponseEntity<>(this.shiftService.createShift(shiftVO), HttpStatus.OK);
     }
 
     @GetMapping(value = PATH_WITH_ID)
-    public ResponseEntity getShiftById(@PathVariable String id) {
-        try {
-            return new ResponseEntity<>(this.shiftService.getShiftById(id), HttpStatus.OK);
-        } catch (IdNotFoundException e) {
-            //TODO: Log the exception
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity getShiftById(@PathVariable String id) throws IdNotFoundException {
+        return new ResponseEntity<>(this.shiftService.getShiftById(id), HttpStatus.OK);
     }
 
     @PutMapping(value = PATH_WITH_ID)
-    public ResponseEntity updateShift(@PathVariable String id, @RequestBody ShiftVo shiftVO) {
-        try {
-            return new ResponseEntity(this.shiftService.updateShift(id, shiftVO), HttpStatus.OK);
-        } catch (IdNotFoundException e) {
-            //TODO: Log the exception
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity updateShift(@PathVariable String id, @RequestBody ShiftVo shiftVO) throws IdNotFoundException {
+        return new ResponseEntity<>(this.shiftService.updateShift(id, shiftVO), HttpStatus.OK);
     }
 
     @DeleteMapping(value = PATH_WITH_ID)
-    public ResponseEntity deleteShift(@PathVariable String id) {
-        try {
-            this.shiftService.deleteShift(id);
-        } catch (IdNotFoundException e) {
-            //TODO: Log the exception
-            e.printStackTrace();
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity deleteShift(@PathVariable String id) throws IdNotFoundException {
+        this.shiftService.deleteShift(id);
 
         return new ResponseEntity(HttpStatus.OK);
     }
