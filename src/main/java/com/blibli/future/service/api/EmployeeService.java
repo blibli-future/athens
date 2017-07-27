@@ -1,5 +1,6 @@
 package com.blibli.future.service.api;
 
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Employee;
 import com.blibli.future.vo.EmployeeVo;
 import com.blibli.future.vo.SummariesVo;
@@ -7,10 +8,10 @@ import com.blibli.future.vo.SummariesVo;
 import java.util.List;
 
 public interface EmployeeService {
-	public Employee saveEmployee (EmployeeVo employeeVo);
-	public boolean isEmployeeExist(String nik);
-	public Employee updateEmployee (EmployeeVo employeeVo);
-	public List<Employee> getEmployeesByDept (String nameOfDept);
-	public List<Employee> getAllEmployees ();
-    SummariesVo generateSummaries(String nik);
+	Employee saveEmployee (EmployeeVo employeeVo);
+	boolean isEmployeeExist(String nik);
+	Employee updateEmployee (EmployeeVo employeeVo);
+	List<Employee> getEmployeesByDept (String nameOfDept);
+	List<Employee> getAllEmployees ();
+    SummariesVo generateSummaries(String nik) throws IdNotFoundException;
 }

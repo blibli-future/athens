@@ -1,5 +1,7 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.dto.response.ErrorResponse;
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.vo.SummariesVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,13 @@ public class EmployeeController {
     }
 
     @GetMapping(SUMMARIES_PATH)
-    public ResponseEntity<SummariesVo> retrieveEmployeeSummary(@PathVariable String nik) {
-        SummariesVo response = this.employeeService.generateSummaries(nik);
+    public ResponseEntity retrieveEmployeeSummary(@PathVariable String nik)  {
+        SummariesVo response = null;
+        try {
+            response = this.employeeService.generateSummaries(nik);
+        } catch (IdNotFoundException e) {
+            return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.LateCondition;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Employee;
 import com.blibli.future.repository.AttendanceRepository;
 import com.blibli.future.repository.EmployeeRepository;
@@ -104,7 +105,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
     @Override
-    public SummariesVo generateSummaries(String nik) { //Todo: apply error handling by throwing exception where nik is not found
+    public SummariesVo generateSummaries(String nik) throws IdNotFoundException {
+        Employee employee = employeeRepository.findOneByNik(nik);
+
+        if(employee == null) {
+            throw new IdNotFoundException("nik: " + nik + " is not found in the database");
+        }
+
         Object[] yearlyLeaveCountObject = this.employeeYearlyLeaveRepository.sumEmployeeYearlyLeaveByNikDateBetween(
                 nik,
                 LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
@@ -129,6 +136,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         SubReportVo employeeLateCount = new SubReportVo(employeeLateCountObject);
 
         //Todo: generate Max Count of Each Field
-        return new SummariesVo();
+        return new SummariesVo(
+                nik,
+                yearlyLeaveCount.getNumberResult(),
+                substitutionLeaveRightCount.getNumberResult(),
+                employeeLateCount.getNumberResult(),
+                0, //by department
+                0, //"max substitutionLeaveRight" START with EmployeeSubstitutionLeaveRightRepository sumEmployeeYearlyLeaveByNikDateBetween END with SubstitutionLeaveRightRepository countSubstitutionLeaveRightAvaiableByNik
+                5);
     }
 }
