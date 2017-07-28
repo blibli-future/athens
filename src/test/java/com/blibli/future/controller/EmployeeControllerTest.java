@@ -3,6 +3,7 @@ package com.blibli.future.controller;
 import com.blibli.future.dto.response.ErrorResponse;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.service.api.EmployeeService;
+import com.blibli.future.service.api.EmployeeStatisticService;
 import com.blibli.future.vo.SummariesVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -23,16 +24,18 @@ public class EmployeeControllerTest {
     private EmployeeController employeeController;
     @Mock
     private EmployeeService employeeService;
+    @Mock
+    private EmployeeStatisticService employeeStatisticService;
 
     private MockMvc mockMvc;
     private ObjectWriter JsonWriter = new ObjectMapper().writer();
 
     private String nik = "TEST";
-    private SummariesVo summariesVo = new SummariesVo(nik, 0l, 0l, 0l, 0, 0, 0);
+    private SummariesVo summariesVo = new SummariesVo();
 
     @Test
     public void retrieveEmployeeSummaryTest_Success() throws Exception {
-        Mockito.when(employeeService.generateSummaries(nik)).thenReturn(summariesVo);
+        Mockito.when(employeeStatisticService.generateSummaries(nik)).thenReturn(summariesVo);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(employeeController.SUMMARIES_PATH.replaceAll("\\{nik\\}", nik))
@@ -40,13 +43,13 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(JsonWriter.writeValueAsString(summariesVo)));
 
-        Mockito.verify(employeeService).generateSummaries(nik);
+        Mockito.verify(employeeStatisticService).generateSummaries(nik);
     }
 
     @Test
     public void retrieveEmployeeSummaryTest_fail() throws Exception {
         String errorMessage = "nik " + nik + " not found";
-        Mockito.when(employeeService.generateSummaries(nik)).thenThrow(new IdNotFoundException(errorMessage));
+        Mockito.when(employeeStatisticService.generateSummaries(nik)).thenThrow(new IdNotFoundException(errorMessage));
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(employeeController.SUMMARIES_PATH.replaceAll("\\{nik\\}", nik))
@@ -54,7 +57,7 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.content().json(JsonWriter.writeValueAsString(new ErrorResponse(errorMessage))));
 
-        Mockito.verify(employeeService).generateSummaries(nik);
+        Mockito.verify(employeeStatisticService).generateSummaries(nik);
     }
 
     @Before

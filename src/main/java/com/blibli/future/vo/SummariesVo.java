@@ -3,22 +3,12 @@ package com.blibli.future.vo;
 
 public class SummariesVo {
     private String nik;
-    private long yearlyLeaveCount;
-    private long substitutionLeaveRightCount;
-    private long employeeLateCount;
-    private int maxYearlyLeaveCount;
-    private int masSubstitutionLeaveRightCount;
-    private int maxEmployeeLateCount;
-
-    public SummariesVo(String nik, Long yearlyLeaveCount, Long substitutionLeaveRightCount, Long employeeLateCount, int maxYearlyLeaveCount, int masSubstitutionLeaveRightCount, int maxEmployeeLateCount) {
-        this.nik = nik;
-        this.yearlyLeaveCount = yearlyLeaveCount;
-        this.substitutionLeaveRightCount = substitutionLeaveRightCount;
-        this.employeeLateCount = employeeLateCount;
-        this.maxYearlyLeaveCount = maxYearlyLeaveCount;
-        this.masSubstitutionLeaveRightCount = masSubstitutionLeaveRightCount;
-        this.maxEmployeeLateCount = maxEmployeeLateCount;
-    }
+    private long yearlyLeaveUsed;
+    private long substitutionLeaveRightUsed;
+    private long lateUsed;
+    private int maxYearlyLeave;
+    private int maxSubstitutionLeaveRight;
+    private int maxEmployeeLate;
 
     public String getNik() {
         return nik;
@@ -28,51 +18,51 @@ public class SummariesVo {
         this.nik = nik;
     }
 
-    public long getYearlyLeaveCount() {
-        return yearlyLeaveCount;
+    public long getYearlyLeaveUsed() {
+        return yearlyLeaveUsed;
     }
 
-    public void setYearlyLeaveCount(long yearlyLeaveCount) {
-        this.yearlyLeaveCount = yearlyLeaveCount;
+    public void setYearlyLeaveUsed(long yearlyLeaveUsed) {
+        this.yearlyLeaveUsed = yearlyLeaveUsed;
     }
 
-    public long getSubstitutionLeaveRightCount() {
-        return substitutionLeaveRightCount;
+    public long getSubstitutionLeaveRightUsed() {
+        return substitutionLeaveRightUsed;
     }
 
-    public void setSubstitutionLeaveRightCount(long substitutionLeaveRightCount) {
-        this.substitutionLeaveRightCount = substitutionLeaveRightCount;
+    public void setSubstitutionLeaveRightUsed(long substitutionLeaveRightUsed) {
+        this.substitutionLeaveRightUsed = substitutionLeaveRightUsed;
     }
 
-    public long getEmployeeLateCount() {
-        return employeeLateCount;
+    public long getLateUsed() {
+        return lateUsed;
     }
 
-    public void setEmployeeLateCount(long employeeLateCount) {
-        this.employeeLateCount = employeeLateCount;
+    public void setLateUsed(long lateUsed) {
+        this.lateUsed = lateUsed;
     }
 
-    public int getMaxYearlyLeaveCount() {
-        return maxYearlyLeaveCount;
+    public int getMaxYearlyLeave() {
+        return maxYearlyLeave;
     }
 
-    public void setMaxYearlyLeaveCount(int maxYearlyLeaveCount) {
-        this.maxYearlyLeaveCount = maxYearlyLeaveCount;
+    public void setMaxYearlyLeave(int maxYearlyLeave) {
+        this.maxYearlyLeave = maxYearlyLeave;
     }
 
-    public int getMasSubstitutionLeaveRightCount() {
-        return masSubstitutionLeaveRightCount;
+    public int getMaxSubstitutionLeaveRight() {
+        return maxSubstitutionLeaveRight;
     }
 
-    public void setMasSubstitutionLeaveRightCount(int masSubstitutionLeaveRightCount) {
-        this.masSubstitutionLeaveRightCount = masSubstitutionLeaveRightCount;
+    public void setMaxSubstitutionLeaveRight(int maxSubstitutionLeaveRight) {
+        this.maxSubstitutionLeaveRight = maxSubstitutionLeaveRight;
     }
 
-    public int getMaxEmployeeLateCount() {
-        return maxEmployeeLateCount;
+    public int getMaxEmployeeLate() {
+        return maxEmployeeLate;
     }
 
-    public void setMaxEmployeeLateCount(int maxEmployeeLateCount) {
-        this.maxEmployeeLateCount = maxEmployeeLateCount;
+    public void setMaxEmployeeLate(int maxEmployeeLate) {
+        this.maxEmployeeLate = maxEmployeeLate;
     }
 }
