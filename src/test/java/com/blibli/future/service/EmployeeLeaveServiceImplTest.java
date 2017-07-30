@@ -102,7 +102,7 @@ public class EmployeeLeaveServiceImplTest {
 	@Before
 	  public void setUp() throws Exception {
 	    initMocks(this);
-	    this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", "PakBossKu", "CEO", "Central", LocalDate.now(), LocalDate.now(), true);
+	    this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", LocalDate.now(), LocalDate.now(), true);
 	    this.leave = new Leave("123", "Cuti Tahun Baru", Gender.MALE, MaritalStatus.LAJANG, Religion.KRISTEN);
 	    this.employeeLeaveVo = new EmployeeLeaveVo("321", "11", "123", "2017-01-06", "2017-01-09", "Pulang Kampoeng");
 	    this.employeeLeave = new EmployeeLeave(employee, leave, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Pulang Kampoeng");

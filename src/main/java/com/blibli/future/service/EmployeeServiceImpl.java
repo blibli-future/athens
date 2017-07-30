@@ -34,8 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }else{
             Employee emp = new Employee(employeeVo.getNik(), employeeVo.getFullName(), Gender.valueOf(employeeVo.getGender()), employeeVo.getPosition(), 
             		employeeVo.getLevel(), employeeVo.getOrganizationalUnitText(), MaritalStatus.valueOf(employeeVo.getMaritalStatus()), Religion.valueOf(employeeVo.getReligion()), employeeVo.getNameOfDept(),
-            		employeeVo.getChiefNik(), employeeVo.getChiefName(), employeeVo.getChiefPosition(), employeeVo.getChiefPositionText(),
-            		LocalDate.parse(employeeVo.getStartWorkingDate(), formatter), LocalDate.parse(employeeVo.getEndWorkingDate(), formatter), employeeVo.getStatus());
+            		employeeVo.getChiefNik(), LocalDate.parse(employeeVo.getStartWorkingDate(), formatter), employeeVo.getStatus());
             employeeRepository.save(emp);
             return emp;
         }
@@ -51,11 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee updateEmployee (EmployeeVo employeeVo){
     		Employee oldEmployee = employeeRepository.findOneByNik(employeeVo.getNik());
     	if(oldEmployee!=null){
-    	   oldEmployee.setChiefName(employeeVo.getChiefName());
     	   oldEmployee.setChiefNik(employeeVo.getChiefNik());
-    	   oldEmployee.setChiefPosition(employeeVo.getChiefPosition());
-    	   oldEmployee.setChiefPositionText(employeeVo.getChiefPositionText());
-    	   oldEmployee.setEndWorkingDate(LocalDate.parse(employeeVo.getEndWorkingDate(), formatter));
     	   oldEmployee.setFullName(employeeVo.getFullName());
     	   oldEmployee.setGender(Gender.valueOf(employeeVo.getGender()));
     	   oldEmployee.setLevel(employeeVo.getLevel());

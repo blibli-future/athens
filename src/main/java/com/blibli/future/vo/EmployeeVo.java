@@ -17,11 +17,7 @@ public class EmployeeVo implements Serializable{
     private String religion;
     private String nameOfDept;
     private String chiefNik;
-    private String chiefName;
-    private String chiefPosition;
-    private String chiefPositionText;
     private String startWorkingDate;
-    private String endWorkingDate;
     private Boolean status;
 
     public EmployeeVo(String nik, String fullName, String gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, String startWorkingDate, String endWorkingDate, Boolean status) {
@@ -35,11 +31,7 @@ public class EmployeeVo implements Serializable{
         this.religion = religion;
         this.nameOfDept = nameOfDept;
         this.chiefNik = chiefNik;
-        this.chiefName = chiefName;
-        this.chiefPosition = chiefPosition;
-        this.chiefPositionText = chiefPositionText;
         this.startWorkingDate = startWorkingDate;
-        this.endWorkingDate = endWorkingDate;
         this.status = status;
     }
 
@@ -123,44 +115,12 @@ public class EmployeeVo implements Serializable{
 		this.chiefNik = chiefNik;
 	}
 
-	public String getChiefName() {
-		return chiefName;
-	}
-
-	public void setChiefName(String chiefName) {
-		this.chiefName = chiefName;
-	}
-
-	public String getChiefPosition() {
-		return chiefPosition;
-	}
-
-	public void setChiefPosition(String chiefPosition) {
-		this.chiefPosition = chiefPosition;
-	}
-
-	public String getChiefPositionText() {
-		return chiefPositionText;
-	}
-
-	public void setChiefPositionText(String chiefPositionText) {
-		this.chiefPositionText = chiefPositionText;
-	}
-
 	public String getStartWorkingDate() {
 		return startWorkingDate;
 	}
 
 	public void setStartWorkingDate(String startWorkingDate) {
 		this.startWorkingDate = startWorkingDate;
-	}
-
-	public String getEndWorkingDate() {
-		return endWorkingDate;
-	}
-
-	public void setEndWorkingDate(String endWorkingDate) {
-		this.endWorkingDate = endWorkingDate;
 	}
 
 	public Boolean getStatus() {
@@ -179,11 +139,7 @@ public class EmployeeVo implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((chiefName == null) ? 0 : chiefName.hashCode());
 		result = prime * result + ((chiefNik == null) ? 0 : chiefNik.hashCode());
-		result = prime * result + ((chiefPosition == null) ? 0 : chiefPosition.hashCode());
-		result = prime * result + ((chiefPositionText == null) ? 0 : chiefPositionText.hashCode());
-		result = prime * result + ((endWorkingDate == null) ? 0 : endWorkingDate.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + ((level == null) ? 0 : level.hashCode());
@@ -207,30 +163,10 @@ public class EmployeeVo implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeeVo other = (EmployeeVo) obj;
-		if (chiefName == null) {
-			if (other.chiefName != null)
-				return false;
-		} else if (!chiefName.equals(other.chiefName))
-			return false;
 		if (chiefNik == null) {
 			if (other.chiefNik != null)
 				return false;
 		} else if (!chiefNik.equals(other.chiefNik))
-			return false;
-		if (chiefPosition == null) {
-			if (other.chiefPosition != null)
-				return false;
-		} else if (!chiefPosition.equals(other.chiefPosition))
-			return false;
-		if (chiefPositionText == null) {
-			if (other.chiefPositionText != null)
-				return false;
-		} else if (!chiefPositionText.equals(other.chiefPositionText))
-			return false;
-		if (endWorkingDate == null) {
-			if (other.endWorkingDate != null)
-				return false;
-		} else if (!endWorkingDate.equals(other.endWorkingDate))
 			return false;
 		if (fullName == null) {
 			if (other.fullName != null)
