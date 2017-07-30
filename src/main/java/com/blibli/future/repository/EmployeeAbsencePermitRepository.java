@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.blibli.future.enums.Status;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeAbsencePermit;
+import com.blibli.future.vo.ApprovalResponseVo;
 
 @Repository
 public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeAbsencePermit, String>{
@@ -29,4 +31,8 @@ public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeA
 			") AS eeap GROUP BY eeap.nik, eeap.fullname, eeap.nameOfDept"
 			, nativeQuery = true)
 	List<Object[]> countEachEmployeeAbsencePermitByDepartmentDateBetween(int absencePermit, String department, LocalDate startDate, LocalDate endDate);
+	
+	@Query("select new com.blibli.future.vo.ApprovalResponseVo(eap.id, eap.employee.nik, e.fullName, eap.startDate, eap.endDate) "
+			+ "from EmployeeAbsencePermit eap join Employee e on eap.employee.nik = e.nik where e.chiefNik = (?1) and e.status = (?2)")
+	List<ApprovalResponseVo> getEmployeeAbsencePermitByChiefNikStatus(String chiefNik, Status status);
 }
