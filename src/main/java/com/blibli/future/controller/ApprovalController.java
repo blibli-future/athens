@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.service.api.ApprovalService;
 import com.blibli.future.vo.ApprovalRequestVo;
 import com.blibli.future.vo.ApprovalResponseVo;
@@ -31,14 +32,17 @@ public class ApprovalController {
 	}
 	
 	@PutMapping(PATH_APPR_OR_REJECT)
-	public ResponseEntity<String> approving(@PathVariable String type , @PathVariable String id , @RequestBody ApprovalRequestVo approvalRequestVo){
+	public ResponseEntity<String> approving(@PathVariable String type , @PathVariable String id , 
+			@RequestBody ApprovalRequestVo approvalRequestVo) throws IdNotFoundException{
 		if(type.equals("leave")){
 			approvalService.processLeave(id, approvalRequestVo.getNik(), approvalRequestVo.isApproved());
 		}
 		else if(type.equals("absence")){
 			approvalService.processAbsencePermit(id, approvalRequestVo.getNik(), approvalRequestVo.isApproved());
 		}
-		else{ return new ResponseEntity<String>("id: "+id+" not processed", HttpStatus.BAD_REQUEST); }
+		else{
+			throw new IdNotFoundException("Type: " + type + " was not found");
+		}
 		return new ResponseEntity<String>("id: " + id + " processed", HttpStatus.OK);
 	}
 	

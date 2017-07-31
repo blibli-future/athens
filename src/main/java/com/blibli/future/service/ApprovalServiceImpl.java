@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.blibli.future.enums.Status;
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.repository.EmployeeAbsencePermitRepository;
@@ -28,7 +29,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public EmployeeAbsencePermit processAbsencePermit(String idAbsencePermit, String chiefNik, boolean isApproved) {
+	public EmployeeAbsencePermit processAbsencePermit(String idAbsencePermit, String chiefNik, boolean isApproved) throws IdNotFoundException{
 		EmployeeAbsencePermit employeeAbsencePermit = employeeAbsencePermitRepository.findOneById(idAbsencePermit);
 		if(employeeAbsencePermit!=null)
 		{
@@ -41,12 +42,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 			//TODO log sukses dudeh
 			return employeeAbsencePermitRepository.save(employeeAbsencePermit);
 		}
-		//TODO log null dudeh
-		return null;
+		else{
+			throw new IdNotFoundException("Absence Permit with ID: " + idAbsencePermit + " was not found in the database");
+		}
 	}
 
 	@Override
-	public EmployeeLeave processLeave(String idLeave, String chiefNik, boolean isApproved) {
+	public EmployeeLeave processLeave(String idLeave, String chiefNik, boolean isApproved) throws IdNotFoundException{
 		EmployeeLeave employeeLeave = employeeLeaveRepository.findOneById(idLeave);
 		if(employeeLeave!=null)
 		{
@@ -59,8 +61,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 			//TODO Log sukses dudeh
 			return employeeLeaveRepository.save(employeeLeave);
 		}
+		else{
+			throw new IdNotFoundException("Absence Permit with ID: " + idLeave + " was not found in the database");
+		}
 		//TODO Log null dudeh
-		return null;
 	}
 	
 	@Override
