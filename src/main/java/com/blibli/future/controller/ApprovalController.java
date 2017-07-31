@@ -22,7 +22,7 @@ import com.blibli.future.vo.ApprovalResponseVo;
 public class ApprovalController {
 	
 	public final String BASE_PATH = RequestController.BASE_PATH;
-	public final String PATH_APPR_OR_REJECT = RequestController.BASE_PATH + "/{type}/{id}";
+	public final String PATH_APPR_OR_REJECT = BASE_PATH + "/{type}/{id}";
 	
 	private ApprovalService approvalService;
 	
@@ -48,6 +48,7 @@ public class ApprovalController {
 	
 	@GetMapping(BASE_PATH)
 	public ResponseEntity<List<ApprovalResponseVo>> unapprovedList(@RequestParam String chiefNik, @RequestParam String type){
+		System.out.println(chiefNik);
 		if(type.equals("history")){
 			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getRequestHistories(chiefNik), HttpStatus.OK);
 		}

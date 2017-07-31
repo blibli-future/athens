@@ -52,8 +52,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 		EmployeeLeave employeeLeave = employeeLeaveRepository.findOneById(idLeave);
 		if(employeeLeave!=null)
 		{
-			employeeLeave.setApprovedBy(chiefNik);
-			employeeLeave.setApprovedDate(LocalDate.now());
+			employeeLeave.setProcessedBy(chiefNik);
+			employeeLeave.setProcessedDate(LocalDate.now());
 			if(isApproved)
 				employeeLeave.setStatus(Status.APPROVED);
 			else

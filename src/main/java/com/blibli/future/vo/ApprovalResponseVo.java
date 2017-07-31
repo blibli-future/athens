@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.blibli.future.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,14 +16,16 @@ public class ApprovalResponseVo implements Serializable{
 	private String type;
 	private String startDate;
 	private String endDate;
+	private Status status;
 	
-	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, LocalDate endDate){
+	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, LocalDate endDate, Status status){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
 		this.id = id;
 		this.nik = nik;
 		this.fullName = fullName;
 		this.startDate = startDate.format(formatter);
 		this.endDate = endDate.format(formatter);
+		this.status = status;
 	}
 
 	public String getId() {
@@ -73,6 +76,14 @@ public class ApprovalResponseVo implements Serializable{
 		this.endDate = endDate;
 	}
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -86,6 +97,7 @@ public class ApprovalResponseVo implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -123,6 +135,8 @@ public class ApprovalResponseVo implements Serializable{
 			if (other.startDate != null)
 				return false;
 		} else if (!startDate.equals(other.startDate))
+			return false;
+		if (status != other.status)
 			return false;
 		if (type == null) {
 			if (other.type != null)

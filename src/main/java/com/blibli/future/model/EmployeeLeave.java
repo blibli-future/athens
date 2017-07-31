@@ -128,11 +128,11 @@ public class EmployeeLeave implements Serializable{
 		this.reason = reason;
 	}
 
-	public String getApprovedBy() {
+	public String getProcessedBy() {
 		return processedBy;
 	}
 
-	public void setApprovedBy(String processedBy) {
+	public void setProcessedBy(String processedBy) {
 		this.processedBy = processedBy;
 	}
 
@@ -140,7 +140,7 @@ public class EmployeeLeave implements Serializable{
 		return processedDate;
 	}
 
-	public void setApprovedDate(LocalDate processedDate) {
+	public void setProcessedDate(LocalDate processedDate) {
 		this.processedDate = processedDate;
 	}
 
