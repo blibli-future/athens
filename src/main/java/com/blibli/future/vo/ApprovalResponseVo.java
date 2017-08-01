@@ -18,7 +18,7 @@ public class ApprovalResponseVo implements Serializable{
 	private String endDate;
 	private Status status;
 	
-	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, LocalDate endDate, Status status){
+	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, LocalDate endDate, Status status, String type){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
 		this.id = id;
 		this.nik = nik;
@@ -26,6 +26,7 @@ public class ApprovalResponseVo implements Serializable{
 		this.startDate = startDate.format(formatter);
 		this.endDate = endDate.format(formatter);
 		this.status = status;
+		this.type = type;
 	}
 
 	public String getId() {

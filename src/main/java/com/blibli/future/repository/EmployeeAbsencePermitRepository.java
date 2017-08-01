@@ -32,7 +32,7 @@ public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeA
 			, nativeQuery = true)
 	List<Object[]> countEachEmployeeAbsencePermitByDepartmentDateBetween(int absencePermit, String department, LocalDate startDate, LocalDate endDate);
 	
-	@Query("select new com.blibli.future.vo.ApprovalResponseVo(eap.id, eap.employee.nik, e.fullName, eap.startDate, eap.endDate, eap.status) "
+	@Query("select new com.blibli.future.vo.ApprovalResponseVo(eap.id, eap.employee.nik, e.fullName, eap.startDate, eap.endDate, eap.status, 'absence') "
 			+ "from EmployeeAbsencePermit eap join Employee e on eap.employee.nik = e.nik where e.chiefNik = (?1) and eap.status = (?2)")
 	List<ApprovalResponseVo> getEmployeeAbsencePermitByChiefNikStatus(String chiefNik, Status status);
 }

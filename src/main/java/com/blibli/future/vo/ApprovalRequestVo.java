@@ -10,6 +10,8 @@ public class ApprovalRequestVo implements Serializable {
 	private String nik;
 	private boolean isApproved;
 	
+	public ApprovalRequestVo(){}
+	
 	public ApprovalRequestVo(String nik, boolean isApproved){
 		this.nik = nik;
 		this.isApproved = isApproved;
@@ -23,7 +25,7 @@ public class ApprovalRequestVo implements Serializable {
 		this.nik = nik;
 	}
 
-	public boolean isApproved() {
+	public boolean getIsApproved() {
 		return isApproved;
 	}
 

@@ -36,10 +36,10 @@ public class ApprovalController {
 	public ResponseEntity<String> processRequest(@PathVariable String type , @PathVariable String id , 
 			@RequestBody ApprovalRequestVo approvalRequestVo) throws IdNotFoundException, TypeNotFoundException{
 		if(type.equals("leave")){
-			approvalService.processLeave(id, approvalRequestVo.getNik(), approvalRequestVo.isApproved());
+			approvalService.processLeave(id, approvalRequestVo.getNik(), approvalRequestVo.getIsApproved());
 		}
 		else if(type.equals("absence")){
-			approvalService.processAbsencePermit(id, approvalRequestVo.getNik(), approvalRequestVo.isApproved());
+			approvalService.processAbsencePermit(id, approvalRequestVo.getNik(), approvalRequestVo.getIsApproved());
 		}
 		else{
 			throw new TypeNotFoundException("Type: " + type + " was not found");
