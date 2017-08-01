@@ -6,7 +6,7 @@ import com.blibli.future.model.Employee;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.vo.EmployeeResponseVo;
-import com.blibli.future.vo.EmployeeVo;
+import com.blibli.future.vo.EmployeeRequestVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee saveEmployee (EmployeeVo employeeVo){
+    public Employee saveEmployee (EmployeeRequestVo employeeVo){
         if(isEmployeeExist(employeeVo.getNik())){
             return null;
         }else{
@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
-    public Employee updateEmployee (EmployeeVo employeeVo){
+    public Employee updateEmployee (EmployeeRequestVo employeeVo){
     		Employee oldEmployee = employeeRepository.findOneByNik(employeeVo.getNik());
     	if(oldEmployee!=null){
     	   oldEmployee.setChiefNik(employeeVo.getChiefNik());

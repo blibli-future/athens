@@ -56,7 +56,7 @@ public class EmployeeAbsencePermitRepositoryTest {
 	
 	@Before
     public void setUp() throws Exception{
-		this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", LocalDate.now(), LocalDate.now(), true);
+		this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", LocalDate.now(), true);
 		Employee emp1 = this.employeeRepository.save(this.employee);
 		
 		this.employeeAbsencePermit1 = new EmployeeAbsencePermit(emp1, AbsencePermit.SICK, LocalDate.of(2016, 12, 12), LocalDate.of(2010, 12, 31), "MALES");

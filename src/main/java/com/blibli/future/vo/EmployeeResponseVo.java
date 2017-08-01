@@ -38,8 +38,11 @@ public class EmployeeResponseVo implements Serializable{
     	this.nameOfDept = nameOfDept;
     	this.chiefNik = chiefNik;
     	this.chiefName = chiefName;
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
-    	this.startWorkingDate = startWorkingDate.format(formatter);
+    	if(startWorkingDate!=null)
+    	{
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
+	    	this.startWorkingDate = startWorkingDate.format(formatter);
+    	}
     }
 	public String getNik() {
 		return nik;

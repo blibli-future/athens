@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EmployeeVo implements Serializable{
+public class EmployeeRequestVo implements Serializable{
 	private static final long serialVersionUID = -5803908690580045466L;
 	private String nik;
     private String fullName;
@@ -18,9 +18,13 @@ public class EmployeeVo implements Serializable{
     private String nameOfDept;
     private String chiefNik;
     private String startWorkingDate;
-    private Boolean status;
+    private boolean status;
 
-    public EmployeeVo(String nik, String fullName, String gender, String position, String level, String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition, String chiefPositionText, String startWorkingDate, String endWorkingDate, Boolean status) {
+    public EmployeeRequestVo(){}
+    
+    public EmployeeRequestVo(String nik, String fullName, String gender, String position, String level, 
+    		String organizationalUnitText, String maritalStatus, String religion, String nameOfDept, 
+    		String chiefNik, String startWorkingDate) {
         this.nik = nik;
         this.fullName = fullName;
         this.gender = gender;
@@ -32,7 +36,7 @@ public class EmployeeVo implements Serializable{
         this.nameOfDept = nameOfDept;
         this.chiefNik = chiefNik;
         this.startWorkingDate = startWorkingDate;
-        this.status = status;
+        this.status = true;
     }
 
 	public String getNik() {
@@ -123,11 +127,11 @@ public class EmployeeVo implements Serializable{
 		this.startWorkingDate = startWorkingDate;
 	}
 
-	public Boolean getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
@@ -150,7 +154,7 @@ public class EmployeeVo implements Serializable{
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		result = prime * result + ((religion == null) ? 0 : religion.hashCode());
 		result = prime * result + ((startWorkingDate == null) ? 0 : startWorkingDate.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + (status ? 1231 : 1237);
 		return result;
 	}
 
@@ -162,7 +166,7 @@ public class EmployeeVo implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EmployeeVo other = (EmployeeVo) obj;
+		EmployeeRequestVo other = (EmployeeRequestVo) obj;
 		if (chiefNik == null) {
 			if (other.chiefNik != null)
 				return false;
@@ -218,10 +222,7 @@ public class EmployeeVo implements Serializable{
 				return false;
 		} else if (!startWorkingDate.equals(other.startWorkingDate))
 			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
+		if (status != other.status)
 			return false;
 		return true;
 	}

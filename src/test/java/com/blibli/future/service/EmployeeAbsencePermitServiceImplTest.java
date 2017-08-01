@@ -92,7 +92,7 @@ public class EmployeeAbsencePermitServiceImplTest {
 	  public void setUp() throws Exception {
 	    initMocks(this);
 	    this.employeeAbsencePermitVo = new EmployeeAbsencePermitVo("123", "11", AbsencePermit.SICK, "2017-01-06", "2017-01-09", "gatau");
-	    this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", LocalDate.now(), LocalDate.now(), true);;
+	    this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", LocalDate.now(), true);;
 	    this.employeeAbsencePermit = new EmployeeAbsencePermit(employee, AbsencePermit.SICK, LocalDate.now(), LocalDate.now(), "gatau");
 	    this.listEmployeeAbsencePermit = new ArrayList<>();
 	}

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.vo.EmployeeResponseVo;
-import com.blibli.future.vo.EmployeeVo;
+import com.blibli.future.vo.EmployeeRequestVo;
 
 @RestController
 public class EmployeesController {
@@ -27,7 +27,7 @@ public class EmployeesController {
 	}
 	
 	@PostMapping(BASE_PATH)
-    public ResponseEntity<Employee> Employee(@RequestBody EmployeeVo employeeVo){
+    public ResponseEntity<Employee> Employee(@RequestBody EmployeeRequestVo employeeVo){
     	
         Employee savedEmployee = employeeService.saveEmployee(employeeVo);
         if (savedEmployee!=null){
@@ -48,7 +48,7 @@ public class EmployeesController {
     }
 
     @PutMapping(BASE_PATH)
-    public ResponseEntity<Employee> employeeUpdate(@RequestBody EmployeeVo employeeVo){
+    public ResponseEntity<Employee> employeeUpdate(@RequestBody EmployeeRequestVo employeeVo){
     	Employee updatedEmployee =
     			employeeService.updateEmployee(employeeVo);
         if(updatedEmployee!=null){
