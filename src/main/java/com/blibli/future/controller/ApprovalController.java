@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blibli.future.exception.IdNotFoundException;
+import com.blibli.future.exception.TypeNotFoundException;
 import com.blibli.future.service.api.ApprovalService;
 import com.blibli.future.vo.ApprovalRequestVo;
 import com.blibli.future.vo.ApprovalResponseVo;
@@ -32,8 +33,8 @@ public class ApprovalController {
 	}
 	
 	@PutMapping(PATH_APPR_OR_REJECT)
-	public ResponseEntity<String> approving(@PathVariable String type , @PathVariable String id , 
-			@RequestBody ApprovalRequestVo approvalRequestVo) throws IdNotFoundException{
+	public ResponseEntity<String> processRequest(@PathVariable String type , @PathVariable String id , 
+			@RequestBody ApprovalRequestVo approvalRequestVo) throws IdNotFoundException, TypeNotFoundException{
 		if(type.equals("leave")){
 			approvalService.processLeave(id, approvalRequestVo.getNik(), approvalRequestVo.isApproved());
 		}
@@ -41,13 +42,14 @@ public class ApprovalController {
 			approvalService.processAbsencePermit(id, approvalRequestVo.getNik(), approvalRequestVo.isApproved());
 		}
 		else{
-			throw new IdNotFoundException("Type: " + type + " was not found");
+			throw new TypeNotFoundException("Type: " + type + " was not found");
 		}
 		return new ResponseEntity<String>("id: " + id + " processed", HttpStatus.OK);
 	}
 	
 	@GetMapping(BASE_PATH)
-	public ResponseEntity<List<ApprovalResponseVo>> unapprovedList(@RequestParam String chiefNik, @RequestParam String type){
+	public ResponseEntity<List<ApprovalResponseVo>> getHistoryAndUnapprovedRequests(@RequestParam String chiefNik, 
+			@RequestParam String type) throws TypeNotFoundException{
 		System.out.println(chiefNik);
 		if(type.equals("history")){
 			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getRequestHistories(chiefNik), HttpStatus.OK);
@@ -55,6 +57,6 @@ public class ApprovalController {
 		else if(type.equals("unapproved")){
 			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getUnapprovedRequests(chiefNik), HttpStatus.OK);
 		}
-		return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+		throw new TypeNotFoundException("Type: " + type + " was not found");
 	}
 }
