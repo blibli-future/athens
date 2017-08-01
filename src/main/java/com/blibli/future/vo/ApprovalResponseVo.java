@@ -17,8 +17,10 @@ public class ApprovalResponseVo implements Serializable{
 	private String startDate;
 	private String endDate;
 	private Status status;
+	private String processedBy;
 	
-	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, LocalDate endDate, Status status, String type){
+	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, 
+			LocalDate endDate, Status status, String type, String processedBy){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
 		this.id = id;
 		this.nik = nik;
@@ -27,6 +29,7 @@ public class ApprovalResponseVo implements Serializable{
 		this.endDate = endDate.format(formatter);
 		this.status = status;
 		this.type = type;
+		this.processedBy = processedBy;
 	}
 
 	public String getId() {
@@ -85,6 +88,14 @@ public class ApprovalResponseVo implements Serializable{
 		this.status = status;
 	}
 
+	public String getProcessedBy() {
+		return processedBy;
+	}
+
+	public void setProcessedBy(String processedBy) {
+		this.processedBy = processedBy;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -97,6 +108,7 @@ public class ApprovalResponseVo implements Serializable{
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
+		result = prime * result + ((processedBy == null) ? 0 : processedBy.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -132,6 +144,11 @@ public class ApprovalResponseVo implements Serializable{
 				return false;
 		} else if (!nik.equals(other.nik))
 			return false;
+		if (processedBy == null) {
+			if (other.processedBy != null)
+				return false;
+		} else if (!processedBy.equals(other.processedBy))
+			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
 				return false;
@@ -145,5 +162,5 @@ public class ApprovalResponseVo implements Serializable{
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
-	}
+	}	
 }
