@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShiftServiceImpl implements ShiftService{
@@ -21,13 +22,24 @@ public class ShiftServiceImpl implements ShiftService{
     }
 
     @Override
-    public List<Shift> getAllShift() {
-        return shiftRepository.findAll();
+    public List<ShiftVo> getAllShift() {
+        List<Shift> allShift = shiftRepository.findAll();
+
+        return allShift.stream().map(shift -> {
+            ShiftVo  s = new ShiftVo();
+            s.setId(shift.getId());
+            s.setName(shift.getName());
+            s.setDepartment(shift.getDepartmentEmployee());
+            s.setStartHour(shift.getStartHour().getHour());
+            s.setEndHour(shift.getEndHour().getHour());
+            s.setStartDay(shift.getStartDay().getValue());
+            s.setEndDay(shift.getEndDay().getValue());
+            return s;
+        }).collect(Collectors.toList());
     }
 
     @Override
     public Shift createShift(ShiftVo newShiftVO) {
-        //TODO: What is the best practice to wrap all this VO -> Model conversion in a single method
         Shift newShift = new Shift();
         newShift.setId(newShiftVO.getId());
         newShift.setName(newShiftVO.getName());

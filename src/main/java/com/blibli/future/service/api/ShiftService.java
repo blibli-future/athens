@@ -7,7 +7,7 @@ import com.blibli.future.vo.ShiftVo;
 import java.util.List;
 
 public interface ShiftService {
-    List<Shift> getAllShift();
+    List<ShiftVo> getAllShift();
 
     Shift createShift(ShiftVo newShiftVO);
 

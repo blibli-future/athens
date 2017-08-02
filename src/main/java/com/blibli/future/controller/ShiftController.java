@@ -25,7 +25,7 @@ public class ShiftController {
     }
 
     @GetMapping(value = BASE_PATH)
-    public ResponseEntity<List<Shift>> getAllShift() {
+    public ResponseEntity<List<ShiftVo>> getAllShift() {
         return new ResponseEntity<>(shiftService.getAllShift(), HttpStatus.OK);
     }
 
