@@ -25,25 +25,25 @@ public class ShiftServiceImpl implements ShiftService{
 
     @Override
     public List<ShiftVo> getAllShift() {
-        List<Shift> allShift = shiftRepository.findAll();
-
-        return allShift.stream().map(shift -> {
-            ShiftVo  s = new ShiftVo();
-            s.setId(shift.getId());
-            s.setName(shift.getName());
-            s.setDepartment(shift.getDepartmentEmployee());
-            s.setStartHour(shift.getStartHour().toString());
-            s.setEndHour(shift.getEndHour().toString());
-            s.setStartDay(shift.getStartDay().getValue());
-            s.setEndDay(shift.getEndDay().getValue());
-            return s;
-        }).collect(Collectors.toList());
+        return shiftRepository.findAll()
+                .stream()
+                .map(shift -> {
+                    ShiftVo  s = new ShiftVo();
+                    s.setId(shift.getId());
+                    s.setName(shift.getName());
+                    s.setDepartment(shift.getDepartmentEmployee());
+                    s.setStartHour(shift.getStartHour().toString());
+                    s.setEndHour(shift.getEndHour().toString());
+                    s.setStartDay(shift.getStartDay().getValue());
+                    s.setEndDay(shift.getEndDay().getValue());
+                    return s;
+                }).collect(Collectors.toList());
     }
 
     @Override
     public Shift createShift(ShiftVo newShiftVO) {
         Shift newShift = new Shift();
-        newShift.setId(newShiftVO.getId());
+
         newShift.setName(newShiftVO.getName());
         newShift.setStartHour(LocalTime.parse(newShiftVO.getStartHour()));
         newShift.setEndHour(LocalTime.parse(newShiftVO.getEndHour()));
@@ -73,7 +73,6 @@ public class ShiftServiceImpl implements ShiftService{
             throw new IdNotFoundException("Shift with ID: " + shiftId + " was not found in the database");
         }
 
-        newShift.setId(updatedShiftVO.getId());
         newShift.setName(updatedShiftVO.getName());
         newShift.setStartHour(LocalTime.parse(updatedShiftVO.getStartHour()));
         newShift.setEndHour(LocalTime.parse(updatedShiftVO.getEndHour()));

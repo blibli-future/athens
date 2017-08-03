@@ -44,18 +44,43 @@ public class ShiftServiceImplTest {
 
         Mockito.verify(shiftRepository).findAll();
 
-        Assert.assertThat(actual, Matchers.containsInAnyOrder(shiftVoList.toArray()));
+        Assert.assertThat(actual, Matchers.containsInAnyOrder(shiftVo1, shiftVo2));
     }
 
     @Test
     public void createShiftTest() throws Exception  {
-        Mockito.when(shiftRepository.save(shift1)).thenReturn(shift1);
+        this.shift1 = new Shift();
+        this.shift2 = new Shift();
+
+        shift1.setName("shift 1");
+        shift1.setStartHour(LocalTime.NOON);
+        shift1.setEndHour(LocalTime.MIDNIGHT);
+        shift1.setStartDay(DayOfWeek.SUNDAY);
+        shift1.setEndDay(DayOfWeek.FRIDAY);
+
+        shift2.setId("1");
+        shift2.setStartHour(LocalTime.NOON);
+        shift2.setEndHour(LocalTime.MIDNIGHT);
+        shift2.setStartDay(DayOfWeek.SUNDAY);
+        shift2.setEndDay(DayOfWeek.FRIDAY);
+
+
+        this.shiftVo1 = new ShiftVo();
+
+        shiftVo1.setName("shift 1");
+        shiftVo1.setStartHour(String.valueOf(LocalTime.NOON));
+        shiftVo1.setEndHour(String.valueOf(LocalTime.MIDNIGHT));
+        shiftVo1.setStartDay(DayOfWeek.SUNDAY.getValue());
+        shiftVo1.setEndDay(DayOfWeek.FRIDAY.getValue());
+
+
+        Mockito.when(shiftRepository.save(shift1)).thenReturn(shift2);
 
         Shift actual = shiftService.createShift(shiftVo1);
 
         Mockito.verify(shiftRepository).save(shift1);
 
-        Assert.assertEquals(shift1, actual);
+        Assert.assertEquals(shift2, actual);
     }
 
     @Test

@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 public class ShiftController {
 
-    public final String BASE_PATH = "/shift";
+    public final String BASE_PATH = "/shifts";
     final String PATH_WITH_ID = BASE_PATH + "/{id}";
 
     private ShiftService shiftService;
