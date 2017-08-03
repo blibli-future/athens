@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,28 +35,30 @@ public class ShiftControllerTest {
 
     private Shift shift1;
     private Shift shift2;
-    private List collectionMock;
-    private ShiftVo shiftVOMock;
+    private List<Shift> shiftList;
+    private ShiftVo shiftVo1;
+    private ShiftVo shiftVo2;
+    private List<ShiftVo> shiftVoList;
 
     private ObjectWriter objectWriter = new ObjectMapper().writer();
 
     @Test
     public void getAllShiftTest() throws Exception {
-        Mockito.when(shiftService.getAllShift()).thenReturn(collectionMock);
+        Mockito.when(shiftService.getAllShift()).thenReturn(shiftVoList);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(shiftController.BASE_PATH)
         ).andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(JSONArray.toJSONString(collectionMock)));
+                .andExpect(MockMvcResultMatchers.content().json(JSONArray.toJSONString(shiftVoList)));
 
         Mockito.verify(shiftService).getAllShift();
     }
 
     @Test
     public void createNewShiftTest() throws Exception {
-        Mockito.when(shiftService.createShift(shiftVOMock)).thenReturn(shift1);
+        Mockito.when(shiftService.createShift(shiftVo1)).thenReturn(shift1);
 
-        String shiftVo = objectWriter.writeValueAsString(shiftVOMock);
+        String shiftVo = objectWriter.writeValueAsString(shiftVo1);
         String jsonResult = objectWriter.writeValueAsString(shift1);
 
         mockMvc.perform(
@@ -68,7 +69,7 @@ public class ShiftControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(jsonResult));
 
-        Mockito.verify(shiftService).createShift(shiftVOMock);
+        Mockito.verify(shiftService).createShift(shiftVo1);
     }
 
     @Test
@@ -100,9 +101,9 @@ public class ShiftControllerTest {
 
     @Test
     public void updateShiftTest_Ok() throws Exception {
-        Mockito.when(shiftService.updateShift(TEST, shiftVOMock)).thenReturn(shift2);
+        Mockito.when(shiftService.updateShift(TEST, shiftVo1)).thenReturn(shift2);
 
-        String shiftVo = objectWriter.writeValueAsString(shiftVOMock);
+        String shiftVo = objectWriter.writeValueAsString(shiftVo1);
         String jsonResult = objectWriter.writeValueAsString(shift2);
 
         mockMvc.perform(
@@ -113,14 +114,14 @@ public class ShiftControllerTest {
         ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(jsonResult));
 
-        Mockito.verify(shiftService).updateShift(TEST, shiftVOMock);
+        Mockito.verify(shiftService).updateShift(TEST, shiftVo1);
     }
 
     @Test
     public void updateShiftTest_Error() throws Exception {
-        Mockito.when(shiftService.updateShift(TEST, shiftVOMock)).thenThrow(new IdNotFoundException(TEST));
+        Mockito.when(shiftService.updateShift(TEST, shiftVo1)).thenThrow(new IdNotFoundException(TEST));
 
-        String shiftVo = objectWriter.writeValueAsString(shiftVOMock);
+        String shiftVo = objectWriter.writeValueAsString(shiftVo1);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.put(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
@@ -128,7 +129,7 @@ public class ShiftControllerTest {
                         .content(shiftVo)
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-        Mockito.verify(shiftService).updateShift(TEST, shiftVOMock);
+        Mockito.verify(shiftService).updateShift(TEST, shiftVo1);
     }
 
     @Test
@@ -161,12 +162,15 @@ public class ShiftControllerTest {
                 .setControllerAdvice(new AthensControllerAdvice())
                 .build();
 
-        shift1 = new Shift();
-        shift2 = new Shift();
+        this.shift1 = new Shift();
+        this.shift2 = new Shift();
 
-        this.collectionMock = new ArrayList(Arrays.asList(shift1, shift2));
+        this.shiftList = Arrays.asList(shift1, shift2);
 
-        shiftVOMock = new ShiftVo();
+        this.shiftVo1 = new ShiftVo();
+        this.shiftVo2 = new ShiftVo();
+
+        this.shiftVoList = Arrays.asList(shiftVo1, shiftVo2);
     }
 
     @After

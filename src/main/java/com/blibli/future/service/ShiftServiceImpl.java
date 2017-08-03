@@ -9,6 +9,8 @@ import com.blibli.future.vo.ShiftVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +32,8 @@ public class ShiftServiceImpl implements ShiftService{
             s.setId(shift.getId());
             s.setName(shift.getName());
             s.setDepartment(shift.getDepartmentEmployee());
-            s.setStartHour(shift.getStartHour().getHour());
-            s.setEndHour(shift.getEndHour().getHour());
+            s.setStartHour(shift.getStartHour().toString());
+            s.setEndHour(shift.getEndHour().toString());
             s.setStartDay(shift.getStartDay().getValue());
             s.setEndDay(shift.getEndDay().getValue());
             return s;
@@ -43,11 +45,11 @@ public class ShiftServiceImpl implements ShiftService{
         Shift newShift = new Shift();
         newShift.setId(newShiftVO.getId());
         newShift.setName(newShiftVO.getName());
-        newShift.setStartHour(newShiftVO.getStartHour());
-        newShift.setEndHour(newShiftVO.getEndHour());
-        newShift.setStartDay(newShiftVO.getStartDay());
-        newShift.setEndDay(newShiftVO.getEndDay());
-        newShift.setDepartmentEmployee(newShiftVO.getDepartmentEmployee());
+        newShift.setStartHour(LocalTime.parse(newShiftVO.getStartHour()));
+        newShift.setEndHour(LocalTime.parse(newShiftVO.getEndHour()));
+        newShift.setStartDay(DayOfWeek.of(newShiftVO.getStartDay()));
+        newShift.setEndDay(DayOfWeek.of(newShiftVO.getEndDay()));
+        newShift.setDepartmentEmployee(newShiftVO.getDepartment());
         newShift.setLocation(newShiftVO.getLocation());
 
         return shiftRepository.save(newShift);
@@ -71,12 +73,13 @@ public class ShiftServiceImpl implements ShiftService{
             throw new IdNotFoundException("Shift with ID: " + shiftId + " was not found in the database");
         }
 
+        newShift.setId(updatedShiftVO.getId());
         newShift.setName(updatedShiftVO.getName());
-        newShift.setStartHour(updatedShiftVO.getStartHour());
-        newShift.setEndHour(updatedShiftVO.getEndHour());
-        newShift.setStartDay(updatedShiftVO.getStartDay());
-        newShift.setEndDay(updatedShiftVO.getEndDay());
-        newShift.setDepartmentEmployee(updatedShiftVO.getDepartmentEmployee());
+        newShift.setStartHour(LocalTime.parse(updatedShiftVO.getStartHour()));
+        newShift.setEndHour(LocalTime.parse(updatedShiftVO.getEndHour()));
+        newShift.setStartDay(DayOfWeek.of(updatedShiftVO.getStartDay()));
+        newShift.setEndDay(DayOfWeek.of(updatedShiftVO.getEndDay()));
+        newShift.setDepartmentEmployee(updatedShiftVO.getDepartment());
         newShift.setLocation(updatedShiftVO.getLocation());
 
         return shiftRepository.save(newShift);

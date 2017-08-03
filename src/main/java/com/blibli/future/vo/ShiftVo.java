@@ -2,12 +2,15 @@ package com.blibli.future.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ShiftVo {
+public class ShiftVo implements Serializable {
+    private static final long serialVersionUID = -8970572276523255465L;
     private String id;
     private String name;
-    private int startHour;
-    private int endHour;
+    private String startHour;
+    private String endHour;
     private int startDay;
     private int endDay;
     private String department;
@@ -29,19 +32,19 @@ public class ShiftVo {
         this.name = name;
     }
 
-    public int getStartHour() {
+    public String getStartHour() {
         return startHour;
     }
 
-    public void setStartHour(int startHour) {
+    public void setStartHour(String startHour) {
         this.startHour = startHour;
     }
 
-    public int getEndHour() {
+    public String getEndHour() {
         return endHour;
     }
 
-    public void setEndHour(int endHour) {
+    public void setEndHour(String endHour) {
         this.endHour = endHour;
     }
 
@@ -84,26 +87,26 @@ public class ShiftVo {
 
         ShiftVo shiftVo = (ShiftVo) o;
 
-        if(startHour != shiftVo.startHour) return false;
-        if(endHour != shiftVo.endHour) return false;
         if(startDay != shiftVo.startDay) return false;
         if(endDay != shiftVo.endDay) return false;
-        if(!id.equals(shiftVo.id)) return false;
-        if(!name.equals(shiftVo.name)) return false;
-        if(!department.equals(shiftVo.department)) return false;
-        return location.equals(shiftVo.location);
+        if(id != null ? !id.equals(shiftVo.id) : shiftVo.id != null) return false;
+        if(name != null ? !name.equals(shiftVo.name) : shiftVo.name != null) return false;
+        if(startHour != null ? !startHour.equals(shiftVo.startHour) : shiftVo.startHour != null) return false;
+        if(endHour != null ? !endHour.equals(shiftVo.endHour) : shiftVo.endHour != null) return false;
+        if(department != null ? !department.equals(shiftVo.department) : shiftVo.department != null) return false;
+        return location != null ? location.equals(shiftVo.location) : shiftVo.location == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + startHour;
-        result = 31 * result + endHour;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
+        result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
         result = 31 * result + startDay;
         result = 31 * result + endDay;
-        result = 31 * result + department.hashCode();
-        result = 31 * result + location.hashCode();
+        result = 31 * result + (department != null ? department.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
     }
 }

@@ -4,7 +4,6 @@ import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.vo.ShiftVo;
-
 import org.hamcrest.Matchers;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -13,7 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,29 +26,32 @@ public class ShiftServiceImplTest {
 
     private final String TEST = "test";
 
-    private List<Shift> listMock;
     private Shift shift1;
-    private ShiftVo shiftVOMock;
+    private Shift shift2;
+    private List<Shift> shiftList;
+    private ShiftVo shiftVo1;
+    private ShiftVo shiftVo2;
+    private List<ShiftVo> shiftVoList;
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void getAllShiftTest() throws Exception {
-        Mockito.when(shiftRepository.findAll()).thenReturn(listMock);
+        Mockito.when(shiftRepository.findAll()).thenReturn(shiftList);
 
-        List<Shift> actual = shiftService.getAllShift();
+        List<ShiftVo> actual = shiftService.getAllShift();
 
         Mockito.verify(shiftRepository).findAll();
 
-        Assert.assertEquals(listMock, actual);
+        Assert.assertThat(actual, Matchers.containsInAnyOrder(shiftVoList.toArray()));
     }
 
     @Test
     public void createShiftTest() throws Exception  {
         Mockito.when(shiftRepository.save(shift1)).thenReturn(shift1);
 
-        Shift actual = shiftService.createShift(shiftVOMock);
+        Shift actual = shiftService.createShift(shiftVo1);
 
         Mockito.verify(shiftRepository).save(shift1);
 
@@ -84,7 +87,7 @@ public class ShiftServiceImplTest {
         Mockito.when(shiftRepository.findOne(TEST)).thenReturn(shift1);
         Mockito.when(shiftRepository.save(shift1)).thenReturn(shift1);
 
-        Shift actual = shiftService.updateShift(TEST, shiftVOMock);
+        Shift actual = shiftService.updateShift(TEST, shiftVo1);
 
         Assert.assertEquals(shift1, actual);
 
@@ -97,7 +100,7 @@ public class ShiftServiceImplTest {
         Mockito.when(shiftRepository.findOne(TEST)).thenReturn(null);
 
         try {
-            shiftService.updateShift(TEST, shiftVOMock);
+            shiftService.updateShift(TEST, shiftVo1);
         } catch (Exception e) {
             Assert.assertThat(e, Matchers.instanceOf(IdNotFoundException.class));
         }
@@ -133,11 +136,44 @@ public class ShiftServiceImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        shift1 = new Shift();
+        this.shift1 = new Shift();
+        this.shift2 = new Shift();
 
-        listMock = new ArrayList(Arrays.asList(shift1));
+        shift1.setId("1");
+        shift1.setName("shift 1");
+        shift1.setStartHour(LocalTime.NOON);
+        shift1.setEndHour(LocalTime.MIDNIGHT);
+        shift1.setStartDay(DayOfWeek.SUNDAY);
+        shift1.setEndDay(DayOfWeek.FRIDAY);
 
-        shiftVOMock = new ShiftVo();
+        shift2.setId("2");
+        shift2.setName("shift 2");
+        shift2.setStartHour(LocalTime.NOON);
+        shift2.setEndHour(LocalTime.MIDNIGHT);
+        shift2.setStartDay(DayOfWeek.SUNDAY);
+        shift2.setEndDay(DayOfWeek.FRIDAY);
+
+        this.shiftList = Arrays.asList(shift1, shift2);
+
+        this.shiftVo1 = new ShiftVo();
+        this.shiftVo2 = new ShiftVo();
+
+        shiftVo1.setId("1");
+        shiftVo1.setName("shift 1");
+        shiftVo1.setStartHour(String.valueOf(LocalTime.NOON));
+        shiftVo1.setEndHour(String.valueOf(LocalTime.MIDNIGHT));
+        shiftVo1.setStartDay(DayOfWeek.SUNDAY.getValue());
+        shiftVo1.setEndDay(DayOfWeek.FRIDAY.getValue());
+
+        shiftVo2.setId("2");
+        shiftVo2.setName("shift 2");
+        shiftVo2.setStartHour(String.valueOf(LocalTime.NOON));
+        shiftVo2.setEndHour(String.valueOf(LocalTime.MIDNIGHT));
+        shiftVo2.setStartDay(DayOfWeek.SUNDAY.getValue());
+        shiftVo2.setEndDay(DayOfWeek.FRIDAY.getValue());
+
+
+        this.shiftVoList = Arrays.asList(shiftVo1, shiftVo2);
     }
 
     @After
