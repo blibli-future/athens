@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-/**
- * Created by amesa on 5/14/17.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttendanceKeyVo implements Serializable  {
 	private static final long serialVersionUID = 7155621036375606250L;
