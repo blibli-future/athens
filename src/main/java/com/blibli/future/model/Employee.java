@@ -24,9 +24,6 @@ public class Employee {
     private Religion religion;
     private String nameOfDept;
     private String chiefNik;
-    private String chiefName;
-    private String chiefPosition;
-    private String chiefPositionText;
     private LocalDate startWorkingDate;
     private LocalDate endWorkingDate;
     private Boolean status;
@@ -50,8 +47,8 @@ public class Employee {
     public Employee() {}
 
     public Employee(String nik, String fullName, Gender gender, String position, String level, String organizationalUnitText,
-                    MaritalStatus maritalStatus, Religion religion, String nameOfDept, String chiefNik, String chiefName, String chiefPosition,
-                    String chiefPositionText, LocalDate startWorkingDate, LocalDate endWorkingDate, Boolean status) {
+                    MaritalStatus maritalStatus, Religion religion, String nameOfDept, String chiefNik,
+                    LocalDate startWorkingDate, Boolean status) {
         this.nik = nik;
         this.fullName = fullName;
         this.gender = gender;
@@ -62,11 +59,7 @@ public class Employee {
         this.religion = religion;
         this.nameOfDept = nameOfDept;
         this.chiefNik = chiefNik;
-        this.chiefName = chiefName;
-        this.chiefPosition = chiefPosition;
-        this.chiefPositionText = chiefPositionText;
         this.startWorkingDate = startWorkingDate;
-        this.endWorkingDate = endWorkingDate;
         this.status = status;
         this.employeeAbsencePermits = new HashSet<>();
         this.shifts = new HashSet<>();
@@ -163,30 +156,6 @@ public class Employee {
         this.chiefNik = chiefNik;
     }
 
-    public String getChiefName() {
-        return chiefName;
-    }
-
-    public void setChiefName(String chiefName) {
-        this.chiefName = chiefName;
-    }
-
-    public String getChiefPosition() {
-        return chiefPosition;
-    }
-
-    public void setChiefPosition(String chiefPosition) {
-        this.chiefPosition = chiefPosition;
-    }
-
-    public String getChiefPositionText() {
-        return chiefPositionText;
-    }
-
-    public void setChiefPositionText(String chiefPositionText) {
-        this.chiefPositionText = chiefPositionText;
-    }
-
     public LocalDate getStartWorkingDate() {
         return startWorkingDate;
     }
@@ -271,10 +240,7 @@ public class Employee {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((chiefName == null) ? 0 : chiefName.hashCode());
 		result = prime * result + ((chiefNik == null) ? 0 : chiefNik.hashCode());
-		result = prime * result + ((chiefPosition == null) ? 0 : chiefPosition.hashCode());
-		result = prime * result + ((chiefPositionText == null) ? 0 : chiefPositionText.hashCode());
 		result = prime * result + ((employeeAbsencePermits == null) ? 0 : employeeAbsencePermits.hashCode());
 		result = prime * result + ((employeeLeaves == null) ? 0 : employeeLeaves.hashCode());
 		result = prime * result
@@ -305,25 +271,10 @@ public class Employee {
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
-		if (chiefName == null) {
-			if (other.chiefName != null)
-				return false;
-		} else if (!chiefName.equals(other.chiefName))
-			return false;
 		if (chiefNik == null) {
 			if (other.chiefNik != null)
 				return false;
 		} else if (!chiefNik.equals(other.chiefNik))
-			return false;
-		if (chiefPosition == null) {
-			if (other.chiefPosition != null)
-				return false;
-		} else if (!chiefPosition.equals(other.chiefPosition))
-			return false;
-		if (chiefPositionText == null) {
-			if (other.chiefPositionText != null)
-				return false;
-		} else if (!chiefPositionText.equals(other.chiefPositionText))
 			return false;
 		if (employeeAbsencePermits == null) {
 			if (other.employeeAbsencePermits != null)
