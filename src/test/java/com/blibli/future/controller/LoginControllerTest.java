@@ -73,8 +73,10 @@ public class LoginControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.loginController).build();
-
+        this.mockMvc = MockMvcBuilders
+                .standaloneSetup(this.loginController)
+                .setControllerAdvice(new AthensControllerAdvice())
+                .build();
     }
 
     @After

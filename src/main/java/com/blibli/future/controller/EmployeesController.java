@@ -2,51 +2,66 @@ package com.blibli.future.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
-import com.blibli.future.vo.EmployeeVo;
+import com.blibli.future.vo.EmployeeResponseVo;
+import com.blibli.future.vo.EmployeeEditRequestVo;
+import com.blibli.future.vo.EmployeeRequestVo;
 
 @RestController
 public class EmployeesController {
 	public static final String BASE_PATH = "/employees";
+	public static final String SINGLE_EMPLOYEE_PATH = BASE_PATH + "/{nik}";
+	
 	private EmployeeService employeeService;
-	EmployeesController(){}
+	
+	@Autowired
+	public EmployeesController(EmployeeService employeeService){
+		this.employeeService = employeeService;
+	}
 	
 	@PostMapping(BASE_PATH)
-    public ResponseEntity<Employee> Employee(@RequestBody EmployeeVo employeeVo){
+    public ResponseEntity<Employee> saveEmployee(@RequestBody EmployeeRequestVo employeeVo){
     	
         Employee savedEmployee = employeeService.saveEmployee(employeeVo);
         if (savedEmployee!=null){
             return new ResponseEntity<Employee>(savedEmployee, HttpStatus.OK);
         }
             return new ResponseEntity<Employee>(savedEmployee, HttpStatus.BAD_REQUEST);
-
     }
 	
     @GetMapping(BASE_PATH)
-    public ResponseEntity<List<Employee>> employeeGetByDepartment(){
-        List<Employee> getEmployees =
+    public ResponseEntity<List<EmployeeResponseVo>> getAllEmployees(){
+        List<EmployeeResponseVo> getEmployees =
                 employeeService.getAllEmployees();
         if(getEmployees!= null){
-            return new ResponseEntity<List<Employee>>(getEmployees, HttpStatus.OK);
+            return new ResponseEntity<List<EmployeeResponseVo>>(getEmployees, HttpStatus.OK);
         }
-        return new ResponseEntity<List<Employee>>(getEmployees, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<List<EmployeeResponseVo>>(getEmployees, HttpStatus.BAD_REQUEST);
+    }
+    
+    @GetMapping(SINGLE_EMPLOYEE_PATH)
+    public ResponseEntity <EmployeeResponseVo> getEmployeeByNik(@PathVariable String nik) throws IdNotFoundException{
+        EmployeeResponseVo getEmployee = employeeService.getEmployeeByNik(nik);
+        return new ResponseEntity<EmployeeResponseVo>(getEmployee, HttpStatus.OK);
     }
 
-    @PutMapping(BASE_PATH)
-    public ResponseEntity<Employee> employeeUpdate(@RequestBody EmployeeVo employeeVo){
+    @PutMapping(SINGLE_EMPLOYEE_PATH)
+    public ResponseEntity<Employee> employeeUpdate(@PathVariable String nik, @RequestBody EmployeeEditRequestVo employeeVo) throws IdNotFoundException{
     	Employee updatedEmployee =
     			employeeService.updateEmployee(employeeVo);
-        if(updatedEmployee!=null){
+        if(updatedEmployee.getNik().equals(nik)){
             return new ResponseEntity<Employee>(updatedEmployee, HttpStatus.OK);
         }
         return new ResponseEntity<Employee>(updatedEmployee, HttpStatus.BAD_REQUEST);

@@ -26,8 +26,8 @@ public class EmployeeLeave implements Serializable{
 	private LocalDate requestDate;
 	private Status status;
 	private String reason;
-	private String approvedBy;
-	private LocalDate approvedDate;
+	private String processedBy;
+	private LocalDate processedDate;
 	
 	public EmployeeLeave(Employee employee, Leave leave, LocalDate startDate, LocalDate endDate, String reason){
 		this.employee = employee;
@@ -37,8 +37,8 @@ public class EmployeeLeave implements Serializable{
 		this.reason = reason;
 		this.requestDate = LocalDate.now();
 		this.status = Status.WAITING;
-		this.approvedBy = null;
-		this.approvedDate = null;
+		this.processedBy = null;
+		this.processedDate = null;
 	}
 
 	public EmployeeLeave() {}
@@ -128,32 +128,32 @@ public class EmployeeLeave implements Serializable{
 		this.reason = reason;
 	}
 
-	public String getApprovedBy() {
-		return approvedBy;
+	public String getProcessedBy() {
+		return processedBy;
 	}
 
-	public void setApprovedBy(String approvedBy) {
-		this.approvedBy = approvedBy;
+	public void setProcessedBy(String processedBy) {
+		this.processedBy = processedBy;
 	}
 
-	public LocalDate getApprovedDate() {
-		return approvedDate;
+	public LocalDate getProcessedDate() {
+		return processedDate;
 	}
 
-	public void setApprovedDate(LocalDate approvedDate) {
-		this.approvedDate = approvedDate;
+	public void setProcessedDate(LocalDate processedDate) {
+		this.processedDate = processedDate;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((approvedBy == null) ? 0 : approvedBy.hashCode());
-		result = prime * result + ((approvedDate == null) ? 0 : approvedDate.hashCode());
 		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((leave == null) ? 0 : leave.hashCode());
+		result = prime * result + ((processedBy == null) ? 0 : processedBy.hashCode());
+		result = prime * result + ((processedDate == null) ? 0 : processedDate.hashCode());
 		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
 		result = prime * result + ((requestDate == null) ? 0 : requestDate.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
@@ -170,16 +170,6 @@ public class EmployeeLeave implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeeLeave other = (EmployeeLeave) obj;
-		if (approvedBy == null) {
-			if (other.approvedBy != null)
-				return false;
-		} else if (!approvedBy.equals(other.approvedBy))
-			return false;
-		if (approvedDate == null) {
-			if (other.approvedDate != null)
-				return false;
-		} else if (!approvedDate.equals(other.approvedDate))
-			return false;
 		if (employee == null) {
 			if (other.employee != null)
 				return false;
@@ -199,6 +189,16 @@ public class EmployeeLeave implements Serializable{
 			if (other.leave != null)
 				return false;
 		} else if (!leave.equals(other.leave))
+			return false;
+		if (processedBy == null) {
+			if (other.processedBy != null)
+				return false;
+		} else if (!processedBy.equals(other.processedBy))
+			return false;
+		if (processedDate == null) {
+			if (other.processedDate != null)
+				return false;
+		} else if (!processedDate.equals(other.processedDate))
 			return false;
 		if (reason == null) {
 			if (other.reason != null)

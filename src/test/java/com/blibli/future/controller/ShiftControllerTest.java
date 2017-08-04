@@ -32,8 +32,6 @@ public class ShiftControllerTest {
 
     private MockMvc mockMvc;
 
-    private final String BASE_PATH = "/shift";
-    private final String PATH_WITH_ID = BASE_PATH + "/test";
     private final String TEST = "test";
 
     private Shift shift1;
@@ -48,7 +46,7 @@ public class ShiftControllerTest {
         Mockito.when(shiftService.getAllShift()).thenReturn(collectionMock);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get(BASE_PATH)
+                MockMvcRequestBuilders.get(shiftController.BASE_PATH)
         ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(JSONArray.toJSONString(collectionMock)));
 
@@ -63,7 +61,7 @@ public class ShiftControllerTest {
         String jsonResult = objectWriter.writeValueAsString(shift1);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.post(BASE_PATH)
+                MockMvcRequestBuilders.post(shiftController.BASE_PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(shiftVo)
         )
@@ -80,7 +78,7 @@ public class ShiftControllerTest {
         String jsonResult = objectWriter.writeValueAsString(shift1);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get(PATH_WITH_ID)
+                MockMvcRequestBuilders.get(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
                         .accept(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(jsonResult));
@@ -93,7 +91,7 @@ public class ShiftControllerTest {
         Mockito.when(shiftService.getShiftById(TEST)).thenThrow(new IdNotFoundException(TEST));
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get(PATH_WITH_ID)
+                MockMvcRequestBuilders.get(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
                         .accept(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
@@ -108,7 +106,7 @@ public class ShiftControllerTest {
         String jsonResult = objectWriter.writeValueAsString(shift2);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put(PATH_WITH_ID)
+                MockMvcRequestBuilders.put(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(shiftVo)
                         .accept(MediaType.APPLICATION_JSON)
@@ -125,7 +123,7 @@ public class ShiftControllerTest {
         String shiftVo = objectWriter.writeValueAsString(shiftVOMock);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.put(PATH_WITH_ID)
+                MockMvcRequestBuilders.put(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(shiftVo)
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -138,7 +136,7 @@ public class ShiftControllerTest {
         Mockito.doNothing().when(shiftService).deleteShift(TEST);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.delete(PATH_WITH_ID)
+                MockMvcRequestBuilders.delete(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
         Mockito.verify(shiftService).deleteShift(TEST);
@@ -149,7 +147,7 @@ public class ShiftControllerTest {
         Mockito.doThrow(new IdNotFoundException(TEST)).when(shiftService).deleteShift(TEST);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.delete(PATH_WITH_ID)
+                MockMvcRequestBuilders.delete(shiftController.PATH_WITH_ID.replaceAll("\\{id\\}", TEST))
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         Mockito.verify(shiftService).deleteShift(TEST);
@@ -158,7 +156,10 @@ public class ShiftControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(this.shiftController).build();
+        this.mockMvc = MockMvcBuilders
+                .standaloneSetup(this.shiftController)
+                .setControllerAdvice(new AthensControllerAdvice())
+                .build();
 
         shift1 = new Shift();
         shift2 = new Shift();
