@@ -177,7 +177,7 @@ public class RequestControllerTest {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(this.requestController).build();
         
-        this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", "Ariel", "CEO", "Central", LocalDate.now(), LocalDate.now(), true);
+        this.employee = new Employee("11", "Sebastian", Gender.MALE, "IT", "1", "Develop", MaritalStatus.LAJANG, Religion.KRISTEN, "IT", "123456", LocalDate.now(), true);
         this.leave = new Leave("123", "Libur Tahun Baru", Gender.MALE, MaritalStatus.LAJANG, Religion.KRISTEN);
         
         this.employeeAbsencePermit = new EmployeeAbsencePermit(employee, AbsencePermit.SICK, LocalDate.of(2017, 1, 6), LocalDate.of(2017, 1, 9), "Males");

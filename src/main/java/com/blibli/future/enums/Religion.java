@@ -1,14 +1,11 @@
 package com.blibli.future.enums;
 
-/**
- * Created by amesa on 5/6/17.
- */
 public enum Religion {
     KRISTEN("Kristen"),
     KATHOLIK("Katholik"),
     ISLAM("Islam"),
     BUDHA("Budha"),
-    MUSLIM("Muslim");
+    HINDU("Hindu");
     private String name;
 
     Religion(String name) {
