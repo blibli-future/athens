@@ -16,6 +16,7 @@ public class EmployeeResponseVo implements Serializable{
     private String fullName;
     private Gender gender;
     private String position;
+    private String level;
     private String organizationalUnitText;
     private MaritalStatus maritalStatus;
     private Religion religion;
@@ -25,6 +26,7 @@ public class EmployeeResponseVo implements Serializable{
     private String startWorkingDate;
     
     public EmployeeResponseVo(){}
+    
     public EmployeeResponseVo(String nik, String fullName, Gender gender, String position, 
     		String organizationalUnitText, MaritalStatus maritalStatus, Religion religion, 
     		String nameOfDept, String chiefNik, String chiefName, LocalDate startWorkingDate){
@@ -44,6 +46,27 @@ public class EmployeeResponseVo implements Serializable{
 	    	this.startWorkingDate = startWorkingDate.format(formatter);
     	}
     }
+    
+    public EmployeeResponseVo(String nik, String fullName, Gender gender, String position,
+    		String organizationalUnitText, MaritalStatus maritalStatus, Religion religion, 
+    		String nameOfDept, String chiefNik, LocalDate startWorkingDate, String level){
+    	this.nik = nik;
+    	this.fullName = fullName;
+    	this.gender = gender;
+    	this.position = position;
+    	this.level = level;
+    	this.organizationalUnitText = organizationalUnitText;
+    	this.maritalStatus = maritalStatus;
+    	this.religion = religion;
+    	this.nameOfDept = nameOfDept;
+    	this.chiefNik = chiefNik;
+    	if(startWorkingDate!=null)
+    	{
+	    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    	this.startWorkingDate = startWorkingDate.format(formatter);
+    	}
+    }
+    
 	public String getNik() {
 		return nik;
 	}
@@ -113,6 +136,12 @@ public class EmployeeResponseVo implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -121,6 +150,7 @@ public class EmployeeResponseVo implements Serializable{
 		result = prime * result + ((chiefNik == null) ? 0 : chiefNik.hashCode());
 		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((level == null) ? 0 : level.hashCode());
 		result = prime * result + ((maritalStatus == null) ? 0 : maritalStatus.hashCode());
 		result = prime * result + ((nameOfDept == null) ? 0 : nameOfDept.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
@@ -155,6 +185,11 @@ public class EmployeeResponseVo implements Serializable{
 		} else if (!fullName.equals(other.fullName))
 			return false;
 		if (gender != other.gender)
+			return false;
+		if (level == null) {
+			if (other.level != null)
+				return false;
+		} else if (!level.equals(other.level))
 			return false;
 		if (maritalStatus != other.maritalStatus)
 			return false;
