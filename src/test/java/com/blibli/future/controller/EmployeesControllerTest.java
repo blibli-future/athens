@@ -19,9 +19,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-public class EmployeeControllerTest {
+public class EmployeesControllerTest {
     @InjectMocks
-    private EmployeeController employeeController;
+    private EmployeesController employeeController;
     @Mock
     private EmployeeService employeeService;
     @Mock
