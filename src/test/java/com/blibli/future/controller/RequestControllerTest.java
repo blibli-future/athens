@@ -152,25 +152,25 @@ public class RequestControllerTest {
 		Mockito.verify(employeeAbsencePermitServiceImpl).getAbsencePermitRequest(employeeAbsencePermitVoMock.getNik());
 	}
 	
-	@Test
-	public void getLeaveTest() throws Exception{
-		String gender = "MALE";
-		String maritalStatus = "MENIKAH";
-		String religion = "KRISTEN";
-		
-		List<Leave> leave = new ArrayList<>();
-		Mockito.when(leaveServiceImpl.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion))).thenReturn(leave);
-		
-		mockMvc.perform(
-                MockMvcRequestBuilders.get(requestController.PATH_LISTING_LEAVE).accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("gender", gender)
-                .param("maritalStatus", maritalStatus)
-                .param("religion", religion))
-		.andExpect(MockMvcResultMatchers.status().isOk());
-
-		Mockito.verify(leaveServiceImpl).getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
-	}
+//	@Test
+//	public void getLeaveTest() throws Exception{
+//		String gender = "MALE";
+//		String maritalStatus = "MENIKAH";
+//		String religion = "KRISTEN";
+//		
+//		List<Leave> leave = new ArrayList<>();
+//		Mockito.when(leaveServiceImpl.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion))).thenReturn(leave);
+//		
+//		mockMvc.perform(
+//                MockMvcRequestBuilders.get(requestController.PATH_LISTING_LEAVE).accept(MediaType.APPLICATION_JSON)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .param("gender", gender)
+//                .param("maritalStatus", maritalStatus)
+//                .param("religion", religion))
+//		.andExpect(MockMvcResultMatchers.status().isOk());
+//
+//		Mockito.verify(leaveServiceImpl).getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
+//	}
 	
 	@Before
     public void setUp() {

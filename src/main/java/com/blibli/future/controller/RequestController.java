@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.EmployeeAbsencePermit;
 import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.model.Leave;
@@ -27,7 +29,7 @@ import com.blibli.future.vo.EmployeeLeaveVo;
 @RestController
 public class RequestController {
 	public static final String BASE_PATH = "/requests";
-    public static final String PATH_LEAVE = BASE_PATH + "/leave";
+    public static final String PATH_LEAVE = BASE_PATH + "/{nik}/leave-right";
     public static final String PATH_LISTING_LEAVE = PATH_LEAVE + "/list";
     public static final String PATH_ABSENCE_PERMIT = BASE_PATH + "/absencepermit";
 	
@@ -122,18 +124,8 @@ public class RequestController {
 	}
 	
 	@GetMapping(PATH_LISTING_LEAVE)
-	public ResponseEntity<List<Leave>> getLeave(@RequestParam("gender") String gender,
-			@RequestParam("maritalStatus") String maritalStatus,
-			@RequestParam("religion") String religion){
-    	
-		List<Leave> requested = leaveService.getLeave(Gender.valueOf(gender), MaritalStatus.valueOf(maritalStatus), Religion.valueOf(religion));
-    	if(requested!=null)
-    	{
-    		return new ResponseEntity<List<Leave>>(requested, HttpStatus.OK);
-    	}
-    	else
-    	{
-    		return new ResponseEntity<List<Leave>>(requested, HttpStatus.BAD_REQUEST);
-    	}
+	public ResponseEntity<List<Leave>> getLeave(@PathVariable String nik) throws IdNotFoundException{
+		List<Leave> requested = leaveService.getLeave(nik);
+    	return new ResponseEntity<List<Leave>>(requested, HttpStatus.OK);
 	}
 }
