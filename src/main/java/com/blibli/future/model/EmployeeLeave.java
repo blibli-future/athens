@@ -15,10 +15,12 @@ import java.io.Serializable;
 
 import com.blibli.future.enums.Status;
 import com.blibli.future.vo.EmployeeLeaveVo;
+import com.blibli.future.vo.PermissionRequestVo;
 
 @Entity
 public class EmployeeLeave implements Serializable{
-    private String id;
+	private static final long serialVersionUID = -2498513787597432511L;
+	private String id;
 	private Employee employee;
 	private Leave leave;
 	private LocalDate startDate;
@@ -52,9 +54,9 @@ public class EmployeeLeave implements Serializable{
 		this.leave = leave;
 	}
 	
-	public static EmployeeLeave convertToEmployeeLeave(EmployeeLeaveVo empLeaVo, Employee emp, Leave lea){
+	public static EmployeeLeave convertToEmployeeLeave(PermissionRequestVo permissionRequestVo, Employee emp, Leave lea){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		return new EmployeeLeave(emp, lea, LocalDate.parse(empLeaVo.getStartDate(), formatter), LocalDate.parse(empLeaVo.getEndDate(), formatter), empLeaVo.getReason());
+		return new EmployeeLeave(emp, lea, LocalDate.parse(permissionRequestVo.getStartDate(), formatter), LocalDate.parse(permissionRequestVo.getEndDate(), formatter), permissionRequestVo.getReason());
 	}
 	
 	@Id

@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.blibli.future.enums.Status;
 import com.blibli.future.model.EmployeeSubstitutionLeaveRight;
+import com.blibli.future.vo.PermissionResponseVo;
 
 @Repository
 public interface EmployeeSubstitutionLeaveRightRepository extends JpaRepository<EmployeeSubstitutionLeaveRight,String>{
@@ -42,4 +44,12 @@ public interface EmployeeSubstitutionLeaveRightRepository extends JpaRepository<
 			") AS esl GROUP BY esl.nik, esl.fullname, esl.nameOfDept"
 			, nativeQuery = true)
 	Object[] sumEmployeeSubstitutionLeaveRightByNikDateBetween(String nik, LocalDate startdate, LocalDate endDate);
+	
+	@Query("select new com.blibli.future.vo.PermissionResponseVo(el.id, el.employee.nik, e.fullName, el.startDate, el.endDate, el.status, 'subtitution', el.processedBy, el.reason) "
+			+ "from EmployeeSubstitutionLeaveRight el join Employee e on el.employee.nik = e.nik where e.chiefNik = (?1) and el.status = (?2)")
+	List<PermissionResponseVo> getEmployeeSubstitutionLeaveRightByChiefNikStatus(String chiefNik, Status status);
+	
+	@Query("select new com.blibli.future.vo.PermissionResponseVo(esl.id, esl.employee.nik, e.fullName, esl.startDate, esl.endDate, esl.status, 'subtitution', esl.processedBy, esl.reason) "
+			+ "from EmployeeSubstitutionLeaveRight esl join Employee e on esl.employee.nik = e.nik where e.nik = (?1) and esl.status = (?2)")
+	List<PermissionResponseVo> getEmployeeSubstitutionLeaveRightByNikStatus(String nik, Status status);
 }

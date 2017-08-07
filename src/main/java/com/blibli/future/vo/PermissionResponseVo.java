@@ -8,7 +8,7 @@ import com.blibli.future.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ApprovalResponseVo implements Serializable{
+public class PermissionResponseVo implements Serializable{
 	private static final long serialVersionUID = -8276863185951658594L;
 	private String id;
 	private String nik;
@@ -18,9 +18,10 @@ public class ApprovalResponseVo implements Serializable{
 	private String endDate;
 	private Status status;
 	private String processedBy;
+	private String reason;
 	
-	public ApprovalResponseVo(String id, String nik, String fullName, LocalDate startDate, 
-			LocalDate endDate, Status status, String type, String processedBy){
+	public PermissionResponseVo(String id, String nik, String fullName, LocalDate startDate, 
+			LocalDate endDate, Status status, String type, String processedBy, String reason){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy");
 		this.id = id;
 		this.nik = nik;
@@ -30,6 +31,7 @@ public class ApprovalResponseVo implements Serializable{
 		this.status = status;
 		this.type = type;
 		this.processedBy = processedBy;
+		this.reason = reason;
 	}
 
 	public String getId() {
@@ -96,6 +98,14 @@ public class ApprovalResponseVo implements Serializable{
 		this.processedBy = processedBy;
 	}
 
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -109,6 +119,7 @@ public class ApprovalResponseVo implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nik == null) ? 0 : nik.hashCode());
 		result = prime * result + ((processedBy == null) ? 0 : processedBy.hashCode());
+		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -123,7 +134,7 @@ public class ApprovalResponseVo implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ApprovalResponseVo other = (ApprovalResponseVo) obj;
+		PermissionResponseVo other = (PermissionResponseVo) obj;
 		if (endDate == null) {
 			if (other.endDate != null)
 				return false;
@@ -149,6 +160,11 @@ public class ApprovalResponseVo implements Serializable{
 				return false;
 		} else if (!processedBy.equals(other.processedBy))
 			return false;
+		if (reason == null) {
+			if (other.reason != null)
+				return false;
+		} else if (!reason.equals(other.reason))
+			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
 				return false;
@@ -162,5 +178,5 @@ public class ApprovalResponseVo implements Serializable{
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
-	}	
+	}
 }

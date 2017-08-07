@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.blibli.future.enums.Status;
 import com.blibli.future.model.EmployeeYearlyLeave;
+import com.blibli.future.vo.PermissionResponseVo;
 
 @Repository
 public interface EmployeeYearlyLeaveRepository extends JpaRepository<EmployeeYearlyLeave, String>{
@@ -40,4 +42,12 @@ public interface EmployeeYearlyLeaveRepository extends JpaRepository<EmployeeYea
 			") AS eyl GROUP BY eyl.nik, eyl.fullname, eyl.nameOfDept"
 			, nativeQuery = true)
 	Object[] sumEmployeeYearlyLeaveByNikDateBetween(String nik, LocalDate startdate, LocalDate endDate);
+	
+	@Query("select new com.blibli.future.vo.PermissionResponseVo(el.id, el.employee.nik, e.fullName, el.startDate, el.endDate, el.status, 'yearly', el.processedBy, el.reason) "
+			+ "from EmployeeYearlyLeave el join Employee e on el.employee.nik = e.nik where e.chiefNik = (?1) and el.status = (?2)")
+	List<PermissionResponseVo> getEmployeeYearlyLeaveByChiefNikStatus(String chiefNik, Status status);
+	
+	@Query("select new com.blibli.future.vo.PermissionResponseVo(el.id, el.employee.nik, e.fullName, el.startDate, el.endDate, el.status, 'yearly', el.processedBy, el.reason) "
+			+ "from EmployeeYearlyLeave el join Employee e on el.employee.nik = e.nik where e.nik = (?1) and el.status = (?2)")
+	List<PermissionResponseVo> getEmployeeYearlyLeaveByNikStatus(String nik, Status status);
 }

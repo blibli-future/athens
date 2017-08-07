@@ -14,6 +14,7 @@ import com.blibli.future.model.Leave;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.repository.LeaveRepository;
 import com.blibli.future.service.api.LeaveService;
+import com.blibli.future.vo.LeaveResponseVo;
 
 @Service
 public class LeaveServiceImpl implements LeaveService{
@@ -28,11 +29,11 @@ public class LeaveServiceImpl implements LeaveService{
 	}
 	
 	@Override
-	public List<Leave> getLeave(String nik) throws IdNotFoundException{
+	public List<LeaveResponseVo> getLeave(String nik) throws IdNotFoundException{
 		Employee emp = employeeRepository.findOneByNik(nik);
 		if(emp == null)
     		throw new IdNotFoundException("NIK: " + nik + " was not found");
-		List<Leave> leave = leaveRepository.findByGenderAndMaritalStatusAndReligion(emp.getGender(), emp.getMaritalStatus(), emp.getReligion());
+		List<LeaveResponseVo> leave = leaveRepository.findLeaveByGenderAndMaritalStatusAndReligion(emp.getGender(), emp.getMaritalStatus(), emp.getReligion());
 		return leave;
 	}
 }

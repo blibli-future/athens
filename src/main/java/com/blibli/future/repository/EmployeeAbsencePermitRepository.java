@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.blibli.future.enums.Status;
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.EmployeeAbsencePermit;
-import com.blibli.future.vo.ApprovalResponseVo;
+import com.blibli.future.vo.PermissionResponseVo;
 
 @Repository
 public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeAbsencePermit, String>{
@@ -32,7 +32,11 @@ public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeA
 			, nativeQuery = true)
 	List<Object[]> countEachEmployeeAbsencePermitByDepartmentDateBetween(int absencePermit, String department, LocalDate startDate, LocalDate endDate);
 	
-	@Query("select new com.blibli.future.vo.ApprovalResponseVo(eap.id, eap.employee.nik, e.fullName, eap.startDate, eap.endDate, eap.status, 'absence', eap.processedBy) "
+	@Query("select new com.blibli.future.vo.PermissionResponseVo(eap.id, eap.employee.nik, e.fullName, eap.startDate, eap.endDate, eap.status, 'absence', eap.processedBy, eap.reason) "
 			+ "from EmployeeAbsencePermit eap join Employee e on eap.employee.nik = e.nik where e.chiefNik = (?1) and eap.status = (?2)")
-	List<ApprovalResponseVo> getEmployeeAbsencePermitByChiefNikStatus(String chiefNik, Status status);
+	List<PermissionResponseVo> getEmployeeAbsencePermitByChiefNikStatus(String chiefNik, Status status);
+	
+	@Query("select new com.blibli.future.vo.PermissionResponseVo(eap.id, eap.employee.nik, e.fullName, eap.startDate, eap.endDate, eap.status, 'absence', eap.processedBy, eap.reason) "
+			+ "from EmployeeAbsencePermit eap join Employee e on eap.employee.nik = e.nik where e.nik = (?1) and eap.status = (?2)")
+	List<PermissionResponseVo> getEmployeeAbsencePermitByNikStatus(String nik, Status status);
 }
