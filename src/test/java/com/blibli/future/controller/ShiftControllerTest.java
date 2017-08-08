@@ -4,6 +4,7 @@ import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.service.api.ShiftService;
 import com.blibli.future.vo.ShiftVo;
+import com.blibli.future.vo.response.EmployeeShiftResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import net.minidev.json.JSONArray;
@@ -20,9 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ShiftControllerTest {
     @InjectMocks
@@ -151,6 +150,41 @@ public class ShiftControllerTest {
         ).andExpect(MockMvcResultMatchers.status().isBadRequest());
 
         Mockito.verify(shiftService).deleteShift(TEST);
+    }
+
+    @Test
+    public void getWorkingEmployees_Ok() throws Exception {
+        EmployeeShiftResponse employeeShiftResponse1 = new EmployeeShiftResponse();
+
+
+        Set<EmployeeShiftResponse> employees = new HashSet<>(
+                Arrays.asList(new EmployeeShiftResponse(), new EmployeeShiftResponse())
+        );
+
+        Mockito.when(shiftService.getWorkingEmployees(TEST)).thenReturn(employees);
+
+        String jsonResult = objectWriter.writeValueAsString(employees);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get(shiftController.SHIFT_EMPLOYEES_PATH.replaceAll("\\{id\\}", TEST))
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(jsonResult));
+
+        Mockito.verify(shiftService).getWorkingEmployees(TEST);
+    }
+
+    @Test
+    public void getWorkingEmployee_error() throws Exception {
+        Mockito.doThrow(new IdNotFoundException(TEST)).when(shiftService).getWorkingEmployees(TEST);
+
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get(shiftController.SHIFT_EMPLOYEES_PATH.replaceAll("\\{id\\}", TEST))
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+
+        Mockito.verify(shiftService).getWorkingEmployees(TEST);
     }
 
     @Before

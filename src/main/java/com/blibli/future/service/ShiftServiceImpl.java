@@ -5,11 +5,13 @@ import com.blibli.future.model.Shift;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.service.api.ShiftService;
 import com.blibli.future.vo.ShiftVo;
-
+import com.blibli.future.vo.response.EmployeeShiftResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ShiftServiceImpl implements ShiftService{
@@ -78,4 +80,20 @@ public class ShiftServiceImpl implements ShiftService{
 
         shiftRepository.delete(shiftId);
     }
+
+    @Override
+    public Set<EmployeeShiftResponse> getWorkingEmployees(String shiftId) throws IdNotFoundException{
+        Shift shift = this.shiftRepository.findOneById(shiftId);
+
+        if(shift == null) {
+            throw new IdNotFoundException("Shift with ID: " + shiftId + " was not found in the database");
+        }
+
+        return shift.getEmployees()
+                .stream()
+                .map(employee -> {return new EmployeeShiftResponse(employee);})
+                .collect(Collectors.toSet());
+    }
+
+
 }
