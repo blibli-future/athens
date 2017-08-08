@@ -52,6 +52,7 @@ public class EmployeesController {
         List<EmployeeResponseVo> getEmployees =
                 employeeService.getAllEmployees();
         if(getEmployees!= null){
+        	System.out.print(getEmployees.size());
             return new ResponseEntity<List<EmployeeResponseVo>>(getEmployees, HttpStatus.OK);
         }
         return new ResponseEntity<List<EmployeeResponseVo>>(getEmployees, HttpStatus.BAD_REQUEST);

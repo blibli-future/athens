@@ -101,10 +101,10 @@ public class RequestServiceImpl implements RequestService{
 		approvedSubstitutionLeaveRightList = employeeSubstitutionLeaveRightRepository.getEmployeeSubstitutionLeaveRightByNikStatus(nik, Status.APPROVED);
 		approvedYearlyLeaveList = employeeYearlyLeaveRepository.getEmployeeYearlyLeaveByNikStatus(nik, Status.APPROVED);
 		
-		waitingAbsencePermitList = employeeAbsencePermitRepository.getEmployeeAbsencePermitByNikStatus(nik, Status.APPROVED);
-		waitingLeaveList = employeeLeaveRepository.getEmployeeLeaveByNikStatus(nik, Status.APPROVED);
-		waitingSubstitutionLeaveRightList = employeeSubstitutionLeaveRightRepository.getEmployeeSubstitutionLeaveRightByNikStatus(nik, Status.APPROVED);
-		waitingYearlyLeaveList = employeeYearlyLeaveRepository.getEmployeeYearlyLeaveByNikStatus(nik, Status.APPROVED);
+		waitingAbsencePermitList = employeeAbsencePermitRepository.getEmployeeAbsencePermitByNikStatus(nik, Status.WAITING);
+		waitingLeaveList = employeeLeaveRepository.getEmployeeLeaveByNikStatus(nik, Status.WAITING);
+		waitingSubstitutionLeaveRightList = employeeSubstitutionLeaveRightRepository.getEmployeeSubstitutionLeaveRightByNikStatus(nik, Status.WAITING);
+		waitingYearlyLeaveList = employeeYearlyLeaveRepository.getEmployeeYearlyLeaveByNikStatus(nik, Status.WAITING);
 		
 		rejectedAbsencePermitList = employeeAbsencePermitRepository.getEmployeeAbsencePermitByNikStatus(nik, Status.REJECTED);
 		rejectedLeaveList = employeeLeaveRepository.getEmployeeLeaveByNikStatus(nik, Status.REJECTED);

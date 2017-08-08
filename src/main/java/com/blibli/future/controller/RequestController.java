@@ -37,7 +37,7 @@ public class RequestController {
 	}
 	
 	@PostMapping(PATH_CREATE_REQUEST)
-	public ResponseEntity<String> sentLeaveRequest(@PathVariable String nik, @PathVariable String type,
+	public ResponseEntity<String> createRequest(@PathVariable String nik, @PathVariable String type,
 			@RequestBody PermissionRequestVo permissionRequestVo) throws IdNotFoundException, TypeNotFoundException{
     	requestService.createRequest(nik, type, permissionRequestVo);
 		return new ResponseEntity<String>("id: " + permissionRequestVo.getRequestKey() + " processed", HttpStatus.OK);

@@ -2,8 +2,11 @@ package com.blibli.future.service;
 import com.blibli.future.enums.Gender;
 import com.blibli.future.enums.MaritalStatus;
 import com.blibli.future.enums.Religion;
+import com.blibli.future.enums.Role;
 import com.blibli.future.exception.IdNotFoundException;
+import com.blibli.future.model.AthensCredential;
 import com.blibli.future.model.Employee;
+import com.blibli.future.repository.AthensCredentialsRepository;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.vo.EmployeeResponseVo;
@@ -19,15 +22,19 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
+    private AthensCredentialsRepository  athensCredentialsRepository;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     @Autowired
-    public EmployeeServiceImpl (EmployeeRepository employeeRepository){
+    public EmployeeServiceImpl (EmployeeRepository employeeRepository, AthensCredentialsRepository  athensCredentialsRepository){
         this.employeeRepository = employeeRepository;
+        this.athensCredentialsRepository = athensCredentialsRepository;
     }
 
     public Employee saveEmployee (EmployeeRequestVo employeeVo){
@@ -36,8 +43,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         }else{
             Employee emp = new Employee(employeeVo.getNik(), employeeVo.getFullName(), Gender.valueOf(employeeVo.getGender()), employeeVo.getPosition(), 
             		employeeVo.getLevel(), employeeVo.getOrganizationalUnitText(), MaritalStatus.valueOf(employeeVo.getMaritalStatus()), Religion.valueOf(employeeVo.getReligion()), employeeVo.getNameOfDept(),
-            		employeeVo.getChiefNik(), LocalDate.parse(employeeVo.getStartWorkingDate(), formatter), employeeVo.getStatus());
+            		employeeVo.getChiefNik(), LocalDate.parse(employeeVo.getStartWorkingDate(), formatter), true);
             employeeRepository.save(emp);
+            AthensCredential credential = new AthensCredential(employeeVo.getNik(), "123456", employeeVo.getNik(), Stream.of(Role.ADMIN).collect(Collectors.toSet()));
+            athensCredentialsRepository.save(credential);
             return emp;
         }
     }
