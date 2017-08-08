@@ -35,8 +35,7 @@ public class ShiftServiceImpl implements ShiftService{
         newShift.setName(newShiftVO.getName());
         newShift.setStartHour(newShiftVO.getStartHour());
         newShift.setEndHour(newShiftVO.getEndHour());
-        newShift.setStartDay(newShiftVO.getStartDay());
-        newShift.setEndDay(newShiftVO.getEndDay());
+        newShift.setWorkDay(newShiftVO.getStartDay());
         newShift.setDepartmentEmployee(newShiftVO.getDepartmentEmployee());
         newShift.setLocation(newShiftVO.getLocation());
 
@@ -64,8 +63,7 @@ public class ShiftServiceImpl implements ShiftService{
         newShift.setName(updatedShiftVO.getName());
         newShift.setStartHour(updatedShiftVO.getStartHour());
         newShift.setEndHour(updatedShiftVO.getEndHour());
-        newShift.setStartDay(updatedShiftVO.getStartDay());
-        newShift.setEndDay(updatedShiftVO.getEndDay());
+        newShift.setWorkDay(updatedShiftVO.getStartDay());
         newShift.setDepartmentEmployee(updatedShiftVO.getDepartmentEmployee());
         newShift.setLocation(updatedShiftVO.getLocation());
 
