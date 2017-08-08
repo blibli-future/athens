@@ -57,4 +57,18 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Attendan
 			+ "WHERE e.name_Of_Dept = (?1) and (atte.date between (?2) and (?3)) "
 			+ "and extract('ISODOW' FROM atte.date) < 6 group by e.nik", nativeQuery = true)
 	List<Object[]> countEachEmployeeAbsenceByDepartmentDateBetween(String department, LocalDate startdate, LocalDate endDate);
+	
+	@Query(value = "select e.name_Of_Dept, atte.date, count(atte)" +
+			"from attendance atte JOIN Employee e ON atte.nik = e.nik " +
+			"WHERE atte.late_condition = (?1) and e.name_Of_Dept = (?2) and (atte.date between (?3) and (?4)) " +
+			"group by e.name_Of_Dept"
+			, nativeQuery = true)
+	List<Object[]> countEachDepartmentLateConditionByDepartmentDateBetween(int lateConditionOrdinal, String department, LocalDate startDate, LocalDate endDate);
+	
+	@Query(value = "select e.nik, e.full_Name, e.name_Of_Dept, count(atte) as counted " +
+			"from attendance atte JOIN Employee e ON atte.nik = e.nik " +
+			"WHERE atte.late_condition = (?1) and e.name_Of_Dept = (?2) and (atte.date between (?3) and (?4)) " +
+			"group by e.nik order by counted desc fetch first 10 rows only"
+			, nativeQuery = true)
+	List<Object[]> countTop10EmployeeLateConditionByDepartmentDateBetween(int lateConditionOrdinal, String department, LocalDate startDate, LocalDate endDate);
 }
