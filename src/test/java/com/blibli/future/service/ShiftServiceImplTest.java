@@ -4,7 +4,6 @@ import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.vo.ShiftVo;
-
 import org.hamcrest.Matchers;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -13,7 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -133,11 +133,11 @@ public class ShiftServiceImplTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        shift1 = new Shift();
+        shift1 = new Shift("1", "shift-1", LocalTime.NOON, LocalTime.MIDNIGHT, DayOfWeek.MONDAY, "dept-1", "location-1");
 
-        listMock = new ArrayList(Arrays.asList(shift1));
+        listMock = Arrays.asList(shift1);
 
-        shiftVOMock = new ShiftVo();
+        shiftVOMock = new ShiftVo(shift1);
     }
 
     @After

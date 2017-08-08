@@ -1,42 +1,48 @@
 package com.blibli.future.vo;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
+import com.blibli.future.model.Shift;
 
 public class ShiftVo {
 	private String id;
     private String name;
-    private LocalTime startHour;
-    private LocalTime endHour;
-    private DayOfWeek startDay;
-    private DayOfWeek endDay;
+    private String startHour;
+    private String endHour;
+    private int workDay;
     private String departmentEmployee;
     private String location;
 
     public ShiftVo() {
     }
 
-    public ShiftVo(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek startDay, DayOfWeek endDay, String departmentEmployee, String location) {
+    public ShiftVo(Shift shift) {
+        this.id = shift.getId();
+        this.name = shift.getName();
+        this.startHour = shift.getStartHour().toString();
+        this.endHour = shift.getEndHour().toString();
+        this.workDay = shift.getWorkDay().getValue();
+        this.departmentEmployee = shift.getDepartmentEmployee();
+        this.location = shift.getLocation();
+    }
+
+    public ShiftVo(String id, String name, String startHour, String endHour, int workDay, String departmentEmployee, String location) {
         this.id = id;
-    	this.name = name;
+        this.name = name;
         this.startHour = startHour;
         this.endHour = endHour;
-        this.startDay = startDay;
-        this.endDay = endDay;
+        this.workDay = workDay;
         this.departmentEmployee = departmentEmployee;
         this.location = location;
     }
-    
 
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -44,36 +50,28 @@ public class ShiftVo {
         this.name = name;
     }
 
-    public LocalTime getStartHour() {
+    public String getStartHour() {
         return startHour;
     }
 
-    public void setStartHour(LocalTime startHour) {
+    public void setStartHour(String startHour) {
         this.startHour = startHour;
     }
 
-    public LocalTime getEndHour() {
+    public String getEndHour() {
         return endHour;
     }
 
-    public void setEndHour(LocalTime endHour) {
+    public void setEndHour(String endHour) {
         this.endHour = endHour;
     }
 
-    public DayOfWeek getStartDay() {
-        return startDay;
+    public int getWorkDay() {
+        return workDay;
     }
 
-    public void setStartDay(DayOfWeek startDay) {
-        this.startDay = startDay;
-    }
-
-    public DayOfWeek getEndDay() {
-        return endDay;
-    }
-
-    public void setEndDay(DayOfWeek endDay) {
-        this.endDay = endDay;
+    public void setWorkDay(int workDay) {
+        this.workDay = workDay;
     }
 
     public String getDepartmentEmployee() {
@@ -97,25 +95,25 @@ public class ShiftVo {
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
 
-        ShiftVo shiftVO = (ShiftVo) o;
+        ShiftVo shiftVo = (ShiftVo) o;
 
-        if(name != null ? !name.equals(shiftVO.name) : shiftVO.name != null) return false;
-        if(startHour != null ? !startHour.equals(shiftVO.startHour) : shiftVO.startHour != null) return false;
-        if(endHour != null ? !endHour.equals(shiftVO.endHour) : shiftVO.endHour != null) return false;
-        if(startDay != shiftVO.startDay) return false;
-        if(endDay != shiftVO.endDay) return false;
-        if(departmentEmployee != null ? !departmentEmployee.equals(shiftVO.departmentEmployee) : shiftVO.departmentEmployee != null)
+        if(workDay != shiftVo.workDay) return false;
+        if(id != null ? !id.equals(shiftVo.id) : shiftVo.id != null) return false;
+        if(name != null ? !name.equals(shiftVo.name) : shiftVo.name != null) return false;
+        if(startHour != null ? !startHour.equals(shiftVo.startHour) : shiftVo.startHour != null) return false;
+        if(endHour != null ? !endHour.equals(shiftVo.endHour) : shiftVo.endHour != null) return false;
+        if(departmentEmployee != null ? !departmentEmployee.equals(shiftVo.departmentEmployee) : shiftVo.departmentEmployee != null)
             return false;
-        return location != null ? location.equals(shiftVO.location) : shiftVO.location == null;
+        return location != null ? location.equals(shiftVo.location) : shiftVo.location == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
         result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
-        result = 31 * result + (startDay != null ? startDay.hashCode() : 0);
-        result = 31 * result + (endDay != null ? endDay.hashCode() : 0);
+        result = 31 * result + workDay;
         result = 31 * result + (departmentEmployee != null ? departmentEmployee.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;

@@ -9,6 +9,8 @@ import com.blibli.future.vo.response.EmployeeShiftResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,9 +35,9 @@ public class ShiftServiceImpl implements ShiftService{
         Shift newShift = new Shift();
         newShift.setId(newShiftVO.getId());
         newShift.setName(newShiftVO.getName());
-        newShift.setStartHour(newShiftVO.getStartHour());
-        newShift.setEndHour(newShiftVO.getEndHour());
-        newShift.setWorkDay(newShiftVO.getStartDay());
+        newShift.setStartHour(LocalTime.parse(newShiftVO.getStartHour()));
+        newShift.setEndHour(LocalTime.parse(newShiftVO.getEndHour()));
+        newShift.setWorkDay(DayOfWeek.of(newShiftVO.getWorkDay()));
         newShift.setDepartmentEmployee(newShiftVO.getDepartmentEmployee());
         newShift.setLocation(newShiftVO.getLocation());
 
@@ -61,9 +63,9 @@ public class ShiftServiceImpl implements ShiftService{
         }
 
         newShift.setName(updatedShiftVO.getName());
-        newShift.setStartHour(updatedShiftVO.getStartHour());
-        newShift.setEndHour(updatedShiftVO.getEndHour());
-        newShift.setWorkDay(updatedShiftVO.getStartDay());
+        newShift.setStartHour(LocalTime.parse(updatedShiftVO.getStartHour()));
+        newShift.setEndHour(LocalTime.parse(updatedShiftVO.getEndHour()));
+        newShift.setWorkDay(DayOfWeek.of(updatedShiftVO.getWorkDay()));
         newShift.setDepartmentEmployee(updatedShiftVO.getDepartmentEmployee());
         newShift.setLocation(updatedShiftVO.getLocation());
 
