@@ -14,7 +14,7 @@ import com.blibli.future.model.EmployeeLeave;
 import com.blibli.future.repository.EmployeeAbsencePermitRepository;
 import com.blibli.future.repository.EmployeeLeaveRepository;
 import com.blibli.future.service.api.ApprovalService;
-import com.blibli.future.vo.ApprovalResponseVo;
+import com.blibli.future.vo.PermissionResponseVo;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
@@ -68,10 +68,10 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 	
 	@Override
-	public List<ApprovalResponseVo> getUnapprovedRequests(String chiefNik) {
-		List<ApprovalResponseVo> approvalResponseVoList = new ArrayList<>();
-		List<ApprovalResponseVo> employeeAbsencePermitList = new ArrayList<>();
-		List<ApprovalResponseVo> employeeLeaveList = new ArrayList<>();
+	public List<PermissionResponseVo> getUnapprovedRequests(String chiefNik) {
+		List<PermissionResponseVo> approvalResponseVoList = new ArrayList<>();
+		List<PermissionResponseVo> employeeAbsencePermitList = new ArrayList<>();
+		List<PermissionResponseVo> employeeLeaveList = new ArrayList<>();
 		employeeAbsencePermitList = employeeAbsencePermitRepository.getEmployeeAbsencePermitByChiefNikStatus(chiefNik, Status.WAITING);
 		employeeLeaveList = employeeLeaveRepository.getEmployeeLeaveByChiefNikStatus(chiefNik, Status.WAITING);
 		if(employeeAbsencePermitList!=null)
@@ -82,12 +82,12 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	public List<ApprovalResponseVo> getRequestHistories(String chiefNik) {
-		List<ApprovalResponseVo> approvalResponseVoList = new ArrayList<>();
-		List<ApprovalResponseVo> approvedAbsencePermitList = new ArrayList<>();
-		List<ApprovalResponseVo> approvedLeaveList = new ArrayList<>();
-		List<ApprovalResponseVo> rejectedAbsencePermitList = new ArrayList<>();
-		List<ApprovalResponseVo> rejectedLeaveList = new ArrayList<>();
+	public List<PermissionResponseVo> getRequestHistories(String chiefNik) {
+		List<PermissionResponseVo> approvalResponseVoList = new ArrayList<>();
+		List<PermissionResponseVo> approvedAbsencePermitList = new ArrayList<>();
+		List<PermissionResponseVo> approvedLeaveList = new ArrayList<>();
+		List<PermissionResponseVo> rejectedAbsencePermitList = new ArrayList<>();
+		List<PermissionResponseVo> rejectedLeaveList = new ArrayList<>();
 		
 		approvedAbsencePermitList = employeeAbsencePermitRepository.getEmployeeAbsencePermitByChiefNikStatus(chiefNik, Status.APPROVED);
 		approvedLeaveList = employeeLeaveRepository.getEmployeeLeaveByChiefNikStatus(chiefNik, Status.APPROVED);

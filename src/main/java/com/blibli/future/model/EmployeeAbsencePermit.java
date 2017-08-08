@@ -16,10 +16,13 @@ import java.io.Serializable;
 import com.blibli.future.enums.AbsencePermit;
 import com.blibli.future.enums.Status;
 import com.blibli.future.vo.EmployeeAbsencePermitVo;
+import com.blibli.future.vo.PermissionRequestVo;
 
 @Entity
 
 public class EmployeeAbsencePermit implements Serializable{
+
+	private static final long serialVersionUID = -93870259757291461L;
 	private String id;
 	private Employee employee;
 	private LocalDate startDate;
@@ -54,9 +57,9 @@ public class EmployeeAbsencePermit implements Serializable{
 		this.absencePermit = employeeAbsencePermitVo.getAbsencePermit();
 	}
 	
-	public static EmployeeAbsencePermit convertToEmployeeAbsencePermit(EmployeeAbsencePermitVo empAbsPerVo, Employee emp){
+	public static EmployeeAbsencePermit convertToEmployeeAbsencePermit(PermissionRequestVo permissionRequestVo, Employee emp){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		return new EmployeeAbsencePermit(emp, empAbsPerVo.getAbsencePermit(), LocalDate.parse(empAbsPerVo.getStartDate(), formatter), LocalDate.parse(empAbsPerVo.getEndDate(), formatter), empAbsPerVo.getReason());
+		return new EmployeeAbsencePermit(emp, AbsencePermit.valueOf(permissionRequestVo.getRequestKey()), LocalDate.parse(permissionRequestVo.getStartDate(), formatter), LocalDate.parse(permissionRequestVo.getEndDate(), formatter), permissionRequestVo.getReason());
 	}
 
 	@Id

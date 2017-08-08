@@ -16,7 +16,7 @@ import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.exception.TypeNotFoundException;
 import com.blibli.future.service.api.ApprovalService;
 import com.blibli.future.vo.ApprovalRequestVo;
-import com.blibli.future.vo.ApprovalResponseVo;
+import com.blibli.future.vo.PermissionResponseVo;
 
 
 @RestController
@@ -48,14 +48,14 @@ public class ApprovalController {
 	}
 	
 	@GetMapping(BASE_PATH)
-	public ResponseEntity<List<ApprovalResponseVo>> getHistoryAndUnapprovedRequests(@RequestParam String chiefNik, 
+	public ResponseEntity<List<PermissionResponseVo>> getHistoryAndUnapprovedRequests(@RequestParam String chiefNik, 
 			@RequestParam String type) throws TypeNotFoundException{
 		System.out.println(chiefNik);
 		if(type.equals("history")){
-			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getRequestHistories(chiefNik), HttpStatus.OK);
+			return new ResponseEntity<List<PermissionResponseVo>>(approvalService.getRequestHistories(chiefNik), HttpStatus.OK);
 		}
 		else if(type.equals("unapproved")){
-			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getUnapprovedRequests(chiefNik), HttpStatus.OK);
+			return new ResponseEntity<List<PermissionResponseVo>>(approvalService.getUnapprovedRequests(chiefNik), HttpStatus.OK);
 		}
 		throw new TypeNotFoundException("Type: " + type + " was not found");
 	}
