@@ -9,19 +9,18 @@ import com.blibli.future.model.Employee;
 import com.blibli.future.repository.AthensCredentialsRepository;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
-import com.blibli.future.vo.EmployeeResponseVo;
 import com.blibli.future.vo.EmployeeEditRequestVo;
 import com.blibli.future.vo.EmployeeRequestVo;
-
+import com.blibli.future.vo.EmployeeResponseVo;
+import com.blibli.future.vo.ShiftVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -106,5 +105,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		EmployeeResponseVo employeeResponse = new EmployeeResponseVo(employee.getNik(), employee.getFullName(), employee.getGender(), employee.getPosition(), employee.getOrganizationalUnitText(), employee.getMaritalStatus(), employee.getReligion(), employee.getNameOfDept(), employee.getChiefNik(), employee.getStartWorkingDate(), employee.getLevel());
 		return employeeResponse;
 	}
+
+    @Override
+    public Set<ShiftVo> getAssignedShifts(String nik) throws IdNotFoundException {
+        Employee employee = employeeRepository.findOneByNik(nik);
+
+        if(employee == null) {
+            throw new IdNotFoundException("NIK: " + nik + " was not found");
+        }
+
+        return employee.getShifts()
+                .stream()
+                .map(shift -> new ShiftVo(shift))
+                .collect(Collectors.toSet());
+    }
 
 }
