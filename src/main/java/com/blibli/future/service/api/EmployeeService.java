@@ -12,7 +12,6 @@ public interface EmployeeService {
 	public Employee saveEmployee (EmployeeRequestVo employeeVo);
 	public boolean isEmployeeExist(String nik);
 	public Employee updateEmployee (EmployeeEditRequestVo employeeVo) throws IdNotFoundException;
-	public List<Employee> getEmployeesByDept (String nameOfDept);
 	public List<EmployeeResponseVo> getAllEmployees();
 	public EmployeeResponseVo getEmployeeByNik(String nik) throws IdNotFoundException;
 }

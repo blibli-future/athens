@@ -271,7 +271,7 @@ public class AttendanceControllerTest {
         String nameofDept = "Technology-GDN";
         List employeeList = new ArrayList<Employee>();
 
-        Mockito.when(employeeService.getEmployeesByDept(nameofDept)).thenReturn(employeeList);
+        //Mockito.when(employeeService.getEmployeesByDept(nameofDept)).thenReturn(employeeList);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/employees").accept(MediaType.APPLICATION_JSON)
@@ -279,7 +279,7 @@ public class AttendanceControllerTest {
                 .param("nameOfDept",nameofDept)
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(employeeService).getEmployeesByDept(nameofDept);
+        //Mockito.verify(employeeService).getEmployeesByDept(nameofDept);
     }
 
 

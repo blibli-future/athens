@@ -3,6 +3,8 @@ package com.blibli.future.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ import com.blibli.future.vo.PermissionResponseVo;
 
 @Service
 public class RequestServiceImpl implements RequestService{
-
+	private static final Logger LOG = LoggerFactory.getLogger(RequestServiceImpl.class);
 	private EmployeeRepository employeeRepository;
 	private EmployeeAbsencePermitRepository employeeAbsencePermitRepository;
 	private EmployeeLeaveRepository employeeLeaveRepository;
@@ -51,8 +53,10 @@ public class RequestServiceImpl implements RequestService{
 	public PermissionRequestVo createRequest(String nik, String type, PermissionRequestVo permissionRequestVo)
 			throws IdNotFoundException, TypeNotFoundException {
 		Employee employee = employeeRepository.findOneByNik(nik);
-		if(employee==null)
+		if(employee==null){
+			LOG.error("NIK: " + nik + " was not found");
 			throw new IdNotFoundException("NIK: " + nik + " was not found");
+		}
 		if(type.equals("absence")){
 			EmployeeAbsencePermit employeeAbsencePermit = EmployeeAbsencePermit.convertToEmployeeAbsencePermit(permissionRequestVo, employee);
 			employeeAbsencePermitRepository.save(employeeAbsencePermit);
@@ -70,15 +74,20 @@ public class RequestServiceImpl implements RequestService{
 			EmployeeSubstitutionLeaveRight employeeSubstitutionLeaveRight = EmployeeSubstitutionLeaveRight.convertToEmployeeSubstitutionLeaveRight(permissionRequestVo, employee);
 			employeeSubstitutionLeaveRightRepository.save(employeeSubstitutionLeaveRight);
 		}
-		else
+		else{
+			LOG.error("Type: " + type + " was not found");
 			throw new TypeNotFoundException("Type: " + type + " was not found");
+		}
+		LOG.info("Request Saved for Employee: "+nik);
 		return permissionRequestVo;
 	}
 
 	@Override
 	public List<PermissionResponseVo> getEmployeeRequestHistories(String nik) throws IdNotFoundException {
-		if(employeeRepository.findOneByNik(nik)==null)
+		if(employeeRepository.findOneByNik(nik)==null){
+			LOG.error("NIK: " + nik + " was not found");
 			throw new IdNotFoundException("NIK: " + nik + " was not found");
+		}
 		List<PermissionResponseVo> requestsResponseVoList = new ArrayList<>();
 		
 		List<PermissionResponseVo> approvedAbsencePermitList = new ArrayList<>();
@@ -137,7 +146,7 @@ public class RequestServiceImpl implements RequestService{
 			requestsResponseVoList.addAll(rejectedSubstitutionLeaveRightList);
 		if(rejectedYearlyLeaveList!=null)
 			requestsResponseVoList.addAll(rejectedYearlyLeaveList);
-
+		LOG.info("Got Request Histories");
 		return requestsResponseVoList;
 	}
 

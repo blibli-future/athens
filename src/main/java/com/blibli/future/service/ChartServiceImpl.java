@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import com.blibli.future.vo.SubReportVo;
 
 @Service
 public class ChartServiceImpl implements ChartService{
+	private static final Logger LOG = LoggerFactory.getLogger(ChartServiceImpl.class);
 	private AttendanceRepository attendanceRepository;
 	private EmployeeAbsencePermitRepository employeeAbsencePermitRepository;
 	private EmployeeLeaveRepository employeeLeaveRepository;
@@ -53,6 +56,7 @@ public class ChartServiceImpl implements ChartService{
 			for(Object[] object : top10Object){
 				top10Report.add(new SubReportVo(object));
 			}
+			LOG.info("Got Employee Late Chart");
 			return new ChartResponse(dailyChart, top10Report);
 		}
 		else if(type.equals("hourly")){
@@ -64,6 +68,7 @@ public class ChartServiceImpl implements ChartService{
 			for(Object[] object : top10Object){
 				top10Report.add(new SubReportVo(object));
 			}
+			LOG.info("Got Hourly Leave Chart");
 			return new ChartResponse(dailyChart, top10Report);
 		}
 		else if(type.equals("sick")){
@@ -75,6 +80,7 @@ public class ChartServiceImpl implements ChartService{
 			for(Object[] object : top10Object){
 				top10Report.add(new SubReportVo(object));
 			}
+			LOG.info("Got Employee Sick Chart");
 			return new ChartResponse(dailyChart, top10Report);
 		}
 		else if(type.equals("substitution")){
@@ -86,6 +92,7 @@ public class ChartServiceImpl implements ChartService{
 			for(Object[] object : top10Object){
 				top10Report.add(new SubReportVo(object));
 			}
+			LOG.info("Got Substitution Leave Chart");
 			return new ChartResponse(dailyChart, top10Report);
 		}
 		else if(type.equals("yearly")){
@@ -97,6 +104,7 @@ public class ChartServiceImpl implements ChartService{
 			for(Object[] object : top10Object){
 				top10Report.add(new SubReportVo(object));
 			}
+			LOG.info("Got Yearly Leave Chart");
 			return new ChartResponse(dailyChart, top10Report);
 		}
 		else if(type.equals("special")){
@@ -108,8 +116,10 @@ public class ChartServiceImpl implements ChartService{
 			for(Object[] object : top10Object){
 				top10Report.add(new SubReportVo(object));
 			}
+			LOG.info("Got Special Leave Chart");
 			return new ChartResponse(dailyChart, top10Report);
 		}
+		LOG.error("Type:"+type+" not found");
 		throw new TypeNotFoundException("Type: " + type + " was not found");
 	}
 
