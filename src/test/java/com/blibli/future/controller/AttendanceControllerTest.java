@@ -1,16 +1,10 @@
 package com.blibli.future.controller;
 
-import com.blibli.future.enums.Gender;
-import com.blibli.future.enums.MaritalStatus;
-import com.blibli.future.enums.Religion;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
-//import com.blibli.future.model.EmployeeShift;
 import com.blibli.future.service.EmployeeServiceImpl;
-//import com.blibli.future.service.EmployeeShiftingServiceImpl;
 import com.blibli.future.service.EmployeeTappingServiceImpl;
-//import com.blibli.future.vo.EmployeeShiftVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.After;
@@ -33,8 +27,11 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+//import com.blibli.future.model.EmployeeShift;
+//import com.blibli.future.service.EmployeeShiftingServiceImpl;
+//import com.blibli.future.vo.EmployeeShiftVo;
 
 public class AttendanceControllerTest {
     @InjectMocks
@@ -112,7 +109,7 @@ public class AttendanceControllerTest {
 //    	String employeeShiftVo = objectWriter.writeValueAsString(employeeShiftVoMock);
 //        
 //    	Mockito.when(converterService.map(employeeShiftVoMock, EmployeeShift.class)).thenReturn(employeeShiftMock);
-//        Mockito.when(employeeShiftingService.processShifting(employeeShiftMock)).thenReturn(employeeShiftMock);
+//        Mockito.when(employeeShiftingService.assignShiftToEmployee(employeeShiftMock)).thenReturn(employeeShiftMock);
 //        
 //        mockMvc.perform(
 //        		MockMvcRequestBuilders.post("/employees/shift")
@@ -122,7 +119,7 @@ public class AttendanceControllerTest {
 //        .andExpect(MockMvcResultMatchers.status().isOk());
 //
 //        Mockito.verify(converterService).map(employeeShiftVoMock, EmployeeShift.class);
-//        Mockito.verify(employeeShiftingService).processShifting(employeeShiftMock);
+//        Mockito.verify(employeeShiftingService).assignShiftToEmployee(employeeShiftMock);
 //    }
     
 //    @Test

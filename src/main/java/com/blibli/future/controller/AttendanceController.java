@@ -50,9 +50,9 @@ public class AttendanceController {
         try {
             employeeTappingService.addTapMachineFile(file);
         } catch (UnreadableFile e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.PRECONDITION_FAILED);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (DateTimeParseException e) {
-            return new ResponseEntity(e.getParsedString(), HttpStatus.PRECONDITION_FAILED);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
         //Question: Should it report the successfully created AttendanceData?
