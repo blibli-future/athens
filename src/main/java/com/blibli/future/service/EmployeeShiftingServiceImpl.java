@@ -1,26 +1,27 @@
 package com.blibli.future.service;
 
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.blibli.future.model.Employee;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.repository.ShiftRepository;
 import com.blibli.future.service.api.EmployeeShiftingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
+	private final EmployeeRepository employeeRepository;
+	private final ShiftRepository shiftRepository;
 
-	@Autowired
-	EmployeeRepository employeeRepository;
-	@Autowired
-	ShiftRepository shiftRepository;
-	
-	@Override
+    @Autowired
+    public EmployeeShiftingServiceImpl(EmployeeRepository employeeRepository, ShiftRepository shiftRepository) {
+        this.employeeRepository = employeeRepository;
+        this.shiftRepository = shiftRepository;
+    }
+
+    @Override
 	public Employee processShifting(String nik, String idShift) {
 		Employee emp = employeeRepository.findOneByNik(nik);
 		Shift shift = shiftRepository.findOneById(idShift);
