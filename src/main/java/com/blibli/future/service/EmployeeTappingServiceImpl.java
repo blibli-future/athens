@@ -6,13 +6,13 @@ import com.blibli.future.model.primaryKey.AttendanceKey;
 import com.blibli.future.repository.AttendanceRepository;
 import com.blibli.future.service.api.EmployeeTappingService;
 import com.blibli.future.service.api.FileReaderService;
+import com.blibli.future.vo.TapData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,41 +53,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
             return result;
         }
     }
-    private class TapData{//Question: Is it better to make this class a public as a VO?
-        private String nik;
-        private LocalTime tapTime;
-        private LocalDate tapDate;
 
-        public TapData(String nik, LocalTime tapTime, LocalDate tapDate) {
-            this.nik = nik;
-            this.tapTime = tapTime;
-            this.tapDate = tapDate;
-        }
-
-        public String getNik() {
-            return nik;
-        }
-
-        public void setNik(String nik) {
-            this.nik = nik;
-        }
-
-        public LocalTime getTapTime() {
-            return tapTime;
-        }
-
-        public void setTapTime(LocalTime tapTime) {
-            this.tapTime = tapTime;
-        }
-
-        public LocalDate getTapDate() {
-            return tapDate;
-        }
-
-        public void setTapDate(LocalDate tapDate) {
-            this.tapDate = tapDate;
-        }
-    }
     private AttendanceRepository attendanceRepository;
     private FileReaderService fileReaderService;
 
@@ -171,22 +137,6 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
 
     @Override
     public List<Attendance> addTapMachineFile(MultipartFile tapMachineFile) throws UnreadableFile, DateTimeParseException {
-        List<TapData> tapDatas = new ArrayList<>();
-        List<String> inputData;
-
-        inputData = fileReaderService.readFileAsStrings(tapMachineFile);
-
-        for(String tappingData : inputData) {
-            String[] splitTappingData = tappingData.split(",");
-
-            //Which is better? parsing the string here, or create new method here in this class or other class?
-            String nik = splitTappingData[0];
-            LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
-            TapData tapData = new TapData(nik, tapTime, tapDate);
-            tapDatas.add(tapData);
-        }
-
-        return createAttendance(tapDatas);
+        return createAttendance(fileReaderService.readFileAsListOfTapData(tapMachineFile));
     }
 }
