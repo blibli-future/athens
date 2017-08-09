@@ -7,11 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Created by amesa on 5/14/17.
- */
-
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttendanceVo implements Serializable {
 	private static final long serialVersionUID = -1488649585498344022L;
