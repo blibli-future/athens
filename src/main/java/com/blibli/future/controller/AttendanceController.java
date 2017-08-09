@@ -7,6 +7,7 @@ import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
+import com.blibli.future.vo.request.EditAttendanceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -51,27 +53,23 @@ public class AttendanceController {
     }
 
     @PostMapping(PATH_TAPS)
-    public ResponseEntity employeeTapping(@RequestParam("type") String type,
-                                          @RequestParam("tapTime") String tapTime,
-                                          @RequestParam("dateTap") String dateTap,
-                                          @RequestParam("nik") String nik) {
-    	LocalDate dateTapConvert = LocalDate.parse(dateTap);
-    	LocalTime tapTimeConvert = LocalTime.parse(tapTime);
+    public ResponseEntity employeeTapping(@RequestBody EditAttendanceRequest attendanceRequest) {
+    	LocalDate dateTapConvert = LocalDate.parse(attendanceRequest.getTapDate());
+    	LocalTime tapTimeConvert = LocalTime.parse(attendanceRequest.getTapTime());
     	boolean employeeTapped =
-    			employeeTappingService.processTapping(type, nik, dateTapConvert, tapTimeConvert);
+    			employeeTappingService.processTapping(attendanceRequest.getType(), attendanceRequest.getNik(), dateTapConvert, tapTimeConvert);
         if(employeeTapped) {
-            return new ResponseEntity(true, HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
         }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
     
     @PutMapping(PATH_TAPS)
-    public ResponseEntity employeeTappingUpdate(@RequestParam("type") String type, @RequestParam("tapTime") String tapTime,
-    		@RequestParam("dateTap") String dateTap, @RequestParam("nik") String nik) {
-    	LocalDate dateTapConvert = LocalDate.parse(dateTap);
-    	LocalTime tapTimeConvert = LocalTime.parse(tapTime);
+    public ResponseEntity employeeTappingUpdate(@RequestBody EditAttendanceRequest attendanceRequest) {
+    	LocalDate dateTapConvert = LocalDate.parse(attendanceRequest.getTapDate());
+    	LocalTime tapTimeConvert = LocalTime.parse(attendanceRequest.getTapTime());
     	boolean employeeUpdated = 
-    			employeeTappingService.processUpdateTapping(type, nik, dateTapConvert, tapTimeConvert);
+    			employeeTappingService.processUpdateTapping(attendanceRequest.getType(), attendanceRequest.getNik(), dateTapConvert, tapTimeConvert);
         if(employeeUpdated) {
             return new ResponseEntity(true, HttpStatus.OK);
         }
@@ -79,12 +77,9 @@ public class AttendanceController {
     }
 
     @GetMapping(PATH_TAPS)
-    public ResponseEntity<List<Attendance>> employeeTappingGet(@RequestParam("dateStart") String dateStart, 
-    		@RequestParam("dateEnd") String dateEnd) {
-    	LocalDate dateStartConvert = LocalDate.parse(dateStart);
-    	LocalDate dateEndConvert = LocalDate.parse(dateEnd);
+    public ResponseEntity<List<Attendance>> employeeTappingGet() {
     	List<Attendance> employeeTapGetted = 
-    			employeeTappingService.processGetTapping(dateStartConvert, dateEndConvert);
+    			employeeTappingService.processGetTapping(LocalDate.now().minus(7, ChronoUnit.DAYS), LocalDate.now());
         if(employeeTapGetted!=null) {
             return new ResponseEntity(employeeTapGetted, HttpStatus.OK);
         }

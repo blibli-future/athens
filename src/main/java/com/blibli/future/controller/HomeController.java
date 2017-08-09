@@ -25,6 +25,6 @@ public class HomeController {
 	
 	@GetMapping(CHART_PATH)
 	public ResponseEntity<ChartResponse> displayChart(@PathVariable String dept, @PathVariable String type) throws TypeNotFoundException{
-		return new ResponseEntity<ChartResponse>(chartService.generateChart(dept, type),HttpStatus.OK);
+		return new ResponseEntity<>(chartService.generateChart(dept, type),HttpStatus.OK);
 	}
 }
