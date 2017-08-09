@@ -92,11 +92,11 @@ public class AttendanceController {
     }
 
     @PostMapping(PATH_SHIFTING)
-    public ResponseEntity<Employee> employeeShifting(@RequestParam("nik") String nik, @RequestParam("idShift") String idShift) {
+    public ResponseEntity<String> employeeShifting(@RequestParam("nik") String nik, @RequestParam("idShift") String idShift) {
     	Employee employeeShifted = employeeShiftingService.assignShiftToEmployee(idShift, nik);
     	if(employeeShifted!=null)
-    		return new ResponseEntity<Employee>(employeeShifted, HttpStatus.OK);
+    		return new ResponseEntity<String>("Shifting success", HttpStatus.OK);
     	else
-    		return new ResponseEntity<Employee>(employeeShifted, HttpStatus.BAD_REQUEST);
+    		return new ResponseEntity<String>("Shifting failed", HttpStatus.BAD_REQUEST);
     }
 }

@@ -37,13 +37,13 @@ public class EmployeesController {
 	}
 	
 	@PostMapping(BASE_PATH)
-    public ResponseEntity<Employee> saveEmployee(@RequestBody EmployeeRequestVo employeeVo){
+    public ResponseEntity<String> saveEmployee(@RequestBody EmployeeRequestVo employeeVo){
     	
         Employee savedEmployee = employeeService.saveEmployee(employeeVo);
         if (savedEmployee!=null){
-            return new ResponseEntity<Employee>(savedEmployee, HttpStatus.OK);
+            return new ResponseEntity<String>("Employee " +savedEmployee.getNik()+" saved", HttpStatus.OK);
         }
-            return new ResponseEntity<Employee>(savedEmployee, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Save Failed", HttpStatus.BAD_REQUEST);
     }
 	
     @GetMapping(BASE_PATH)
@@ -64,13 +64,13 @@ public class EmployeesController {
     }
 
     @PutMapping(SINGLE_EMPLOYEE_PATH)
-    public ResponseEntity<Employee> employeeUpdate(@PathVariable String nik, @RequestBody EmployeeEditRequestVo employeeVo) throws IdNotFoundException{
+    public ResponseEntity<String> employeeUpdate(@PathVariable String nik, @RequestBody EmployeeEditRequestVo employeeVo) throws IdNotFoundException{
     	Employee updatedEmployee =
     			employeeService.updateEmployee(employeeVo);
         if(updatedEmployee.getNik().equals(nik)){
-            return new ResponseEntity<Employee>(updatedEmployee, HttpStatus.OK);
+            return new ResponseEntity<String>("Employee: "+nik+" updated", HttpStatus.OK);
         }
-        return new ResponseEntity<Employee>(updatedEmployee, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("Update Employee "+nik+" Failed", HttpStatus.BAD_REQUEST);
 
     }
     
@@ -92,7 +92,8 @@ public class EmployeesController {
     }
     
     @PostMapping(value = EMPLOYEE_SHIFTING_PATH)
-    public ResponseEntity<Employee> AssignShift(@PathVariable String nik, @PathVariable String shiftId) throws IdNotFoundException {
-        return new ResponseEntity<Employee>(employeeShiftingService.assignShiftToEmployee(shiftId, nik), HttpStatus.OK);
+    public ResponseEntity<String> AssignShift(@PathVariable String nik, @PathVariable String shiftId) throws IdNotFoundException {
+    	employeeShiftingService.assignShiftToEmployee(shiftId, nik);
+    	return new ResponseEntity<String>("Shifting Success", HttpStatus.OK);
     }
 }
