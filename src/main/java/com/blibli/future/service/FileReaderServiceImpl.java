@@ -116,10 +116,14 @@ public class FileReaderServiceImpl implements FileReaderService {
                         tapData.setNik(String.valueOf(cell.getNumericCellValue()));
                         break;
                     case 1:
-                        tapData.setTapDate(LocalDate.parse(cell.getStringCellValue(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                        if(cell.getStringCellValue() != null) {
+                            tapData.setTapDate(LocalDate.parse(cell.getStringCellValue(), DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+                        }
                         break;
                     case 2:
-                        tapData.setTapTime(LocalTime.parse(cell.getStringCellValue(), DateTimeFormatter.ofPattern("HH:mm:ss")));
+                        if(cell.getStringCellValue() != null) {
+                            tapData.setTapTime(LocalTime.parse(cell.getStringCellValue(), DateTimeFormatter.ofPattern("HH:mm:ss")));
+                        }
                         break;
                 }
             }
