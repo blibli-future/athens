@@ -1,5 +1,6 @@
 package com.blibli.future.controller;
 
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
@@ -36,7 +37,7 @@ public class AttendanceController {
     }
 
     @PostMapping(PATH_TAPS_UPLOAD)
-    public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) throws IdNotFoundException{
         try {
             employeeTappingService.addTapMachineFile(file);
         } catch (UnreadableFile e) {

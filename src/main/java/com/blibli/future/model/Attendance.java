@@ -26,7 +26,7 @@ public class Attendance {
     	this.attendanceKey = new AttendanceKey(nik, date);
         this.tapIn = tap;
         this.tapOut = null;
-        this.lateCondition = lateConditioning(tap);
+        this.lateCondition = null;
     }
 
     public Attendance(String nik, LocalDate date, LocalTime tapIn, LocalTime tapOut) {
@@ -34,14 +34,7 @@ public class Attendance {
         this.tapIn = tapIn;
         this.tapOut = tapOut;
         this.earlyLeaveHour = measureEarlyLeave(tapIn, tapOut);
-        this.lateCondition = lateConditioning(tapIn);
-    }
-    
-    private LateCondition lateConditioning(LocalTime tapIn){
-    	if(tapIn.isAfter(LocalTime.of(10, 30)))
-    		return LateCondition.LATE;
-    	else
-    		return LateCondition.NOTLATE;
+        this.lateCondition = null;
     }
     
     private double measureEarlyLeave(LocalTime tapIn, LocalTime tapOut){
@@ -67,6 +60,7 @@ public class Attendance {
                 this.tapOut = tapTime;
             }
         }
+        this.earlyLeaveHour = this.measureEarlyLeave(this.tapIn, this.tapOut);
     }
 
     public String getNik() {

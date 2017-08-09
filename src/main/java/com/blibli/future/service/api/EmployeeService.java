@@ -2,6 +2,7 @@ package com.blibli.future.service.api;
 
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Employee;
+import com.blibli.future.model.Shift;
 import com.blibli.future.vo.EmployeeEditRequestVo;
 import com.blibli.future.vo.EmployeeRequestVo;
 import com.blibli.future.vo.EmployeeResponseVo;
@@ -19,4 +20,5 @@ public interface EmployeeService {
 	EmployeeResponseVo getEmployeeByNik(String nik) throws IdNotFoundException;
 
     Set<ShiftVo> getAssignedShifts(String nik) throws IdNotFoundException;
+    List<Shift> getAssignedShiftsList(String nik) throws IdNotFoundException;
 }

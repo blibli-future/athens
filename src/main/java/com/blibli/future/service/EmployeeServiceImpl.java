@@ -6,6 +6,7 @@ import com.blibli.future.enums.Role;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.AthensCredential;
 import com.blibli.future.model.Employee;
+import com.blibli.future.model.Shift;
 import com.blibli.future.repository.AthensCredentialsRepository;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -119,5 +121,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(shift -> new ShiftVo(shift))
                 .collect(Collectors.toSet());
     }
+    
+    @Override
+    public List<Shift> getAssignedShiftsList(String nik) throws IdNotFoundException {
+        Employee employee = employeeRepository.findOneByNik(nik);
 
+        if(employee == null) {
+            throw new IdNotFoundException("NIK: " + nik + " was not found");
+        }
+
+        return employee.getShifts()
+                .stream()
+                .collect(Collectors.toList());
+    }
 }
