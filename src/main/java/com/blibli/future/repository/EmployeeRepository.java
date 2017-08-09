@@ -4,6 +4,7 @@ package com.blibli.future.repository;
 import com.blibli.future.model.Employee;
 import com.blibli.future.vo.EmployeeResponseVo;
 import com.blibli.future.vo.ReportResponseVo;
+import com.blibli.future.vo.ShiftVo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

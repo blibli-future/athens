@@ -4,8 +4,11 @@ import com.blibli.future.dto.response.ErrorResponse;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
+import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeStatisticService;
 import com.blibli.future.vo.*;
+
+import org.jboss.logging.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +23,17 @@ public class EmployeesController {
 	public static final String SINGLE_EMPLOYEE_PATH = BASE_PATH + "/{nik}";
 	public static final String SUMMARIES_PATH = BASE_PATH + "/{nik}/summaries";
     public final String EMPLOYEE_SHIFT_PATH = SINGLE_EMPLOYEE_PATH + "/shifts";
+    public final String EMPLOYEE_SHIFTING_PATH = SINGLE_EMPLOYEE_PATH + "/{shiftId}";
 
     private final EmployeeService employeeService;
+    private final EmployeeShiftingService employeeShiftingService;
 	private final EmployeeStatisticService employeeStatisticService;
 	
 	@Autowired
-	public EmployeesController(EmployeeService employeeService, EmployeeStatisticService employeeStatisticService){
+	public EmployeesController(EmployeeService employeeService, EmployeeStatisticService employeeStatisticService, EmployeeShiftingService employeeShiftingService){
 		this.employeeService = employeeService;
 		this.employeeStatisticService = employeeStatisticService;
+		this.employeeShiftingService = employeeShiftingService;
 	}
 	
 	@PostMapping(BASE_PATH)
@@ -81,7 +87,12 @@ public class EmployeesController {
     }
 
     @GetMapping(value = EMPLOYEE_SHIFT_PATH)
-    public ResponseEntity<Set<ShiftVo>> getAssignedShift(@PathVariable String nik) throws IdNotFoundException {
-        return new ResponseEntity<>(employeeService.getAssignedShifts(nik), HttpStatus.OK);
+    public ResponseEntity<List<ShiftVo>> getAssignedShift(@PathVariable String nik) throws IdNotFoundException {
+        return new ResponseEntity<List<ShiftVo>>(employeeShiftingService.getAllShiftAvailableByNik(nik), HttpStatus.OK);
+    }
+    
+    @PostMapping(value = EMPLOYEE_SHIFTING_PATH)
+    public ResponseEntity<Employee> AssignShift(@PathVariable String nik, @PathVariable String shiftId) throws IdNotFoundException {
+        return new ResponseEntity<Employee>(employeeShiftingService.assignShiftToEmployee(shiftId, nik), HttpStatus.OK);
     }
 }

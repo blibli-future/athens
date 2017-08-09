@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -111,7 +110,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
     @Override
-    public Set<ShiftVo> getAssignedShifts(String nik) throws IdNotFoundException {
+    public List<ShiftVo> getAssignedShiftsVo(String nik) throws IdNotFoundException {
         Employee employee = employeeRepository.findOneByNik(nik);
 
         if(employee == null) {
@@ -121,7 +120,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee.getShifts()
                 .stream()
                 .map(shift -> new ShiftVo(shift))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
     
     @Override

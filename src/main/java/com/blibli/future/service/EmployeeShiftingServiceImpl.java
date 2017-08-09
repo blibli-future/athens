@@ -5,7 +5,13 @@ import com.blibli.future.model.Employee;
 import com.blibli.future.model.Shift;
 import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.repository.ShiftRepository;
+import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeShiftingService;
+import com.blibli.future.vo.ShiftVo;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +19,13 @@ import org.springframework.stereotype.Service;
 public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
 	private final EmployeeRepository employeeRepository;
 	private final ShiftRepository shiftRepository;
+	private EmployeeService employeeService;
 
     @Autowired
-    public EmployeeShiftingServiceImpl(EmployeeRepository employeeRepository, ShiftRepository shiftRepository) {
+    public EmployeeShiftingServiceImpl(EmployeeRepository employeeRepository, ShiftRepository shiftRepository, EmployeeService employeeService) {
         this.employeeRepository = employeeRepository;
         this.shiftRepository = shiftRepository;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -57,5 +65,25 @@ public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
 
         employeeRepository.save(employee);
     }
+
+
+
+	@Override
+	public List<ShiftVo> getAllShiftAvailableByNik(String nik) throws IdNotFoundException {
+		Employee emp = employeeRepository.findOneByNik(nik);
+		List<ShiftVo> result = new ArrayList<>();
+		List<ShiftVo> employeeShifts = employeeService.getAssignedShiftsVo(nik);
+		List<ShiftVo> allShifts = shiftRepository.findAllByDept(emp.getNameOfDept());
+		for(ShiftVo allShift:allShifts){
+			for(ShiftVo employeeShift:employeeShifts){
+				if(allShift==employeeShift)
+				{
+					allShift = employeeShift;
+				}
+				result.add(allShift);
+			}
+		}
+		return result;
+	}
 
 }

@@ -15,10 +15,9 @@ public interface EmployeeService {
 	Employee saveEmployee (EmployeeRequestVo employeeVo);
 	boolean isEmployeeExist(String nik);
 	Employee updateEmployee (EmployeeEditRequestVo employeeVo) throws IdNotFoundException;
-	List<Employee> getEmployeesByDept (String nameOfDept);
 	List<EmployeeResponseVo> getAllEmployees();
 	EmployeeResponseVo getEmployeeByNik(String nik) throws IdNotFoundException;
 
-    Set<ShiftVo> getAssignedShifts(String nik) throws IdNotFoundException;
+    List<ShiftVo> getAssignedShiftsVo(String nik) throws IdNotFoundException;
     List<Shift> getAssignedShiftsList(String nik) throws IdNotFoundException;
 }
