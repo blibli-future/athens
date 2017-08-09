@@ -1,5 +1,8 @@
 package com.blibli.future.vo;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+
 import com.blibli.future.model.Shift;
 
 public class ShiftVo {
@@ -10,6 +13,7 @@ public class ShiftVo {
     private int workDay;
     private String departmentEmployee;
     private String location;
+    private boolean assigned;
 
     public ShiftVo() {
     }
@@ -22,16 +26,18 @@ public class ShiftVo {
         this.workDay = shift.getWorkDay().getValue();
         this.departmentEmployee = shift.getDepartmentEmployee();
         this.location = shift.getLocation();
+        this.assigned = true;
     }
 
-    public ShiftVo(String id, String name, String startHour, String endHour, int workDay, String departmentEmployee, String location) {
+    public ShiftVo(String id, String name, LocalTime startHour, LocalTime endHour, DayOfWeek workDay, String departmentEmployee, String location, boolean assigned) {
         this.id = id;
         this.name = name;
-        this.startHour = startHour;
-        this.endHour = endHour;
-        this.workDay = workDay;
+        this.startHour = startHour.toString();
+        this.endHour = endHour.toString();
+        this.workDay = Integer.parseInt(workDay.toString());
         this.departmentEmployee = departmentEmployee;
         this.location = location;
+        this.assigned = assigned;
     }
 
     public String getId() {
@@ -90,32 +96,72 @@ public class ShiftVo {
         this.location = location;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
+	public boolean getAssigned() {
+		return assigned;
+	}
 
-        ShiftVo shiftVo = (ShiftVo) o;
+	public void setAssigned(boolean assigned) {
+		this.assigned = assigned;
+	}
 
-        if(workDay != shiftVo.workDay) return false;
-        if(id != null ? !id.equals(shiftVo.id) : shiftVo.id != null) return false;
-        if(name != null ? !name.equals(shiftVo.name) : shiftVo.name != null) return false;
-        if(startHour != null ? !startHour.equals(shiftVo.startHour) : shiftVo.startHour != null) return false;
-        if(endHour != null ? !endHour.equals(shiftVo.endHour) : shiftVo.endHour != null) return false;
-        if(departmentEmployee != null ? !departmentEmployee.equals(shiftVo.departmentEmployee) : shiftVo.departmentEmployee != null)
-            return false;
-        return location != null ? location.equals(shiftVo.location) : shiftVo.location == null;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (assigned ? 1231 : 1237);
+		result = prime * result + ((departmentEmployee == null) ? 0 : departmentEmployee.hashCode());
+		result = prime * result + ((endHour == null) ? 0 : endHour.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((startHour == null) ? 0 : startHour.hashCode());
+		result = prime * result + workDay;
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (startHour != null ? startHour.hashCode() : 0);
-        result = 31 * result + (endHour != null ? endHour.hashCode() : 0);
-        result = 31 * result + workDay;
-        result = 31 * result + (departmentEmployee != null ? departmentEmployee.hashCode() : 0);
-        result = 31 * result + (location != null ? location.hashCode() : 0);
-        return result;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ShiftVo other = (ShiftVo) obj;
+		if (assigned != other.assigned)
+			return false;
+		if (departmentEmployee == null) {
+			if (other.departmentEmployee != null)
+				return false;
+		} else if (!departmentEmployee.equals(other.departmentEmployee))
+			return false;
+		if (endHour == null) {
+			if (other.endHour != null)
+				return false;
+		} else if (!endHour.equals(other.endHour))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (startHour == null) {
+			if (other.startHour != null)
+				return false;
+		} else if (!startHour.equals(other.startHour))
+			return false;
+		if (workDay != other.workDay)
+			return false;
+		return true;
+	}
 }
