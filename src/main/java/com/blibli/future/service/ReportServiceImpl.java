@@ -6,6 +6,9 @@ import com.blibli.future.repository.*;
 import com.blibli.future.service.api.ReportService;
 import com.blibli.future.vo.ReportResponseVo;
 import com.blibli.future.vo.SubReportVo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ import java.util.Map;
 
 @Service
 public class ReportServiceImpl implements ReportService{
+	private static final Logger LOG = LoggerFactory.getLogger(ReportServiceImpl.class);
 	private EmployeeRepository employeeRepository;
 	private AttendanceRepository attendanceRepository;
 	private EmployeeAbsencePermitRepository employeeAbsencePermitRepository;
@@ -64,7 +68,7 @@ public class ReportServiceImpl implements ReportService{
 		List<Object[]> daysYearlyLeaveObj = employeeYearlyLeaveRepository.sumEachEmployeeYearlyLeaveByDepartmentDateBetween(dept, startDate, endDate);
 		List<Object[]> daysReplacementLeaveObj = employeeSubstitutionLeaveRightRepository.sumEachEmployeeSubstitutionLeaveRightByDepartmentDateBetween(dept, startDate, endDate);
 
-		Map<String, SubReportVo> daysComing = mapSubReportQueryResult(daysComingObj);
+		Map<String, SubReportVo>  daysComing = mapSubReportQueryResult(daysComingObj);
 		Map<String, SubReportVo>  daysAbsence = mapSubReportQueryResult(daysAbsenceObj);
 		Map<String, SubReportVo>  daysLeaveEarly = mapSubReportQueryResult(daysLeaveEarlyObj);
 		Map<String, SubReportVo>  daysLateWithoutPermission = mapSubReportQueryResult(daysLateWithoutPermissionObj);
@@ -102,7 +106,7 @@ public class ReportServiceImpl implements ReportService{
 			if(daysNoTapOut.get(nik)!=null)
 				report.setNoTapOutDay(daysNoTapOut.get(nik).getNumberResult());
 		}
-		
+		LOG.info("Got Report");
 		return reports;
 	}
 

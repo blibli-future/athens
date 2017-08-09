@@ -12,6 +12,8 @@ import com.blibli.future.repository.EmployeeRepository;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.vo.EmployeeEditRequestVo;
 import com.blibli.future.vo.EmployeeRequestVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.blibli.future.vo.EmployeeResponseVo;
 import com.blibli.future.vo.ShiftVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import java.util.stream.Stream;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+	private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceImpl.class);
     private EmployeeRepository employeeRepository;
     private AthensCredentialsRepository  athensCredentialsRepository;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -48,6 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeRepository.save(emp);
             AthensCredential credential = new AthensCredential(employeeVo.getNik(), "123456", employeeVo.getNik(), Stream.of(Role.ADMIN).collect(Collectors.toSet()));
             athensCredentialsRepository.save(credential);
+            LOG.info("Employee with NIK: "+employeeVo.getNik()+" Saved");
             return emp;
         }
     }
@@ -61,8 +65,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Employee updateEmployee (EmployeeEditRequestVo employeeVo) throws IdNotFoundException{
     	Employee oldEmployee = employeeRepository.findOneByNik(employeeVo.getNik());
-    	if(oldEmployee == null)
+    	if(oldEmployee == null){
+    		LOG.error("NIK: " + employeeVo.getNik() + " was not found");
     		throw new IdNotFoundException("NIK: " + employeeVo.getNik() + " was not found");
+    	}
     	oldEmployee.setChiefNik(employeeVo.getChiefNik());
     	oldEmployee.setFullName(employeeVo.getFullName());
     	oldEmployee.setGender(Gender.valueOf(employeeVo.getGender()));
@@ -76,17 +82,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     	if(!oldEmployee.getStatus())
     		oldEmployee.setEndWorkingDate(LocalDate.parse(employeeVo.getEndWorkingDate(), formatter));
     	Employee newEmployee = employeeRepository.save(oldEmployee);
+    	LOG.info("NIK: " + employeeVo.getNik() + " Updated");
     	return newEmployee;
-    }
-
-
-    public List<Employee> getEmployeesByDept(String nameOfDept){
-        List<Employee> listEmployee = new ArrayList<>();
-        listEmployee = employeeRepository.findByNameOfDept(nameOfDept);
-        if(listEmployee!=null){
-            return listEmployee;
-        }
-        return null;
     }
     
 	@Override
@@ -94,17 +91,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<EmployeeResponseVo> listEmployee = new ArrayList<>();
         listEmployee = employeeRepository.findAllEmployee();
         if(listEmployee!=null){
+        	LOG.info("Got Employee List");
             return listEmployee;
         }
+        LOG.error("Employee List is Null");
         return null;
 	}
 
 	@Override
 	public EmployeeResponseVo getEmployeeByNik(String nik) throws IdNotFoundException {
 		Employee employee = employeeRepository.findOneByNik(nik);
-		if(employee == null)
+		if(employee == null){
+			LOG.error("NIK: " + nik + " was not found");
 			throw new IdNotFoundException("NIK: " + nik + " was not found");
+		}
 		EmployeeResponseVo employeeResponse = new EmployeeResponseVo(employee.getNik(), employee.getFullName(), employee.getGender(), employee.getPosition(), employee.getOrganizationalUnitText(), employee.getMaritalStatus(), employee.getReligion(), employee.getNameOfDept(), employee.getChiefNik(), employee.getStartWorkingDate(), employee.getLevel());
+		LOG.info("Got Employee Nik: " + nik);
 		return employeeResponse;
 	}
 

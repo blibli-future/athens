@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import com.blibli.future.vo.PermissionResponseVo;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService{
-
+	private static final Logger LOG = LoggerFactory.getLogger(ApprovalServiceImpl.class);
 	private EmployeeAbsencePermitRepository employeeAbsencePermitRepository;
 	private EmployeeLeaveRepository employeeLeaveRepository;
 	
@@ -39,10 +41,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 				employeeAbsencePermit.setStatus(Status.APPROVED);
 			else
 				employeeAbsencePermit.setStatus(Status.REJECTED);
-			//TODO log sukses dudeh
+			LOG.info("Absence Permit:"+idAbsencePermit+" Processed By: "+chiefNik);
 			return employeeAbsencePermitRepository.save(employeeAbsencePermit);
 		}
 		else{
+			LOG.error("Absence Permit ID Not Found");
 			throw new IdNotFoundException("Absence Permit with ID: " + idAbsencePermit + " was not found in the database");
 		}
 	}
@@ -58,13 +61,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 				employeeLeave.setStatus(Status.APPROVED);
 			else
 				employeeLeave.setStatus(Status.REJECTED);
-			//TODO Log sukses dudeh
+			LOG.info("Leave with ID: "+idLeave+" Processed By "+chiefNik);
 			return employeeLeaveRepository.save(employeeLeave);
 		}
 		else{
-			throw new IdNotFoundException("Absence Permit with ID: " + idLeave + " was not found in the database");
+			LOG.error("Leave with ID: "+idLeave+" Not Found");
+			throw new IdNotFoundException("Leave with ID: " + idLeave + " was not found in the database");
 		}
-		//TODO Log null dudeh
 	}
 	
 	@Override
@@ -78,6 +81,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 			approvalResponseVoList.addAll(employeeAbsencePermitList);
 		if(employeeLeaveList!=null)
 			approvalResponseVoList.addAll(employeeLeaveList);
+		LOG.info("Got Unapproved Requests");
 		return approvalResponseVoList;
 	}
 
@@ -103,6 +107,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		if(rejectedLeaveList!=null)
 			approvalResponseVoList.addAll(rejectedLeaveList);
 
+		LOG.info("Got Request Histories");
 		return approvalResponseVoList;
 	}
 }
