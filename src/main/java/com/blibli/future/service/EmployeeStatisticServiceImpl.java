@@ -7,6 +7,9 @@ import com.blibli.future.repository.*;
 import com.blibli.future.service.api.EmployeeStatisticService;
 import com.blibli.future.vo.SubReportVo;
 import com.blibli.future.vo.SummariesVo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import java.time.Month;
 
 @Service
 public class EmployeeStatisticServiceImpl implements EmployeeStatisticService {
+	private static final Logger LOG = LoggerFactory.getLogger(EmployeeStatisticServiceImpl.class);
     private final EmployeeRepository employeeRepository;
     private final EmployeeYearlyLeaveRepository employeeYearlyLeaveRepository;
     private final EmployeeSubstitutionLeaveRightRepository employeeSubstitutionLeaveRightRepository;
@@ -35,6 +39,7 @@ public class EmployeeStatisticServiceImpl implements EmployeeStatisticService {
         Employee employee = employeeRepository.findOneByNik(nik);
 
         if(employee == null) {
+        	LOG.error("Employee:"+nik+" Not Found");
             throw new IdNotFoundException("nik: " + nik + " is not found in the database");
         }
 
@@ -47,7 +52,7 @@ public class EmployeeStatisticServiceImpl implements EmployeeStatisticService {
         summaries.setMaxYearlyLeave(countMaxYearlyLeaveUsed(employee));
         summaries.setMaxSubstitutionLeaveRight(countMaxSubstitutionLeaveRight(nik));
         summaries.setMaxEmployeeLate(countMaxLate());
-
+        LOG.info("Got Summaries");
         return summaries;
     }
 
