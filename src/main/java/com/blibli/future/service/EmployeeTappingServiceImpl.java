@@ -1,18 +1,22 @@
 package com.blibli.future.service;
 
+import com.blibli.future.enums.LateCondition;
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
+import com.blibli.future.model.Shift;
 import com.blibli.future.model.primaryKey.AttendanceKey;
 import com.blibli.future.repository.AttendanceRepository;
+import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeTappingService;
 import com.blibli.future.service.api.FileReaderService;
+import com.blibli.future.vo.TapData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,43 +57,10 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
             return result;
         }
     }
-    private class TapData{//Question: Is it better to make this class a public as a VO?
-        private String nik;
-        private LocalTime tapTime;
-        private LocalDate tapDate;
 
-        public TapData(String nik, LocalTime tapTime, LocalDate tapDate) {
-            this.nik = nik;
-            this.tapTime = tapTime;
-            this.tapDate = tapDate;
-        }
-
-        public String getNik() {
-            return nik;
-        }
-
-        public void setNik(String nik) {
-            this.nik = nik;
-        }
-
-        public LocalTime getTapTime() {
-            return tapTime;
-        }
-
-        public void setTapTime(LocalTime tapTime) {
-            this.tapTime = tapTime;
-        }
-
-        public LocalDate getTapDate() {
-            return tapDate;
-        }
-
-        public void setTapDate(LocalDate tapDate) {
-            this.tapDate = tapDate;
-        }
-    }
     private AttendanceRepository attendanceRepository;
     private FileReaderService fileReaderService;
+    private EmployeeService employeeService;
 
     @Autowired
     public EmployeeTappingServiceImpl(AttendanceRepository attendanceRepository, FileReaderService fileReaderService) {
@@ -153,7 +124,7 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
         }
     }
 
-    public List<Attendance> createAttendance(List<TapData> tapDataList) {
+    public List<Attendance> createAttendance(List<TapData> tapDataList) throws IdNotFoundException{
         Map<MachineKey, Attendance> attendances = new HashMap<>();
 
         for(TapData tapData : tapDataList) {
@@ -162,31 +133,35 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
                 attendances.get(key).assign(tapData.getTapTime());
             } else {
                 Attendance attendance = new Attendance(tapData.getNik(), tapData.getTapDate(), tapData.getTapTime());
+                attendance.setLateCondition(lateConditioning(tapData.getTapTime(), tapData.getTapDate(), tapData.getNik()));
                 attendances.put(key, attendance);
             }
         }
 
         return attendanceRepository.save(attendances.values());
     }
+    
+    private LateCondition lateConditioning(LocalTime tapIn, LocalDate dateTap, String nik) throws IdNotFoundException {
+    	List<Shift> employeeShift = employeeService.getAssignedShiftsList(nik);
+    	LocalTime startTime = LocalTime.of(12, 00);
+    	
+    	if(employeeShift!=null)
+    	{
+	    	for(Shift shift : employeeShift){
+	    		if(shift.getWorkDay() == dateTap.getDayOfWeek()){
+	    			startTime = shift.getStartHour();
+	    		}
+	    	}
+    	}
+    		
+    	if(tapIn.isAfter(startTime))
+    		return LateCondition.LATE;
+    	else
+    		return LateCondition.NOTLATE;
+    }
 
     @Override
-    public List<Attendance> addTapMachineFile(MultipartFile tapMachineFile) throws UnreadableFile, DateTimeParseException {
-        List<TapData> tapDatas = new ArrayList<>();
-        List<String> inputData;
-
-        inputData = fileReaderService.readFileAsStrings(tapMachineFile);
-
-        for(String tappingData : inputData) {
-            String[] splitTappingData = tappingData.split(",");
-
-            //Which is better? parsing the string here, or create new method here in this class or other class?
-            String nik = splitTappingData[0];
-            LocalDate tapDate = LocalDate.parse(splitTappingData[1], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            LocalTime tapTime = LocalTime.parse(splitTappingData[2], DateTimeFormatter.ofPattern("HH:mm:ss"));
-            TapData tapData = new TapData(nik, tapTime, tapDate);
-            tapDatas.add(tapData);
-        }
-
-        return createAttendance(tapDatas);
+    public List<Attendance> addTapMachineFile(MultipartFile tapMachineFile) throws UnreadableFile, DateTimeParseException, IdNotFoundException {
+        return createAttendance(fileReaderService.readFileAsListOfTapData(tapMachineFile));
     }
 }

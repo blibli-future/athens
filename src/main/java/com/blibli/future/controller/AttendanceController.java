@@ -1,31 +1,22 @@
 package com.blibli.future.controller;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.blibli.future.enums.Gender;
-import com.blibli.future.enums.MaritalStatus;
-import com.blibli.future.enums.Religion;
+import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.exception.UnreadableFile;
 import com.blibli.future.model.Attendance;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeShiftingService;
 import com.blibli.future.service.api.EmployeeTappingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 
 
 @RestController
@@ -46,13 +37,13 @@ public class AttendanceController {
     }
 
     @PostMapping(PATH_TAPS_UPLOAD)
-    public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity uploadAttendanceFile(@RequestParam("file") MultipartFile file) throws IdNotFoundException{
         try {
             employeeTappingService.addTapMachineFile(file);
         } catch (UnreadableFile e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.PRECONDITION_FAILED);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (DateTimeParseException e) {
-            return new ResponseEntity(e.getParsedString(), HttpStatus.PRECONDITION_FAILED);
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
         //Question: Should it report the successfully created AttendanceData?
@@ -102,32 +93,10 @@ public class AttendanceController {
 
     @PostMapping(PATH_SHIFTING)
     public ResponseEntity<Employee> employeeShifting(@RequestParam("nik") String nik, @RequestParam("idShift") String idShift) {
-    	Employee employeeShifted = employeeShiftingService.processShifting(nik,idShift);
+    	Employee employeeShifted = employeeShiftingService.assignShiftToEmployee(idShift, nik);
     	if(employeeShifted!=null)
     		return new ResponseEntity<Employee>(employeeShifted, HttpStatus.OK);
     	else
     		return new ResponseEntity<Employee>(employeeShifted, HttpStatus.BAD_REQUEST);
     }
-
-    @PutMapping(PATH_SHIFTING)
-    public ResponseEntity<Employee> employeeShiftingUpdate(@RequestParam("nik") String nik, 
-    		@RequestParam("newShift") String newShift, @RequestParam("oldShift") String oldShift) {
-    	Employee employeeShiftUpdated =
-    			employeeShiftingService.employeeShiftingUpdate(nik, newShift, oldShift);
-        if(employeeShiftUpdated!=null) {
-            return new ResponseEntity<Employee>(employeeShiftUpdated, HttpStatus.OK);
-        }
-        return new ResponseEntity<Employee>(employeeShiftUpdated, HttpStatus.BAD_REQUEST);
-    }
-
-    @GetMapping(PATH_SHIFTING)
-    public ResponseEntity<Set<Employee>> employeeShiftingGet(@RequestParam("idShift") String idShift) {
-    	Set<Employee> employeeShiftGetted =
-    			employeeShiftingService.processGetShifting(idShift);
-        if(employeeShiftGetted!=null) {
-            return new ResponseEntity<Set<Employee>>(employeeShiftGetted, HttpStatus.OK);
-        }
-        return new ResponseEntity<Set<Employee>>(employeeShiftGetted, HttpStatus.BAD_REQUEST);
-    }
-    
-    }
+}

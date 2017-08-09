@@ -79,12 +79,12 @@ public class SummariesVo {
         if(maxYearlyLeave != that.maxYearlyLeave) return false;
         if(maxSubstitutionLeaveRight != that.maxSubstitutionLeaveRight) return false;
         if(maxEmployeeLate != that.maxEmployeeLate) return false;
-        return nik.equals(that.nik);
+        return nik != null ? nik.equals(that.nik) : that.nik == null;
     }
 
     @Override
     public int hashCode() {
-        int result = nik.hashCode();
+        int result = nik != null ? nik.hashCode() : 0;
         result = 31 * result + (int) (yearlyLeaveUsed ^ (yearlyLeaveUsed >>> 32));
         result = 31 * result + (int) (substitutionLeaveRightUsed ^ (substitutionLeaveRightUsed >>> 32));
         result = 31 * result + (int) (lateUsed ^ (lateUsed >>> 32));

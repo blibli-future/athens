@@ -1,34 +1,27 @@
 package com.blibli.future.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.blibli.future.dto.response.ErrorResponse;
 import com.blibli.future.exception.IdNotFoundException;
 import com.blibli.future.model.Employee;
 import com.blibli.future.service.api.EmployeeService;
 import com.blibli.future.service.api.EmployeeStatisticService;
-import com.blibli.future.vo.EmployeeResponseVo;
-import com.blibli.future.vo.SummariesVo;
-import com.blibli.future.vo.EmployeeEditRequestVo;
-import com.blibli.future.vo.EmployeeRequestVo;
+import com.blibli.future.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
 
 @RestController
 public class EmployeesController {
 	public static final String BASE_PATH = "/employees";
 	public static final String SINGLE_EMPLOYEE_PATH = BASE_PATH + "/{nik}";
 	public static final String SUMMARIES_PATH = BASE_PATH + "/{nik}/summaries";
-	
-	private final EmployeeService employeeService;
+    public final String EMPLOYEE_SHIFT_PATH = SINGLE_EMPLOYEE_PATH + "/shifts";
+
+    private final EmployeeService employeeService;
 	private final EmployeeStatisticService employeeStatisticService;
 	
 	@Autowired
@@ -85,5 +78,10 @@ public class EmployeesController {
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping(value = EMPLOYEE_SHIFT_PATH)
+    public ResponseEntity<Set<ShiftVo>> getAssignedShift(@PathVariable String nik) throws IdNotFoundException {
+        return new ResponseEntity<>(employeeService.getAssignedShifts(nik), HttpStatus.OK);
     }
 }
