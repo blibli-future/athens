@@ -74,16 +74,21 @@ public class EmployeeShiftingServiceImpl implements EmployeeShiftingService{
 		List<ShiftVo> result = new ArrayList<>();
 		List<ShiftVo> employeeShifts = employeeService.getAssignedShiftsVo(nik);
 		List<ShiftVo> allShifts = shiftRepository.findAllByDept(emp.getNameOfDept());
-		for(ShiftVo allShift:allShifts){
-			for(ShiftVo employeeShift:employeeShifts){
-				if(allShift==employeeShift)
-				{
-					allShift = employeeShift;
+		System.out.println(allShifts.size());
+		if(employeeShifts.size()!=0){
+			for(ShiftVo allShift:allShifts){
+				for(ShiftVo employeeShift:employeeShifts){
+					if(allShift==employeeShift)
+					{
+						allShift = employeeShift;
+					}
+					result.add(allShift);
 				}
-				result.add(allShift);
 			}
+			return result;
 		}
-		return result;
+		return allShifts;
+		
 	}
 
 }

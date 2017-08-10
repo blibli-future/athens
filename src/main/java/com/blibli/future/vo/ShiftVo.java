@@ -34,7 +34,7 @@ public class ShiftVo {
         this.name = name;
         this.startHour = startHour.toString();
         this.endHour = endHour.toString();
-        this.workDay = Integer.parseInt(workDay.toString());
+        this.workDay = workDay.getValue();
         this.departmentEmployee = departmentEmployee;
         this.location = location;
         this.assigned = assigned;
