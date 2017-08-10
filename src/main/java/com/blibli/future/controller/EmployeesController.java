@@ -23,7 +23,7 @@ public class EmployeesController {
 	public static final String SINGLE_EMPLOYEE_PATH = BASE_PATH + "/{nik}";
 	public static final String SUMMARIES_PATH = BASE_PATH + "/{nik}/summaries";
     public final String EMPLOYEE_SHIFT_PATH = SINGLE_EMPLOYEE_PATH + "/shifts";
-    public final String EMPLOYEE_SHIFTING_PATH = SINGLE_EMPLOYEE_PATH + "/{shiftId}";
+    public final String EMPLOYEE_SHIFTING_PATH = SINGLE_EMPLOYEE_PATH + "/{shiftId}/{type}";
 
     private final EmployeeService employeeService;
     private final EmployeeShiftingService employeeShiftingService;
@@ -92,8 +92,13 @@ public class EmployeesController {
     }
     
     @PostMapping(value = EMPLOYEE_SHIFTING_PATH)
-    public ResponseEntity<String> AssignShift(@PathVariable String nik, @PathVariable String shiftId) throws IdNotFoundException {
-    	employeeShiftingService.assignShiftToEmployee(shiftId, nik);
-    	return new ResponseEntity<String>("Shifting Success", HttpStatus.OK);
+    public ResponseEntity<String> AssignShift(@PathVariable String nik, @PathVariable String shiftId, @PathVariable String type) throws IdNotFoundException {
+    	if(type.equals("add")){
+    		employeeShiftingService.assignShiftToEmployee(shiftId, nik);
+    	}
+    	else if(type.equals("remove")){
+    		employeeShiftingService.removeShiftFromEmployee(shiftId, nik);
+    	}
+    	return new ResponseEntity<String>("Shifting Processed", HttpStatus.OK);
     }
 }

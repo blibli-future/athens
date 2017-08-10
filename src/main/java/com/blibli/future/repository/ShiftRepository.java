@@ -12,6 +12,6 @@ import com.blibli.future.vo.ShiftVo;
 @Repository
 public interface ShiftRepository extends JpaRepository<Shift, String> {
 	Shift findOneById(String id);
-	@Query("select new com.blibli.future.vo.ShiftVo(id, name, startHour, endHour, workDay, departmentEmployee, location, true) from Shift where departmentEmployee=(?1)")
+	@Query("select new com.blibli.future.vo.ShiftVo(id, name, startHour, endHour, workDay, departmentEmployee, location, false) from Shift where departmentEmployee=(?1)")
 	List<ShiftVo> findAllByDept(String dept);
 }
