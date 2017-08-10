@@ -43,7 +43,7 @@ public interface EmployeeSubstitutionLeaveRightRepository extends JpaRepository<
 			"    ((?2) BETWEEN start_Date and end_Date) OR ((?3) BETWEEN start_Date AND end_Date))" +
 			") AS esl GROUP BY esl.nik, esl.fullname, esl.nameOfDept"
 			, nativeQuery = true)
-	Object[] sumEmployeeSubstitutionLeaveRightByNikDateBetween(String nik, LocalDate startdate, LocalDate endDate);
+	List<Object[]> sumEmployeeSubstitutionLeaveRightByNikDateBetween(String nik, LocalDate startdate, LocalDate endDate);
 	
 	@Query("select new com.blibli.future.vo.PermissionResponseVo(el.id, el.employee.nik, e.fullName, el.startDate, el.endDate, el.status, 'subtitution', el.processedBy, el.reason) "
 			+ "from EmployeeSubstitutionLeaveRight el join Employee e on el.employee.nik = e.nik where e.chiefNik = (?1) and el.status = (?2)")
