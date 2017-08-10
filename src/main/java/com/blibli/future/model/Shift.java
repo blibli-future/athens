@@ -1,6 +1,9 @@
 package com.blibli.future.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -11,6 +14,8 @@ import java.util.Set;
 @Entity
 public class Shift {
 	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name="uuid", strategy = "uuid2")
 	private String id;
 
 	private String name;
