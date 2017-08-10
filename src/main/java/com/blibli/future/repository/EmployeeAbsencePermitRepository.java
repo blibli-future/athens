@@ -41,10 +41,10 @@ public interface EmployeeAbsencePermitRepository extends JpaRepository<EmployeeA
 	List<PermissionResponseVo> getEmployeeAbsencePermitByNikStatus(String nik, Status status);
 	
 	@Query(value = "select manyDays.dept, manyDays.day, count(manyDays) as countedDays from "
-			+ "(select e.name_of_dept as dept, generate_series(date_trunc('day', eap.start_date), eap.end_date, '1 day')::date "
+			+ "(select e.name_of_dept as dept, generate_series(date_trunc('day', eap.start_date), eap.end_date, '1 day')//://:date "
 			+ "as day from employee e join employee_absence_permit eap on e.nik = eap.employee_nik "
 			+ "where eap.absence_permit = (?1) and eap.status = (?2) and e.name_of_dept = (?3) "
-			+ "and start_date between (?4)//://:date-20 and (?4)//://:date+20 order by day) as manyDays "
+			+ "and start_date between ?4//://:date-20 and ?4//://:date+20 order by day) as manyDays "
 			+ "where (manyDays.day between ((?4)-(?5)) and (?4)) group by manyDays.dept, manyDays.day "
 			+ "order by manyDays.day asc"
 			, nativeQuery = true)

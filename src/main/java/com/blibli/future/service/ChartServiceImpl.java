@@ -57,6 +57,8 @@ public class ChartServiceImpl implements ChartService{
 				top10Report.add(new SubReportVo(object));
 			}
 			LOG.info("Got Employee Late Chart");
+			System.out.println(dailyChart.size());
+			System.out.println(top10Report.size());
 			return new ChartResponse(dailyChart, top10Report);
 		}
 		else if(type.equals("hourly")){
