@@ -142,17 +142,17 @@ public class EmployeeTappingServiceImpl implements EmployeeTappingService {
     }
     
     private LateCondition lateConditioning(LocalTime tapIn, LocalDate dateTap, String nik) throws IdNotFoundException {
-    	List<Shift> employeeShift = employeeService.getAssignedShiftsList(nik);
-    	LocalTime startTime = LocalTime.of(12, 00);
+    	//List<Shift> employeeShift = employeeService.getAssignedShiftsList(nik);
+    	LocalTime startTime = LocalTime.of(10, 00);
     	
-    	if(employeeShift!=null)
-    	{
-	    	for(Shift shift : employeeShift){
-	    		if(shift.getWorkDay() == dateTap.getDayOfWeek()){
-	    			startTime = shift.getStartHour();
-	    		}
-	    	}
-    	}
+//    	if(employeeShift!=null)
+//    	{
+//	    	for(Shift shift : employeeShift){
+//	    		if(shift.getWorkDay() == dateTap.getDayOfWeek()){
+//	    			startTime = shift.getStartHour();
+//	    		}
+//	    	}
+//    	}
     		
     	if(tapIn.isAfter(startTime))
     		return LateCondition.LATE;

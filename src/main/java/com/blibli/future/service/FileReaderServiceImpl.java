@@ -113,7 +113,7 @@ public class FileReaderServiceImpl implements FileReaderService {
 
                 switch (columnIndex) {
                     case 0:
-                        tapData.setNik(String.valueOf(cell.getNumericCellValue()));
+                        tapData.setNik(cell.getStringCellValue());
                         break;
                     case 1:
                         if(cell.getStringCellValue() != null) {

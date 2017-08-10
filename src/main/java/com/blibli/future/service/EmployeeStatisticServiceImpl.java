@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 @Service
 public class EmployeeStatisticServiceImpl implements EmployeeStatisticService {
@@ -58,45 +59,53 @@ public class EmployeeStatisticServiceImpl implements EmployeeStatisticService {
 
     private long countYearlyLeaveUsed(String nik) {
         long result = 0;
-    	Object[] yearlyLeaveCountObject = this.employeeYearlyLeaveRepository.sumEmployeeYearlyLeaveByNikDateBetween(
+    	List<Object[]> yearlyLeaveCountObject = this.employeeYearlyLeaveRepository.sumEmployeeYearlyLeaveByNikDateBetween(
                 nik,
                 LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
                 LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31)
         );
 
-        if(yearlyLeaveCountObject.length!=0){
-        	SubReportVo yearlyLeaveCount = new SubReportVo(yearlyLeaveCountObject);
-        	result = yearlyLeaveCount.getNumberResult();
+        if(yearlyLeaveCountObject.size()!=0){
+        	for(Object[] object : yearlyLeaveCountObject){
+        		SubReportVo yearlyLeaveCount = new SubReportVo(object);
+            	result = yearlyLeaveCount.getNumberResult();
+        	}
         }
         return result;
     }
 
     private long countSubstitutionLeaveRightUsed(String nik) {
     	long result = 0;
-    	Object[] substitutionLeaveRightCountObject =
+    	List<Object[]> substitutionLeaveRightCountObject =
                 this.employeeSubstitutionLeaveRightRepository.sumEmployeeSubstitutionLeaveRightByNikDateBetween(
                 nik,
                 LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
                 LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31)
         );
-        if(substitutionLeaveRightCountObject.length!=0){
-        	SubReportVo substitutionLeaveRightCount = new SubReportVo(substitutionLeaveRightCountObject);
-        	result = substitutionLeaveRightCount.getNumberResult();
+        if(substitutionLeaveRightCountObject.size()!=0){
+        	for(Object[] object : substitutionLeaveRightCountObject){
+        		SubReportVo substitutionLeaveRightCount = new SubReportVo(object);
+            	result = substitutionLeaveRightCount.getNumberResult();
+        	}
+        	
         }
         return result;
     }
 
     private long countLate(String nik) {
     	long result = 0;
-        Object[] employeeLateCountObject = this.attendanceRepository.countEmployeeLateConditionByNikDateBetween(
+        List<Object[]> employeeLateCountObject = this.attendanceRepository.countEmployeeLateConditionByNikDateBetween(
                 LateCondition.LATE.ordinal(),
                 nik,
                 LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
                 LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31)
         );
-        if(employeeLateCountObject.length!=0){
-        	SubReportVo employeeLateCount = new SubReportVo(employeeLateCountObject);
-        	result = employeeLateCount.getNumberResult();
+        if(employeeLateCountObject.size()!=0){
+        	for(Object[] object : employeeLateCountObject){
+        		SubReportVo employeeLateCount = new SubReportVo(object);
+            	result = employeeLateCount.getNumberResult();
+        	}
+        	
         }
         return result;
     }

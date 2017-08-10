@@ -41,7 +41,7 @@ public interface EmployeeYearlyLeaveRepository extends JpaRepository<EmployeeYea
 			"    ((?2) BETWEEN start_Date and end_Date) OR ((?3) BETWEEN start_Date AND end_Date))" +
 			") AS eyl GROUP BY eyl.nik, eyl.fullname, eyl.nameOfDept"
 			, nativeQuery = true)
-	Object[] sumEmployeeYearlyLeaveByNikDateBetween(String nik, LocalDate startdate, LocalDate endDate);
+	List<Object[]> sumEmployeeYearlyLeaveByNikDateBetween(String nik, LocalDate startdate, LocalDate endDate);
 	
 	@Query("select new com.blibli.future.vo.PermissionResponseVo(el.id, el.employee.nik, e.fullName, el.startDate, el.endDate, el.status, 'yearly', el.processedBy, el.reason) "
 			+ "from EmployeeYearlyLeave el join Employee e on el.employee.nik = e.nik where e.chiefNik = (?1) and el.status = (?2)")
