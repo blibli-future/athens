@@ -1,0 +1,62 @@
+package com.blibli.future.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.blibli.future.exception.IdNotFoundException;
+import com.blibli.future.exception.TypeNotFoundException;
+import com.blibli.future.service.api.ApprovalService;
+import com.blibli.future.vo.ApprovalRequestVo;
+import com.blibli.future.vo.ApprovalResponseVo;
+
+
+@RestController
+public class ApprovalController {
+	
+	public final String BASE_PATH = RequestController.BASE_PATH;
+	public final String PATH_APPR_OR_REJECT = BASE_PATH + "/{type}/{id}";
+	
+	private ApprovalService approvalService;
+	
+	@Autowired
+	ApprovalController(ApprovalService approvalService){
+		this.approvalService = approvalService;
+	}
+	
+	@PutMapping(PATH_APPR_OR_REJECT)
+	public ResponseEntity<String> processRequest(@PathVariable String type , @PathVariable String id , 
+			@RequestBody ApprovalRequestVo approvalRequestVo) throws IdNotFoundException, TypeNotFoundException{
+		if(type.equals("leave")){
+			approvalService.processLeave(id, approvalRequestVo.getNik(), approvalRequestVo.getIsApproved());
+		}
+		else if(type.equals("absence")){
+			approvalService.processAbsencePermit(id, approvalRequestVo.getNik(), approvalRequestVo.getIsApproved());
+		}
+		else{
+			throw new TypeNotFoundException("Type: " + type + " was not found");
+		}
+		return new ResponseEntity<String>("id: " + id + " processed", HttpStatus.OK);
+	}
+	
+	@GetMapping(BASE_PATH)
+	public ResponseEntity<List<ApprovalResponseVo>> getHistoryAndUnapprovedRequests(@RequestParam String chiefNik, 
+			@RequestParam String type) throws TypeNotFoundException{
+		System.out.println(chiefNik);
+		if(type.equals("history")){
+			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getRequestHistories(chiefNik), HttpStatus.OK);
+		}
+		else if(type.equals("unapproved")){
+			return new ResponseEntity<List<ApprovalResponseVo>>(approvalService.getUnapprovedRequests(chiefNik), HttpStatus.OK);
+		}
+		throw new TypeNotFoundException("Type: " + type + " was not found");
+	}
+}

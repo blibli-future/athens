@@ -1,9 +1,9 @@
 package com.blibli.future.enums;
 
 public enum Status {
-	WAITING("Waiting"),
-    APPROVED("Approved"),
-    REJECTED("Rejected");
+	WAITING("waiting"),
+    APPROVED("approved"),
+    REJECTED("rejected");
 
     private String name;
 

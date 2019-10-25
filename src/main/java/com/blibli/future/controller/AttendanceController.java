@@ -30,10 +30,8 @@ import com.blibli.future.service.api.EmployeeTappingService;
 
 @RestController
 public class AttendanceController {
-	
-	public final String BASE_PATH = "/employee";
-    public final String PATH_SHIFTING = BASE_PATH + "/shift";
-    public final String PATH_TAPS = BASE_PATH + "/taps";
+    public final String PATH_SHIFTING = EmployeesController.BASE_PATH + "/shift";
+    public final String PATH_TAPS = EmployeesController.BASE_PATH + "/taps";
     public final String PATH_TAPS_UPLOAD = PATH_TAPS + "/upload";
 	
     private EmployeeTappingService employeeTappingService;
@@ -132,68 +130,4 @@ public class AttendanceController {
         return new ResponseEntity<Set<Employee>>(employeeShiftGetted, HttpStatus.BAD_REQUEST);
     }
     
-    @PostMapping(BASE_PATH)
-    public ResponseEntity Employee(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
-                                   @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
-                                   @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
-                                   @RequestParam("level") String level, @RequestParam("startWorkingDate") String startWorkingDate,
-                                   @RequestParam("endWorkingDate") String endWorkingDate, @RequestParam("gender") String gender,
-                                   @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-                                   @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
-                                   @RequestParam("position") String position,@RequestParam("status") String status){
-
-    	Boolean statusConvert = Boolean.parseBoolean(status);
-    	Gender genderConvert = Gender.valueOf(gender);
-        MaritalStatus maritalConvert = MaritalStatus.valueOf(maritalStatus);
-        Religion religionConvert = Religion.valueOf(religion);
-    	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
-    	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
-    	
-        Boolean employeeAdded = employeeService.saveEmployee(nik, fullName,genderConvert,position,level,
-        		organizationalUnitText,maritalConvert,religionConvert,nameOfDept,chiefNik,
-        		chiefName,chiefPosition,chiefPositionText,
-        		startWorkingDateConvert,endWorkingDateConvert,statusConvert);
-        if (employeeAdded){
-            return new ResponseEntity(true, HttpStatus.OK);
-        }
-            return new ResponseEntity(true, HttpStatus.BAD_REQUEST);
-
-    }
-    @GetMapping(BASE_PATH)
-    public ResponseEntity<List<Employee>> employeeGetByDepartment(@RequestParam("nameOfDept") String nameOfDept){
-        List<Employee> getEmployees =
-                employeeService.getEmployeesByDept(nameOfDept);
-        if(getEmployees!= null){
-            return new ResponseEntity(getEmployees, HttpStatus.OK);
-        }
-        return new ResponseEntity(getEmployees, HttpStatus.BAD_REQUEST);
-    }
-
-    @PutMapping(BASE_PATH)
-    public ResponseEntity employeeUpdate(@RequestParam("nik") String nik , @RequestParam("fullName") String fullName ,
-            @RequestParam("chiefNik") String chiefNik, @RequestParam("chiefName") String chiefName,
-            @RequestParam("chiefPosition") String chiefPosition, @RequestParam("chiefPositionText") String chiefPositionText,
-            @RequestParam("level") String level, @RequestParam("startWorkingDate") String startWorkingDate,
-            @RequestParam("endWorkingDate") String endWorkingDate, @RequestParam("gender") String gender,
-            @RequestParam("maritalStatus") String maritalStatus, @RequestParam("organizationalUnitText") String organizationalUnitText,
-            @RequestParam ("religion") String religion, @RequestParam("nameOfDept") String nameOfDept,
-            @RequestParam("position") String position,@RequestParam("status") String status){
-
-    	Boolean statusConvert = Boolean.parseBoolean(status);
-    	Gender genderConvert = Gender.valueOf(gender);
-        MaritalStatus maritalConvert = MaritalStatus.valueOf(maritalStatus);
-        Religion religionConvert = Religion.valueOf(religion);
-    	LocalDate endWorkingDateConvert = LocalDate.parse(endWorkingDate);
-    	LocalDate startWorkingDateConvert = LocalDate.parse(startWorkingDate);
-    	Boolean employeeUpdated =
-    			employeeService.updateEmployee(nik, fullName,genderConvert,position,level,
-    	        		organizationalUnitText,maritalConvert,religionConvert,nameOfDept,chiefNik,
-    	        		chiefName,chiefPosition,chiefPositionText,
-    	        		startWorkingDateConvert,endWorkingDateConvert,statusConvert);
-        if(employeeUpdated){
-            return new ResponseEntity(true, HttpStatus.OK);
-        }
-        return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
-
-    }
     }

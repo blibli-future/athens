@@ -26,10 +26,10 @@ import com.blibli.future.vo.EmployeeLeaveVo;
 
 @RestController
 public class RequestController {
-	public final String BASE_PATH = "/request";
-    public final String PATH_LEAVE = BASE_PATH + "/leave";
-    public final String PATH_LISTING_LEAVE = PATH_LEAVE + "/list";
-    public final String PATH_ABSENCE_PERMIT = BASE_PATH + "/absencepermit";
+	public static final String BASE_PATH = "/requests";
+    public static final String PATH_LEAVE = BASE_PATH + "/leave";
+    public static final String PATH_LISTING_LEAVE = PATH_LEAVE + "/list";
+    public static final String PATH_ABSENCE_PERMIT = BASE_PATH + "/absencepermit";
 	
 	private EmployeeLeaveService employeeLeaveService;
 	private EmployeeAbsencePermitService employeeAbsencePermitService;
