@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown ">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li class="active"> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <br/>
+    <section  id="progressBarSummary">
+        <div class="row">
+            <h3>Employee Summary</h3>
+            <div class="col-md-4">
+                <h5>Annual Leave Rights</h5>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                        6 of 12
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h5>Substitution Leave Rights</h5>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:60%">
+                        50% Complete (info)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h5>Number Of Late</h5>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+                         aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:20%">
+                        2
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="formAbsence">
+        <form>
+            <div class="row">
+                <h3>Apply an absence</h3>
+                <div class="col-md-3">
+                    Criteria <br/>
+                    <select name="criteria" class="form-control">
+                        <option>Cuti Istimewa</option>
+                        <option>Cuti Tahunan</option>
+                        <option>Ijin Sakit</option>
+                        <option>Sakit dengan Surat Dokter</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    Option <br/>
+                    <select name="criteria" class="form-control">
+                        <option>Cuti Istimewa</option>
+                        <option>Cuti Tahunan</option>
+                        <option>Ijin Sakit</option>
+                        <option>Sakit dengan Surat Dokter</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    Start Date <br/>
+                    <input type="date" class="form-control"/>
+                </div>
+                <div class="col-md-3">
+                    End Date <br/>
+                    <input type="date" class="form-control"/>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="alasan">Alasan:</label>
+                        <textarea class="form-control" rows="6" id="alasan"></textarea>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-info">
+        </form>
+        <br/>
+    </section>
+
+    <section id="leaveHistory">
+        <div class="row>">
+            <h3>Leave History</h3>
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height:63px;">
+                    <h3 class="panel-title ">
+                        Cuti Tahunan<br/>
+                        16 Maret 2017-17 Maret 2017
+                    </h3>
+                </div>
+                <div class="panel-body " style="height: 70px;">
+                    Alasan Cuti nanti akan muncul dibagian ini. Jadi karyawan akan ingat kenapa dia tidak masuk kantor pada hari yang tertulis diatas
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height:63px;">
+                    <h3 class="panel-title ">
+                        Cuti Tahunan<br/>
+                        16 Maret 2017-17 Maret 2017
+                    </h3>
+                </div>
+                <div class="panel-body " style="height: 70px;">
+                    Alasan Cuti nanti akan muncul dibagian ini. Jadi karyawan akan ingat kenapa dia tidak masuk kantor pada hari yang tertulis diatas
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height:63px;">
+                    <h3 class="panel-title ">
+                        Cuti Tahunan<br/>
+                        16 Maret 2017-17 Maret 2017
+                    </h3>
+                </div>
+                <div class="panel-body " style="height: 70px;">
+                    Alasan Cuti nanti akan muncul dibagian ini. Jadi karyawan akan ingat kenapa dia tidak masuk kantor pada hari yang tertulis diatas
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height:63px;">
+                    <h3 class="panel-title ">
+                        Cuti Tahunan<br/>
+                        16 Maret 2017-17 Maret 2017
+                    </h3>
+                </div>
+                <div class="panel-body " style="height: 70px;">
+                    Alasan Cuti nanti akan muncul dibagian ini. Jadi karyawan akan ingat kenapa dia tidak masuk kantor pada hari yang tertulis diatas
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height:63px;">
+                    <h3 class="panel-title ">
+                        Cuti Tahunan<br/>
+                        16 Maret 2017-17 Maret 2017
+                    </h3>
+                </div>
+                <div class="panel-body " style="height: 70px;">
+                    Alasan Cuti nanti akan muncul dibagian ini. Jadi karyawan akan ingat kenapa dia tidak masuk kantor pada hari yang tertulis diatas
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading" style="height:63px;">
+                    <h3 class="panel-title ">
+                        Cuti Tahunan<br/>
+                        16 Maret 2017-17 Maret 2017
+                    </h3>
+                </div>
+                <div class="panel-body " style="height: 70px;">
+                    Alasan Cuti nanti akan muncul dibagian ini. Jadi karyawan akan ingat kenapa dia tidak masuk kantor pada hari yang tertulis diatas
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+</body>
+</html>

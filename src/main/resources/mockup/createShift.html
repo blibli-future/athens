@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<br/>
+
+<div class="container">
+    <h1>Create Shift</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="name" class="control-label col-sm-2">Shift Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control " id="name" placeholder="e.g Batu Ceper Shifting">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="start" class="control-label col-sm-2">Start Hour:</label>
+            <div class="col-sm-2">
+                <input type="time" class="form-control " id="start">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="end" class="control-label col-sm-2">End Hour:</label>
+            <div class="col-sm-2">
+                <input type="time" class="form-control " id="end">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="departement" class="control-label col-sm-2">Departement:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="departement" placeholder="e.g Call Agent">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="location" class="control-label col-sm-2">Location:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="location" placeholder="e.g KS Tubun">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+
+    </form>
+    <a href="shift.html">Back to Shift</a>
+</div>
+</body>
+</html>

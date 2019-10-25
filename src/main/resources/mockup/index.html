@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<br/>
+
+<div class="container">
+
+    <div class="row">
+        <form>
+        <div class="col-md-2">
+            Criteria
+            <select name="criteria" class="form-control">
+                <option>Karyawan Terlambat</option>
+                <option>Ijin Hourly</option>
+                <option>Ijin Sakit</option>
+                <option>Cuti Pengganti</option>
+                <option>Cuti Tahunan</option>
+                <option>Cuti Istimewa</option>
+            </select>
+        </div>
+
+
+        <div class="col-md-2">
+            Department
+            <select name="criteria" class="form-control" >
+                <option>IT</option>
+                <option>HRD</option>
+                <option>Operational</option>
+                <option>Marketing</option>]
+            </select>
+        </div>
+        <div class="col-md-2">
+            Start Date <br/>
+            <input type="date" class="form-control"/>
+
+        </div>
+
+        <div class="col-md-2">
+            End Date <br/>
+            <input type="date" class="form-control"/>
+        </div>
+        <div class="col-md-2">
+            <br/>
+            <input type="submit" class="btn btn-info">
+        </div>
+        </form>
+    </div>
+    <br/>
+    <div class="col-lg-6" >
+        <canvas id="myChart" width="530" height="400" class="well" style="background-color:white;"></canvas>
+    </div>
+    <div class="col-lg-6" style="padding-left:30px">
+        <label>Top 10 </label>
+       <table class="table table-striped ">
+           <tr>
+               <th class="text-center">NIK</th>
+               <th class="text-center">Name</th>
+               <th class="text-center">Department</th>
+               <th class="text-center">Number of Late</th>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+           <tr>
+               <td>11223</td>
+               <td>Name</td>
+               <td>Department</td>
+               <td>Number of Late</td>
+           </tr>
+
+       </table>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+           <strong>Warning</strong> The file can't be uploaded
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+           <strong>Succes</strong> The file successfully uploaded
+        </div>
+    </div>
+
+    <h3>Upload Absensi</h3>
+    <form>
+        <input type="file" id="uploadAbsensi"><br/>
+        <input type="submit" class="btn btn-primary btn-xs" >
+    </form>
+
+
+
+
+</div>
+</body>
+</html>

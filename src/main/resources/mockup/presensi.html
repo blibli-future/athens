@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h2>Presensi Karyawan</h2>
+    <div class="row">
+        <div class="col-md-5">
+            <input type="text" placeholder="Search" id="searchPresensi" name="searchPresensi"class="form-control">
+        </div>
+
+       <div class="col-md-2">
+           <select class="form-control" id="searchBy" name="searchBy">
+               <option>Nama</option>
+               <option>NIK</option>
+               <option>Departement</option>
+           </select>
+       </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-info">Search</button>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th width="5"></th>
+                    <th>NIK</th>
+                    <th>Nama</th>
+                    <th>Tap In</th>
+                    <th>Tap Out</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"  name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"  name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"  name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"  name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"  name="selectedEmployee"></td>
+                    <td>87329832</td>
+                    <td>Namename</td>
+                    <td>09:09</td>
+                    <td>18:09</td>
+                    <td>9h 0m</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="center col-sm-4">
+
+        <ul class="pagination " >
+            <li class="active"><a href="#">1</a></li>
+            <li ><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">6</a></li>
+            <li><a href="#">7</a></li>
+            <li><a href="#">8</a></li>
+            <li><a href="#">9</a></li>
+            <li><a href="#">10</a></li>
+        </ul>
+
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-4">
+            <button type="button" id="updateTapIn" class="btn btn-default" data-toggle="modal" data-target="#modalTapIn">Tap In</button>
+            <button type="button" id="updateTapOut" class="btn btn-default" data-toggle="modal" data-target="#modalTapOut">Tap Out</button>
+
+
+            <div id="modalTapIn" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Tap In</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" class="form-horizontal">
+                                <label for="tapIn">Tap In time</label>
+                                <input type="time" class="form-control" name="tapIn" id="tapIn">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default" data-dismiss="modal">Update</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="modalTapOut" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Tap In</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" class="form-horizontal">
+                                <label for="tapOut">Tap Out time</label>
+                                <input type="time" class="form-control" name="tapOut" id="tapOut">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default" data-dismiss="modal">Update</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<br/>
+
+<div class="container">
+    <h1>Create Employee</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="nik" class="control-label col-sm-2">Nik:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="nik" >
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="name" class="control-label col-sm-2">Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control " id="name">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="religion" class="control-label col-sm-2">Religion :</label>
+            <div class="col-sm-2">
+                <select id="religion" class="form-control">
+                    <option>Kristen</option>
+                    <option>Katholik</option>
+                    <option>Hindu</option>
+                    <option>Islam</option>
+                    <option>Budha</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="department" class="control-label col-sm-2">Department :</label>
+            <div class="col-sm-2">
+                <select id="department" class="form-control">
+                    <option>IT</option>
+                    <option>Customer Service</option>
+                    <option>Human Resource</option>
+                    <option>Marketing</option>
+                    <option>Product</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label  for="jabatan" class="control-label col-sm-2">Nama Jabatan:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="jabatan">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label  for="nikAtasan" class="control-label col-sm-2">Nik Atasan:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="nikAtasan">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label  for="namaAtasan" class="control-label col-sm-2">Nama Atasan:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="namaAtasan">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label  for="posisiAtasan" class="control-label col-sm-2">Posisi Atasan:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control " id="posisiAtasan">
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label for="status" class="control-label col-sm-2">Status :</label>
+            <div class="col-sm-2">
+                <select id="status" class="form-control">
+                    <option>Single</option>
+                    <option>Married</option>
+                    <option>Janda</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" class="control-label">
+            <label  for="joinDate" class="control-label col-sm-2">Join Date:</label>
+            <div class="col-sm-2">
+                <input type="date" class="form-control " id="joinDate">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Save</button>
+            </div>
+
+    </form>
+    <a href="employee.html">Back to Employee List</a>
+</div>
+</body>
+</html>

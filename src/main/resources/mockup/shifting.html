@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h2>Employee Shifting</h2>
+    <div class="row">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th width="5"></th>
+                <th>NIK</th>
+                <th>Nama</th>
+                <th>Department</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="selectedEmployee" value="" ></td>
+                <td>87329832</td>
+                <td>Namename</td>
+                <td>IT</td>
+            </tr>
+
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="center col-sm-4">
+
+            <ul class="pagination " >
+                <li class="active"><a href="#">1</a></li>
+                <li ><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">6</a></li>
+                <li><a href="#">7</a></li>
+                <li><a href="#">8</a></li>
+                <li><a href="#">9</a></li>
+                <li><a href="#">10</a></li>
+            </ul>
+
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+    <div class="row">
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="shift">Shift:</label>
+                    <select class="form-control" id="shift" name="shift">
+                        <option>Batu Ceper Shifting 1</option>
+                        <option>Batu Ceper Shifting 2</option>
+                        <option>Cawang Ops Shifting 1</option>
+                        <option>Cawang Ops Shifting 2</option>
+                        <option>KS Tubun BES</option>
+                        <option>Image Editor/Screening/ Data endtry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="datetime-local" class="form-control" id="date">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+
+            </form>
+
+    </div>
+
+</div>
+</body>
+</html>

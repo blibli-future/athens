@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATHENS</title>
+    <link rel="icon" type="image/png" href="img/icon.png">
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse " >
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">Athens</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+            <li class="menuItem dropdown active">
+                <a class="dropdown-toggle " data-toggle="dropdown" href="#">Absensi<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="upload.html">Upload</a></li>
+                    <li><a href="shift.html">Shift</a></li>
+                    <li><a href="presensi.html">Presensi</a></li>
+                    <li><a href="employee.html">Employee List</a></li>
+                </ul>
+            </li>
+
+            <li> <a href="request.html" >Request</a></li>
+            <li ><a href="approval.html">Approval</a></li>
+            <li><a href="report.html">Report</a></li>
+        </ul>
+    </div>
+</nav>
+    <br/>
+    <div class="container">
+        <div class="row">
+
+                <h2>Shift</h2>
+                <div class="alert alert-success alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success! </strong>Your data has been inserted
+                </div>
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Danger! </strong>Your data has can't be inserted
+                </div>
+
+
+            <a href="createShift.html" class="btn btn-primary pull-right" style="float:right;">Create New</a>
+        </div>
+
+        <br/>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Start </th>
+                    <th>End </th>
+                    <th>Department</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>123</td>
+                <td>Batu Ceper Shifting 1</td>
+                <td>07:00</td>
+                <td>16:00</td>
+                <td>Batu Ceper Shifting</td>
+                <td>Batu Ceper</td>
+            </tr>
+            <tr>
+                <td>143</td>
+                <td>Batu Ceper Shifting 2</td>
+                <td>07:00</td>
+                <td>16:00</td>
+                <td>Batu Ceper Shifting</td>
+                <td>Batu Ceper</td>
+            </tr>
+            <tr>
+                <td>183</td>
+                <td>Cawang Ops Shifting 1</td>
+                <td>08:00</td>
+                <td>14:00</td>
+                <td>Cawang Ops Shifting</td>
+                <td>Cawang</td>
+            </tr>
+            <tr>
+                <td>213</td>
+                <td>Cawang Ops Shifting 2</td>
+                <td>08:00</td>
+                <td>16:00</td>
+                <td>Cawang Ops Shifting</td>
+                <td>Cawang</td>
+            </tr>
+            <tr>
+                <td>893</td>
+                <td>Call Agent 1</td>
+                <td>06:00</td>
+                <td>15:00</td>
+                <td>Call Agent</td>
+                <td>Jati Baru</td>
+            </tr>
+            <tr>
+                <td>213</td>
+                <td>Call Agent 2</td>
+                <td>07:00</td>
+                <td>16:00</td>
+                <td>Call Agent</td>
+                <td>Jati Baru</td>
+            </tr>
+            <tr>
+                <td>213</td>
+                <td>KS Tubun BES</td>
+                <td>15:00</td>
+                <td>24:00</td>
+                <td>Call Agent</td>
+                <td>KS Tubun</td>
+            </tr>
+            <tr>
+                <td>213</td>
+                <td>Image Editor/Screening/ Data endtry</td>
+                <td>15:00</td>
+                <td>23:00</td>
+                <td>Call Agent</td>
+                <td>KS Tubun</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>
